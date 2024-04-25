@@ -5,7 +5,12 @@ Stanford - Fall 2021
 
 主题：
 Since their introduction in 2017, transformers have revolutionized Natural Language Processing (NLP). Now, transformers are finding applications all over Deep Learning, be it computer vision (CV), reinforcement learning (RL), Generative Adversarial Networks (GANs), Speech or even Biology. Among other things, transformers have enabled the creation of powerful language models like GPT-3 and were instrumental in DeepMind's recent AlphaFold2, that tackles protein folding.
+
 In this seminar, we examine the details of how transformers work, and dive deep into the different kinds of transformers and how they're applied in different fields. We do this through a combination of instructor lectures, guest lectures, and classroom discussions. We will invite people at the forefront of transformers research across different domains for guest lectures.
+
+自 2017 年问世以来，transformers已经彻底改变了自然语言处理（NLP）。现在，transformers的应用遍及深度学习领域，无论是计算机视觉（CV）、强化学习（RL）、生成对抗网络（GAN）、语音甚至生物学。除其他外，transformers还帮助创建了 GPT-3 等强大的语言模型，并在 DeepMind 最近开发的 AlphaFold2 中发挥了重要作用，该模型用于处理蛋白质折叠问题。
+
+在本讲座中，我们将研究transformers的工作细节，深入探讨不同类型的transformers及其在不同领域的应用。我们将通过教师讲课、嘉宾讲座和课堂讨论相结合的方式来实现这一目标。我们将邀请在不同领域处于变压器研究前沿的人士做客座讲师。
 
 ## 「V1-01」Transformers介绍（Introduction to Transformers）
 推荐阅读: 
