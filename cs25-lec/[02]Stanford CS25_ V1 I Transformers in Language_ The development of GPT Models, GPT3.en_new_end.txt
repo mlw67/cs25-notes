@@ -1,0 +1,554 @@
+So a sample from this model looks like this.
+So they also point to $99 .6 billion from 200 for 0 .63%.
+It's a bunch of kind of gibberish.
+So the sentence isn't too coherent, but at least the words do seem to be somewhat related, like they come from the same space.
+Now jumping forwards to the beginning of the deep learning boom in 2011, we have language modeling with neural networks now and in particular with recurrent neural networks.
+So you can get rid of this giant lookup table from the Ngram models.
+And instead we can have our influence be these tokens and let this kind of recurrent cell remember some state and persistent state.
+So if we set up a neural model like this we get a sample as shown below.
+So the meaning of life is the tradition of the ancient human reproduction is less favorable to the good boy for when to remove vigor.
+So again, this doesn't really make any sense, but it kind of starts to have the flow of a real sentence.
+Yeah.
+So jumping forward even more to 2016, we have LSTM models.
+And of course LSTMs are an architectural innovation on top of RNNs and they have kind of better gradient flows.
+So they're ever better to, they can better model long term dependencies.
+And so with an LSTM model, we get a sample like this with even more new technologies coming onto the market quickly during the past two years and increasing number of companies must tackle the ever -changing and ever -changing environmental challenges online.
+So this sentence is starting to make a little bit of sense though.
+There are clear artifacts like the repetition of the phrase ever -changing.
+Now starting in 2018, we have our first autoregressive transformer based on which models, which are even better at modeling these very long -term dependencies.
+And here what I'm showing is an example of a completion.
+So in a completion, the user supplies the prompt.
+In this case, this text swings over Kansas and the model will continue from this prompt.
+So you can see that this completion is coherent across multiple sentences now, though there are notable spelling mistakes.
+So you see this like a, whatever Doc Nafee is, so it doesn't quite make sense.
+And now we arrive at GPT -2, which is a 1 .5 billion parameter transformer model.
+And I copied in what I personally found was the most compelling completion from GPT -2.
+And in contrast with the last slide, what this does is it sets up a clearly fake prompt.
+So we have something about finding unicorns and scientists in South America.
+And so the models probably not seen this exact prompt before and has to make up something that's consistent.
+So the thing I find most impressive is it does so and is coherent across multiple paragraphs.
+It invents this fictional Dr. Perez and it persists Perez throughout multiple paragraphs.
+I think it's like very aptly named.
+You have him from University of La Paz and yeah, we just have fairly coherent completions at this point.
+So it's worth disclosing that this was the best of 10 samples.
+So we still had to sample multiple times to get a sample like this.
+And finally, to end this section.
+Yeah, yeah, for sure.
+Are you arguing over just the examples that fail me, the worst of the 10?
+I can pull some up.
+Yes.
+Yeah.
+Yes, yes, yes.
+We're sorry.
+One last question.
+When you have these 10, you said we took the best of the 10.
+That doesn't in what sense?
+Yeah.
+So this is human judged and I'll probably expand a little bit on that most of it.
+So I want to end this kind of fly by overview with GPT -3.
+And since GPT -2 already produces such coherent tags, like how do you characterize GPT -3?
+And I would say that the best way to do so is that say you took the best of like one best out of five or 10 completions from GPT -2, that would be kind of your first completion from GPT -3.
+And of course best is kind of a personal metric here.
+So here I'm showing completion from the three body problem.
+And you can see that the impressive things about this completion or that it really stays true to this style of the novel.
+I think the second thing that kind of impressed me was just how poetic, like the metaphors and similes that it produces are.
+So you have this stuff like blood was seeping through her jacket and a dark red flower was blooming on her chest.
+Like he's kind of like very poetic and stylistic sentences.
+So he definitely understands it's part of a novel and it's trying to generate this kind of prose that in the same style.
+So as generated texts becomes more and more cozier, I think one really...
+How much bigger each of the parameters is GPT -3?
+Yeah, so it's 175 billion parameters versus GPT -2, which is around one billion.
+So do you feel like that very subtle increase in accuracy is the cause of how much difference?
+Yeah, that's a very good question.
+So there's kind of stuff maybe we can dive into a little bit after, but there is work on neural scaling laws.
+And so the idea is like, can you predict the performance of a larger model from a series of smaller models?
+And so I would rather characterize the increase in performance, not by kind of the small gain in perplexity, but whether it lines up with the projections and in that sense GPT -3 does.
+So yeah, that's some intuition for...
+I think personally at OpenAI, we would have stopped the experiment if it didn't.
+No, I just think this is a little bit general thing, so we don't need to go into this tension.
+In machine learning, you see people pushing for like an extra 1 % or 25 % accuracy, but the models are increasing at a scale that's functional.
+So I wonder sometimes whether it's worth it and where you should stop.
+Yeah, I think maybe this side we'll get to it a little bit, but there's also some sense in which as you reach the entropy floor of modeling, every having gives you...
+If you think about accuracy, it's not on a linear scale.
+Like a 1 % early on isn't the same as that last 1%.
+And so those last bits really do help you squeeze a little bit out of that.
+Sorry, I'm skipping to my access.
+Oh yes, yes.
+Sorry, this is accuracy.
+I will explain this one.
+So as generated text becomes more and more realistic, I think one very natural question to ask is whether humans can still distinguish between real and fake text.
+And so in here we have...
+This is of course like a very set up scenario.
+It's not in all cases, the model is able to trick humans, but this is for news articles.
+We presented GPT -3 generated samples against real news articles.
+And you can tell as the number of parameters increases, the ability of humans to distinguish between the real and fake articles, that ability goes down to their random chance.
+And yes?
+How did you generate the news articles?
+Oh, I'm actually not completely sure.
+So I didn't do this work particularly, but I think one possible approach would be to have a delimiter and just have it start generating news articles from there.
+Any other questions?
+Great.
+So even with all of these impressive results, I think it's worth taking a step back at this point and asking what do we really care about language modeling for?
+And what is it actually useful for?
+I think one can make the argument that it is actually a fairly narrow capability.
+Why would you just want some system that just continues text for you?
+And you can argue that there's more important tasks to solve like summarization or translation.
+And I think most researchers at OpenAI would agree with this point of view.
+And in fact, GPT was not really a project that was focused on language modeling as an end goal, but mostly as a tool to solve a problem called unsupervised learning, which I'm going to go through in the next couple of slides.
+So I want to do a history of language modeling at OpenAI and hopefully motivate why we ended up at the GPT series of models and how we arrived there.
+And hopefully it'll become much more intuitive after this section.
+So the deep learning boom started in 2012 with AlexNet, which was a system that could take images and labels and it could classify images to their labels.
+And what we found with AlexNet was these systems were able to generalize surprisingly well.
+You could take data sets that weren't necessarily the training distribution and you still have pretty good features on them.
+And since then, this kind of supervised approach has been really, really powerful, right?
+We've been able to train models in many different domains to classify very accurately.
+And you can even have some guarantees that supervised learning will work well.
+So there's critical risk optimization.
+But the problem with supervised learning is that oftentimes the labels are scarce, right?
+Especially in language tasks, there isn't really that many kind of texts paired with their summaries or too many pairs across languages, for instance.
+So collecting a lot of data can be not too hard, but actually scalably labeling all of that data.
+It could be very time consuming and expensive.
+So the main problem with unsupervised learning is can we also learn from unlabeled data?
+And this is a lot scarier because all of a sudden we're starting to optimize an objective, which isn't the one we care about that's true, right?
+So there are a lot of the guarantees that we used to have, we no longer have.
+And we can only kind of hope that we learn some features that are adaptable to a wide variety of downstream tasks.
+But nevertheless, there's a reason to be very optimistic in language.
+And the reason is that there is a huge trove of unlabeled data and it's called the internet.
+And so the real question is, can we leverage all this unlabeled data from the internet to solve language tasks where we don't really have that much data?
+And the hope is that if we kind of pre -trained this model on the internet, they'll see all of these words used in different settings, kind of understand the relationships, and they'll be able to leverage this kind of understanding for any kind of task we've done.
+So now that we've established why language is such a good domain to try unsupervised learning in, let's talk about why use generative models for it and also why use autoregressive generative models.
+And I do want to stress that a lot of the guarantees you have with supervised learning are no longer there for unsupervised learning.
+So some of these arguments will be a little bit kind of intuitive.
+And so the first argument I want to present is this quote by Richard Feynman, which is a pretty wide space.
+So what I cannot create, I do not understand.
+And there's the inverse of this idea, which we call analysis by synthesis.
+And it's what I can create, I can also understand.
+And this has been studied by Josh Tenenbaum.
+There's definitely some kind of biological motivation as well for it.
+But the idea here is that if you're able to create a language model, which can generate diverse samples that are coherent, then it must also build up representations that can help you solve language understanding.
+And then the next question is why do we use autoregressive models?
+You might have a local objective, right?
+You're just predicting the next words.
+You could do really well with kind of some end gram approximation, right?
+Why would it be good at solving things that allow you to summarize an entire piece of that?
+And so an intuitive argument here could be say that you wanted to do very well on language modeling for a mystery novel.
+And there's this grand reveal at the end, like, Oh, the culprit was, and then you want to predict that next token.
+And to do really well at that task, you really need to have a good understanding of what happened in the story, along with all the twists and turns, and maybe even some of this kind of like deductive reasoning.
+So the first sign of life, Oh, you got a question?
+Oh yeah.
+So the first sign of life we had at OpenAI was in the task of predicting whether Amazon regimes were positive or negative.
+And this worked on in 2017.
+So instead of training a classifier in the kind of typical supervised way, what we did was we trained an LSTM model just to predict the next character in Amazon reviews.
+And when we trained a linear model on the features from this LSTM, what we found surprisingly, it was like one of these cells or one of these neurons was firing in terms of predicting sentiment and positive activations for this neuron corresponding to positive reviews and negative activations to negative reviews.
+And this was despite not being, not seeing any of the labels at training time.
+So you can even track kind of what this neuron value is across a sample.
+So it's a little bit hard to read, but these are reviews where maybe someone says, Oh, I really liked this film, but I didn't like this part.
+And you can kind of see the sentiment switching and as you go from positive to negative.
+So yeah, just predicting the next character resulted in, Oh yeah.
+Was there any sort of monoclonal architecture to encourage?
+Oh yeah, no, no, no.
+This was just a pure LSTM.
+So you guys do a default neuron, saw which one's the most - In the hidden state.
+Yeah.
+So you train a linear classifier on top of that.
+And one neuron is firing with, yeah, just a outsize predictive power.
+Great.
+So next up GPT -1 was one of the first demonstrations that this kind of approach could work broadly protects.
+So GPT -1 was trained on the internet, not on Amazon reviews anymore, and it was fine too on a bunch of different downstream tasks.
+Right.
+And, and one thing to stress here was kind of to your point that the fine tuning was very, I guess, minimally kind of you're not kind of bashing the architecture apart and kind of repurposing a new model.
+So it's just a new head that classifies for your task.
+And this showed that you can use this approach, not just for sending analysis, but also for entailments, semantic similarity and getting sodas on a lot of these benchmarks downstream.
+So I've already presented GPT -2 from the point of view of a very powerful language model.
+And now I think it's worth visiting from the viewpoint of unsupervised learning.
+So like GPT -1, GPT -2 was trained on a large chunk of the internet and it's only trained to predict the next token or word from previous ones.
+But the key insight of GPT -2 is that many downstream tasks can be expressed naturally as a language modeling task.
+And yeah, so GPT -2 explores how well we can perform on downstream tasks simply by using this method without any fine tuning.
+So let me start with a couple of examples.
+So let's say you want to solve some reading comprehension benchmark.
+And this is usually set up as a prompt, which is some passage you have to read and then a bunch of questions, which you have to answer.
+So you can literally just stick the entire prompting context.
+You put a question, colon, you write out the question, answer colon, and then have the model complete from there.
+And this kind of gives you zero shot reading comprehension.
+We can also use it for other tasks like summarization.
+For instance, here's like a first, the beginning of a CNN article about kind of some, some archeological finding, and you can just put TLDR after you see this passage and the model, hopefully if it's good enough, we'll produce good summaries.
+And the final example I want to show is that you can do zero shot translation as well.
+So the way you would do this is if you wanted to convert, let's say a French sentence into English, you could set up a prompt, like the sentence insert the French sentence translated from French to English means, and then the model will complete.
+And it can sometimes do as well.
+And one kind of critical thing to note here is that here's the chart of performance as you increase the number of parameters.
+And in all of these models, they were trained on the same dataset.
+So the only kind of compounding variable is scale.
+And you can see as we scale up the models, these kind of zero shot capabilities emerge or, and kind of smoothly get better.
+So the role of scale is important here.
+And yeah, and I think these are starting to approach some, I guess they're not great benchmarks, but at least respectable.
+Yeah, yeah, yeah, exactly.
+It's not going to be great in a lot of cases.
+And to be honest, like the blue metric used for translation is actually often, thank you very much.
+It's not a great metric.
+What it does is it takes a reference solution and basically it does some kind of like end gram comparison.
+So it is a big problem to have good translation metrics in NLP.
+And yeah, I think when I talk about code, I'll talk a little more about it.
+Right.
+So let's finally talk about how GPT -3 fits into this picture.
+So the primary insight of GPT -3 is that the training process itself can be interpreted in the context of meta -learn, which is kind of like learning over distribution.
+And during training, what the model is doing is it's developing certain kind of capabilities.
+It's picking up some set of skills in terms of modeling certain passages.
+And it can bring inference time when it's, when it's doing, it's kind of quickly picking up on what a task is based on what the prompt is so far and adapting to that task to predict the next token.
+So you can kind of view this outward loop of all the SGD steps you're doing during training and this inward loop of kind of picking up on what the task is and then modeling the next token.
+So you can imagine a lot of tasks being framed in this way.
+For instance, on the left, you can have addition kind of, you have a lot of examples of additional context and hopefully that would help you with a new addition problem where you can try to unscramble over for instance.
+And I'll explore results on these two kind of benchmarks in the next slides.
+So this setting we call fuchsia arithmetic, and just to explain what's going on, you're taking the entire context of your transformer and you're putting in as many examples as will fit.
+And then finally you put in the example that you would like to solve.
+So here are like these examples could be these kind of first three addition problems.
+And then you have 31 plus 41 equals and you ask the model to complete.
+So you notice that as the language model gets bigger, it's better able to recognize this task.
+And you can see that kind of performance on addition, subtraction, even some kind of multiplication tasks increases sharply as you go towards 200 billion parameters.
+And there just seems to be kind of some step function change right here.
+And looking at word unscrambling, this is also true.
+So we have parameters again on the X axis, we have accuracy and each of these is a different kind of unscramble task.
+So this blue line is you kind of do a cyclic shift of the letters and you want it to uncycle.
+And there's a lot of other transforms you can do like randomly in certain words, for instance.
+So the final point here is that this is a pretty general phenomenon.
+We didn't just test it on these two aforementioned tasks.
+We tried to array of, I think 40 plus tasks.
+And here you can see how the zero shot, one shot and few shot performance increases as we scale the models.
+So of course they're all smoothly increasing, but one thing to be aware of is that the gap between zero shot and few shot is also improving as a function of scale.
+Awesome.
+So we've just seen that we can pre -train the transform.
+Oh, go ahead.
+I was curious, it seems like there's three things.
+One is themselves that were used.
+Two is the number of parameters.
+And then three, my understanding is also the quantity of data that was ingested.
+I was curious sort of between those three, which ones, you've shown a lot of the number of parameters definitely helps.
+I was curious though, you had a sense of the degree to which also the training tasks and the sophistication of the tasks, as well as the quality of the adjusted.
+Yeah.
+Yeah.
+So I guess I can dive, maybe it's something to say for, for after, but yeah, let's dig into that after.
+Yes.
+I guess GPT two and three are different.
+GPT one just has an extra classification head for certain tasks.
+Yeah.
+Great.
+Yeah.
+Good questions.
+So yeah, we've just seen that we can use a transformer in this kind of pre -trained and finding set up where we have some kind of a lot of unlabeled data in the pre -training setting.
+And we have just a little bit of data and finding setting, and we can solve a lot of language tasks in this way.
+And I would say this has become the dominant paradigm in language over the last couple of years.
+So there's follow -up objectives like Bert and T5, which have done extremely good at pushing the soda, but there's nothing really that says that these transformer models have to be applied to language.
+The transformer is a sequence model and as such, it can just ingest any sequence of bytes and model them.
+And when you think about this, like all of the data that we consume, like our videos or audio, they're represented on our computers as sequences of bytes.
+Right.
+And so we might think, Oh, could this approach be used to just model whatever modality we want?
+And I think this kind of paradigm is very, at least interesting when, when we don't really have good inductive biases, like we don't.
+So we don't do that.
+But one question to ask is, does it even work when you do have really strong inductive biases?
+So I'm going to present some work that suggests that the answer is yes, it still works fairly well in this case in the domain of images where convolutions are already so popular and proven out.
+And I'm going to show a second result very briefly here, which is a DALI, which shows that it's strong enough to even ingest two different modalities and be able to join.
+So the first question is how would you apply GPT to images?
+And there's a few things you have to do.
+You have to modify this autoregressive next word prediction objective.
+So the natural analog is you can think of images as a very strange language where the words are pixels instead.
+And instead you need to predict the next pixel at each point.
+And so we can just change the objective from next word prediction to next pixel prediction.
+And of course we want this unroll it as a sequence.
+It's the same way it's stored on a computer.
+You just have a sequence of bytes.
+Yeah.
+Good question.
+So in the language setting, we pre -trained on this large unlabeled data set on the internet and we fine tune on question answering or these other benchmarks.
+And then images, one good analog of this situation is you can pre -train on image net without the labels.
+You have a, let's say a low resource, low data, sorry, setting like so far, and you can try to attack our classification.
+And of course, in both settings, you can do fine tuning and GPT.
+You can do zero shot.
+And I would say the standard eval on images is you do linear probes.
+So you take features from your model.
+The model is frozen.
+You pass through through the model, get some features and you see how predictive these features are.
+Is it kind of social, which basically you ask a model to predict the next pixel given the.
+Yeah.
+Yeah.
+So CNN is an instantiation of an autoregressive image prediction model.
+So what we're asking here is can we actually take the same transformer architecture that we use in language, don't make any modifications at all and just throw.
+So there's no kind of 2d prior.
+So yeah, I, I, I I'll call this a model that we train emissions for sure.
+And here you can see actually what some completions from the model look like.
+So on the left column, what I'm feeding in is the pixels of the first half of the image and the next floor columns, what you're seeing is a different model generated completions.
+And the right column here is the original reference image.
+And you can actually see that the model is kind of being some interesting things, right?
+If you look at the last two rows, it's not coming up with tennis and magically the same completion every single time.
+It's like putting these birds in different settings, sometimes adding reflections is putting this lighthouse in grassy areas and like watery areas, for instance.
+So if you buy into this philosophy of analysis by synthesis, we definitely have some hint of the synthesis part.
+So I don't have time to go through all of the results with you, but I just want to say that it is fairly successful in this so far setting where, where you don't have much labeled data.
+If you train a linear model on top of the features, you get better results than if you do the same approach with a resume trained on English net with sleep.
+So that's like the typical approach in the field between this and resident on image net, you get the features.
+Oh, yeah.
+Oh yeah.
+And if you compare it to this approach, generate a generative model on image net without the labels, take the features.
+It's actually a better predictive of some of them.
+Yeah.
+Once the architecture for this is the same.
+Exactly.
+Yeah.
+Yeah.
+Yeah.
+Yeah.
+Yeah.
+So this, um, yeah, no, so you can modify GPT to, to have like 2d bias that you can do to the position of eddies.
+Well, we don't do that.
+We just want to see, can you use the same exact approach?
+So earlier some of the data is just a sequential, but also there's like metadata showing about how sequential should be reconstructed.
+So like, what's the way, for example, so the data on this story, but when you want to transform the sequence into an image, you have metadata that will say something like, just like in NumPy race, it'll say, here's the strike.
+So here's our rearrange.
+What I'm curious to know is the DPT before it's given an image, at least given this metadata.
+I see.
+I see.
+Okay.
+That's extremely good question.
+Yeah.
+In this case, um, we, we, all the images are, have the same shape.
+Okay.
+Okay.
+Okay.
+Okay.
+Yeah.
+So, but we don't tell it like the concept of row within the model, like, uh, yeah.
+Yeah.
+So it needs to learn it from the data, but yeah, the data looks like variable image shapes, then they can test where to do it.
+Yeah.
+Yeah.
+A lot more pixels than there are in sizes.
+Uh, yeah.
+So this is a critical low resolution images.
+Um, yeah, so we can actually, the models we're comparing against are trained on kind of high resolution images.
+So I think that makes it even more impressive.
+Um, but we are, we're just training at 32 by 32.
+Cool.
+So if we fine tune these models for CIFAR classification, we can get 99 % accuracy, which matches G pipe.
+And this is G pipe for instance, is a system which is a pre -trained on image net with labels and then also fine tuned with labels.
+So yeah, it just kind of shows you like even this approach, which doesn't really know about convolutions can do well.
+I think you're going to hear more about that next week with Lucas's talk.
+So, uh, by now it shouldn't be surprising at all that you can model a lot of different modalities with transformers.
+So in Dolly, we just ask, uh, what about throwing two different modalities at the model and seeing if we can learn kind of, uh, how to condition on text to produce an image.
+And, um, for instance, one thing you might want it to do is like you, you provide one of these text captions and you want it to generate some image like the one below.
+And the easy way to do this is just train a transformer on the combination of a captioning image.
+And of course, uh, in, in a lot of these situations, like the idea is very simple, but the implementation and execution is where the difficulty is.
+And I'm not going to talk too much about that.
+I think the focus today is on language, but you can refer to the paper for a lot of those details.
+Oh, yeah.
+So you, you like say have a max capture length and you just kind of cut it off at that length and you can pad up to that.
+Right.
+So you can see that, uh, it can generate fairly good samples.
+Um, so if you want like a storefront with the word open AI on it, it's not perfect.
+Um, but it's understood at least it's kind of like reverse OCR problem where you, you take some texts and render it.
+Uh, and it's kind of typically rendering it in like office looking places.
+So, uh, that's one encouraging sign, but I do think, um, my, my favorite results here are a zero shocking mission.
+So what's going on here is for instance, if your prompt is the exact same cap on the top as, as a sketch on the bottom and you feed in the top half of it, this image, which is a cap, and you ask it to complete the rest of the image, then it'll render the top cat actually as like, uh, um, a sketch.
+And you can do the same thing with like flipping over photos, for instance, uh, you can zoom in to a photo.
+Uh, of course they're not perfect.
+Um, but it has some understanding of what the text is trying to do in the captions originally, uh, like the training, uh, in the training set, do they have like wording, such as extreme close up view?
+Uh, I think that that is the, it probably are some examples like that.
+And that's probably where it's picking up some of this knowledge from though.
+We don't seek out these examples.
+Um, it's just, uh, yeah, yeah, exactly.
+Okay.
+Perfect.
+Yeah.
+So this is just, uh, we just go and, and do a, do a massive web script.
+There's no kind of, we're not trying to find examples like this.
+Right.
+And so you can also do things like colorization, right?
+You can take the cat color red, and this has to kind of recognize that what the object is in the figure.
+Um, and yeah, and you can do stuff like semantic transformations, like adding sunglasses, uh, into the cat and, uh, you can put it on postage for instance.
+Yeah.
+So just remarkable that you can do a lot of these like transform zero shot.
+Um, it wasn't trained to do these things specifically.
+Cool.
+So moving on, uh, the last section of my talk today is on codex, which is our most recently released code writing models.
+And the first question you should rightly ask here is, um, why, why train them all on code anyway?
+Isn't at this point, isn't it just another mood out and what is the novelty that there is at this point?
+Right.
+Um, so let me give you a couple of reasons.
+So first is that GPT -3 had a rudimentary ability to write Python code already from a doc string or descriptive method name.
+And we actually didn't train it on much code data.
+Actually, I think there might've been active filtering to get rid of code data.
+And so we were surprised that there is this capability anyway, so that, you know, like if we actually purpose the model and trade it on the large amount of code that we can find, maybe something interesting will happen there.
+Uh, next what sets apart code from other modalities is that there is a kind of ground truth correctness of a sample and functions can be tested with unit tests and an interpreter.
+So this is very different from language where, uh, to get a ground truth eval, you might need a human to come in.
+And even then sometimes humans won't agree like this, this is the better example, or this isn't the better.
+And, uh, I think it's, I used to double in competitive programming myself and I really wanted to create a model that could solve problems that I could.
+So it's, is that same thing?
+Like, have you partnered with GitHub on this?
+We wrote a paper on it too.
+So yeah, I think it's kind of a high level programming language is similar to like our human language.
+Have you guys ever tried to even lower level?
+Yeah.
+Yeah.
+Um, Hey, I think there's, yeah, there's follow -up work where we just trade on a bunch of different languages and I don't know the metrics off the top of my head, but I have seen some assembly writing models.
+Um, so I guess I, um, continue on the therapy before, so we have this, this, uh, study where we have unit tests and interpreter.
+So how do we actually evaluate, um, these models in a way that's kind of aware of these two concepts?
+So the first thing we did was we have a dataset, a new data set, which is 164 handwritten programming problem.
+And, um, these kind of have the format shown here.
+Like there's a function name, a doc string, there's a solution.
+Um, and there's an average of around eight units.
+And why is it important that we hand wrote these?
+Well, the thing is we're training on such a large part of GitHub.
+Like if you said, okay, I'm going to take like some B code problems and I'm going to turn them into an evaluation.
+That's not going to work because there's just so many GitHub repos that are like, Oh, here's the solution to this problem.
+So while this doesn't kind of guarantee that this problem isn't duplicated, at least someone wrote it without kind of copying from another source.
+Um, so here's some kind of examples of a unit test that you would, uh, evaluate the previous function on.
+Um, I think it's should be fairly clear that we should be using this metric.
+Uh, like this is the correct kind of ground truth metric to use.
+I mean, humans do use unit tests to evaluate code.
+And I would say like, um, if you're familiar with competitive programming, like you can't manually judge all like tens of thousands of submissions that are coming in, you need the unit tests and that is a fairly good.
+So one interesting point here was, uh, we had to create a sandbox environment to, to run these, um, these kind of generated solutions in, because when you train on GitHub, there's a bunch of malicious code.
+There's a bunch of kind of insecure code.
+You know, your model should be sampling that and kind of running that on your environment.
+Cool.
+So now that we have an evaluation data set, uh, let's define a metric.
+And so the metric we're going to use is called pass at K and the definition is the average probability over all the problems that at least one out of key samples passes the tests.
+So if we evaluate this metric by just taking every problem and exactly generating case samples, um, it's actually not, uh, there's high variance, uh, just kind of sampling in that way.
+But you imagine the past rate of a particular sample is around one over K like, uh, this is kind of like an all or nothing.
+So, um, what, what we do instead is we generate, um, a much larger set of samples and greater than K most of the times it's like greater than five K.
+Um, and we count number that are correct and we compute this unbiased estimator and that it looks more complicated than it actually is.
+It's just complimentary counting.
+You, um, you take kind of, uh, the number of combos where all of them fail.
+So then, uh, we train our model and, uh, like I alluded to earlier, uh, there's 160, about 160 gigabytes of code, which is collected from 54 million repositories.
+Um, for efficient training, what we did was we fine tuned from QPT three models of various sizes.
+And, um, this isn't actually strictly necessary.
+We find that we can get to roughly the same, uh, final loss in performance without this, but it is slower to do it without, um, without this returning staff.
+And so we already have these models.
+Why not just finding them?
+And, um, one extra trick to make training much faster here is in a code, there's a lot of runs of spaces, right?
+And those don't get compressed efficiently in language because you just don't see them very often.
+So they typically get broken up into like many separate tokens.
+So we introduce additionally, some tokens that compress runs of that space.
+And that makes training maybe like a 30 or 40%.
+So the token watches, yeah, exactly.
+Yeah.
+Great.
+So once we have these models, we can go and revisit the human eval data set, and I can share a couple of problems to give you a sense for where the models are at and also what kind of difficulty level the problems in the data set are at.
+So this is a 12 billion parameter model that passed up 90%, which means that 90 % of the samples will pass the unit tests.
+And this is very something like anyone kind of doing a first day of Python to be able to do so you, uh, increment, uh, all the elements of a list by one.
+Um, here's a problem where the pass rate is 17%.
+So this is a solution.
+The problem I gave earlier.
+So you are given a non MP list of integers.
+You want to return the sum of all odd elements that are even positions.
+And this might not sound that much harder to you, but models can often get confused about like, Oh, like it's odd to referring to positions or elements.
+Um, and so here you can actually see that it's doing the right thing.
+And finally, this is an example of one of the harder problems in the data set.
+So the pass rate is under 1 % here.
+And so what's going on here is actually there's an encode function, which takes a string.
+It kind of chunks it up into groups of, uh, uh, three characters, and it does a cyclic shift on each character and you have to write a decoder, uh, something that reverses this operation.
+Um, so, uh, you can see that the model, this is a real model solution.
+So it chunks up the, the characters in the same way.
+You can see that the cyclic shift is the opposite way.
+So, um, up there, it takes the first element of each group moves into the end and now it takes the last element of each group, which is Jennifer.
+Okay.
+So I'm wondering, um, what's the effect of, so like you had a couple of examples in the comments.
+So like, I'm wondering if the model will be able to, um, extrapolate what it's doing by the examples that are only not relying on it.
+Yeah.
+So some of our tasks, there are, uh, some examples in the doctrine.
+Um, and some of them though, I think it's just to kind of match the distribution of, um, real kind of tasks we find, in the real world.
+Like in this case, it doesn't have it, but definitely for the unit tests, none of those appear within.
+I'm just curious, like if you just give it the examples and not give the description of the task.
+Oh, I see.
+I see.
+So can it do like pure induction where you like don't tell the task at all?
+Um, yeah.
+Um, I haven't tried it to be honest.
+Um, I think it's worth a shot.
+Yeah.
+Thanks.
+Yep.
+So yeah, at this point, um, we've changed codex models.
+We've evaluated on this metric, but the thing is like, was it worth all this trouble?
+Right.
+Um, you, you, you have already had these metrics like blue that are match -based, um, in, in language.
+Um, couldn't we have just used this to approximate it.
+We don't need like an interpreter.
+We don't need like to generate so many samples and it would be great if like it kind of like separated out like this.
+Um, but what we find is that, uh, this is, uh, if you take four random problems from human and you plot the distribution of blue scores for correct and wrong solutions, you actually find a lot of distribution or overall, right?
+Like, uh, it's hard to distinguish like the green from the blue distribution.
+And so this suggests that blue actually isn't a very good metric for gauging functional practice and that we actually do need this, this new kind of metric and this, this new data set.
+So now let's explore the setting where the pass at K and pass at K, K is greater than one.
+And so the first observation we have here is that the temperature that you sample at it affects your pass at K and just for some intuition, um, if you do temperature zero sample, you're going to get the same sample every single time you're doing artifacts sampling.
+So it doesn't matter like how many samples you generate.
+Um, you're just going to get the same pass rate.
+Um, and, but if you're, if you want to generate a hundred samples, right, um, you can afford to make some mistakes, but you just want a very diverse set of samples.
+So you, you can up the temperature and you can see kind of as you up the temperature, the slope of the kind of number of samples against pathway, um, it becomes, and so you can kind of take the upper whole of this and you can find the optimal temperature for, for each number of samples.
+And so this brings me to personally, my favorite result of the paper, which I call the unreasonable effectiveness of sampling.
+And so let me explain what's going on here.
+So this is the number of parameters in the model and here you have pass rate at one and a pass rate at a hundred.
+And the reason I use this term unreasonable effectiveness is that I think there's a world where if the orange line and the blue line weren't that far apart, I might not be that surprised.
+Like at these scales, the model, it rarely makes kind of syntactical errors anymore.
+Like the, if you run it, it'll run and produce some kind of output.
+So you could imagine a world where, um, basically what you're doing, the model has some approach in mind is just repeatedly sampling that approach.
+And it's just either right or wrong, but instead what we, what we find is that the model is actually composing different parts and producing functionally different things.
+And, um, you get this huge boost from under 30 % to over 70 % just by sampling a lot of samples from the model.
+So unfortunately, um, knowing that one of your samples is correct, it isn't that useful if you don't have access to the unit tests.
+And now one setting where practical setting, where you would care about this is say you're creating an auto -complete tool and you generate a hundred samples, but you don't want to show your user a hundred samples and have them pick one.
+Right.
+Um, you want to kind of try to pre -filter, but you don't have unit tests.
+Um, so can we kind of approximate this Oracle sampling with some other ranking heuristic?
+So, um, here I'm showing a couple of different heuristics.
+Um, like you can randomly pick one, but the one that seems most promising is to, to write by me and not probably.
+And, um, it's, I know like kind of, maybe not theoretically well grounded, but in, um, in language, this kind of heuristic is fairly strong as well.
+So recall that what we're doing is we have this evaluation set, um, where we have kind of standalone functions.
+We want to produce solutions to them, but when we're doing training, uh, there's a lot of code that isn't relevant for this task.
+For instance, there's a lot of classes that we're seeing.
+There's actually data classes too, which are relevant enough.
+And actually there's a lot of incorrect code on GitHub too.
+So, um, we might be modeling incorrect solutions as well as correct ones.
+So, uh, one thing we thought was let's find two codex on further on a couple of data sets where they are standalone functions and you have kind of more guaranteed correct solutions to that.
+So what we did was we found these problems from a couple of sources.
+So one is competitive programming problems.
+You can kind of go on these sites.
+Um, oftentimes they'll just give you the unit test sometimes when they don't give you the unit test, you can submit incorrect solutions and they'll tell you the first one you failed on and kind of keep it.
+So you can get a lot of competitive programming problems.
+Um, and another source is, um, projects where a continuous integration is enabled.
+So why are these useful?
+Because you can actually kind of do an execution tracing.
+So when you run the integration tests, you can get all the inputs to two functions that are caught in their outputs as well.
+And so you actually have the true function body, you know what the test output is supposed to be.
+So, you know, kind of the ground truth inputs and outputs.
+And, um, these are kind of like two orthogonal data sets.
+One kind of helps you with like algorithmic kind of tasks.
+And one is more kind of like, can I manipulate command line utilities and tests like that?
+So this brings us to the main figure of the codex paper.
+So really what we're seeing is a progression of capabilities.
+So with GPT three on this human about dataset, the pass rate at one is zero.
+Basically, um, you can generate like one or two lines coherently, never, never really a whole program coherently.
+Um, now when you fine tune on, on code, uh, which is codex, this orange line, you start to see some kind of non -nodable performance on this dataset.
+When you do this additional supervised fine tuning, that's the streamline, uh, you get even better pass rates.
+And then if you kind of generate a hundred samples from this model, re -rank with mean log P even better pass rates.
+And finally, of course, if you have access to an Oracle, um, it gives you the best pass rates.
+So I have one question here.
+Can you actually use any ranking to like, like put it in the model?
+Can you use it for like as a backdrop signal?
+Yeah.
+Yeah.
+Um, so we, we just put that, um, I don't know if I can say too much about these results.
+Yeah.
+And finally, I don't want to suggest that these, these models are perfect.
+They have a lot of limitations that human programmers don't run into.
+So one is like, uh, actually all generative models are auto aggressive generative models.
+Kind of, we have some problems with binding.
+So when there's like a lot of variables going on, like a lot of operations going on, sometimes it's like hard to figure out which operation is finding through which variable.
+So you can kind of see some examples of that on the left.
+And, uh, one other kind of counterintuitive behavior is composition.
+So we can take a bunch of very simple building blocks, like, uh, take a string and reverse it, or, or like delete every third character or something.
+And I human, like if you can change two of these operations, you could probably change end of them, but our models aren't able to do that yet.
+Cool.
+So moving on to the conclusion, uh, we have four main points in today's talk.
+So first progress in neural language modeling has been fairly rapid and GPT.
+It wasn't the result of a push on language modeling and more of a result of work on pushing unsupervised learning in the world.
+The third point is that auto aggressive modeling is universal and it can yield strong results, even when there are strong inductive biases, like in images or, or in text.
+And finally, we can produce strong co -generating models by fine tuning GPT -3 on code.
+And sampling is an unreasonably effective way to improve model.
+Cool.
+And to end with some acknowledgements, I want to thank my codex primary co -authors, uh, some mentors at open AI and, um, that was in which I worked very closely with.
+Great.
+Uh, thank you guys for your attention.

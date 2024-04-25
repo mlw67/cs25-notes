@@ -1,0 +1,557 @@
+It's my pleasure to welcome Jan from OpenAI.
+He leads the alignment team there and he was previously a researcher at DeepMind as well.
+He holds a PhD in reinforcement learning theory.
+Has been thinking about the alignment problem for over 10 years.
+And today he'll be giving a very interesting talk.
+So hope you guys enjoy.
+Yeah, thanks a lot for the intro and thanks a lot for having me.
+I'm very excited to talk about this stuff.
+I'm also super happy to keep it interactive.
+If you have questions at any point, please interrupt me.
+Yeah, I wanna start out with a few very basic observations on kind of what I think is going on.
+And so the first one is Team AI is joining the game.
+So Team AI has a lot of different players.
+They don't all join at the same time, but rather they join one by one.
+And not all of their players are like very a lot in how good they are.
+And right now a lot of the players that have joined so far aren't really that smart and usually can do on a very narrow set of tasks.
+But one thing that we've kind of observed this that over time, we're seeing stronger and stronger players join.
+And this is kind of where we are now.
+And then in general, we expect that Team AI has incredibly strong players.
+So those will be players that are able to think so much better than humans, so much faster and so much more cheaply.
+And these haven't joined yet.
+And so the kind of like anchor point that we have, if you think for example about ChatGBT, ChatGBT can already be any human as like knowing more facts or speaking more languages.
+And it can write about 50 words per second and can do so about a hundred times cheaper than humans could at minimum wage.
+And so, there's the more, ChatGBT also has some really important limitations and there's a lot of things that it can't do yet.
+But it is kind of an indicator of some of the players that maybe will be done in the future.
+And so it seems like in the long run, Team AI will have all the advantages over Team Human.
+But, and there's an important caveat, which is there's one important advantage that Team Human has, which is Team Human gets to pick which players from Team AI join and when.
+And so this is kind of like an advantage that we should really be leaning into when we're thinking about what to do and when we're thinking about, this game that we're playing with Team AI and then we'll be playing with Team AI.
+So I think two of the main objectives of what we as Team Human should do is like first, we should try to recruit players from Team AI to play on Team Human.
+And so this is kind of what I would broadly call alignment.
+And this is kind of like the problem that I'm working on.
+And then there's also other objectives.
+So another objective that I think is gonna be really important is you wanna write the rules of the game so that Team Human doesn't lose.
+And right now, Team Human kind of has the ball and we get to write the rules.
+So we should write the rules that make sense and that are still playing this game in the future.
+And so in this talk, I won't really talk about the second point at all.
+And I'll talk about the first point because that's where I know that's not what I'm working on.
+And kind of to phrase it differently or to make it kind of like more practical, like one way I'm thinking about alignment is like, you wanna build AI systems that follow human intent and that follow human preferences that do we want them to do.
+And so a bunch of the things, basically I'll talk about two main things.
+The first part is gonna be work that we've done in the past and kind of like, which roughly is in the bucket of like, we are trying to figure out how we can make the models that we have today as aligned as we can.
+And you just kind of trying, we're gonna try hard to do this and we'll see how far we get.
+And then the second bucket is the things that we have to do next.
+The stuff that we haven't done yet that we think are gonna be really important and I wanna kind of like lay out why I think they're gonna be important.
+So now I said, you know, I'm like trying to make this more clear or like more broken down what alignment means.
+So not like here, because now, you know, the big question is like, what does it mean to follow human intent?
+And kind of like two main categories of intent that we care about is, I would say explicit intent.
+So if you, you know, I give the system an instruction or if you want it to be my assistant, it should be my assistant.
+I should follow the instructions.
+But then there's also all these other intents that I don't say when I'm usually, you know, talking to your system or a human, they all probably care about.
+You know, it shouldn't literally always do what I say, but thing that I mean, and it shouldn't make up stuff and it shouldn't do harmful things and it should ask follow up questions and it's not sure what I mean and so on and so on.
+And so these are all kind of like things that are often just like really difficult to like to start, precisely specify or like, you know, put precisely in groups, but it is still things that we want to get the app to do and that we have to figure out how to, you know, get into it.
+And so kind of like the main techniques that we use today for this is what we call the question line feedback.
+So that was used to train the script GPT and test GPT, which are the two main systems that I'll talk about in this part.
+And the basic way, the basic system is very simple and it's also like a super general technique that applies to lots of different AI models and modalities and settings.
+But in this case, we'll be using managed models.
+And so two steps is actually another step of like timeline demonstration.
+So I'm gonna stop for the thing.
+First step is you want to train your reward model from comparison.
+So you have on the top, let's say now explain moving on you physical or, you know, help me with my paper, whatever it is.
+And then the model does a bunch of things and then you read which one is like close to the thing that you intended the model to be.
+And so you have a bigger set of preferences and you train your reward model.
+The reward model basically just meant to predict which one would you prefer.
+Everything okay?
+I would say like just standing more in front of the camera.
+It's impossible, but I think that looks good.
+Sorry about that.
+Maybe let's turn it over.
+Okay, so now we have this through our model that captures kind of our preferences and what we care about and what we intend for the model to do.
+And then the second step is, now you optimize the reward model with the input.
+And so not setting, you know, like model tries a whole bunch of different things and the reward model tells it which one will be assisted.
+Things are probably more like the thing that you get.
+When you say comparison, is that the advice from the labeler goes into data?
+And are those always consistent or does that not depend on the labeler?
+They'll depend on the labeler if they're maybe able to have different preferences.
+They also might be inconsistencies and you can give these examples of like in front of this preferences.
+But those haven't really been a problem in practice.
+And so far, you know, like our labelers often don't agree, but the model average overall is not consistent.
+But yeah, so this is like the basic technique.
+It's conceptually like quite simple.
+You can make it even simpler if you had, you know, if you didn't train the reward model and you labeled instead like every hour of the load, but it would be a lot less data efficient.
+And so you can turn your one on to think of like data efficient.
+So how does it work?
+So this is kind of like one of the main thoughts from the instruction sheet paper.
+And this is the one I like showing because it really blew my mind and it still does.
+What do we see here?
+So on the x -axis, you see, this is from the GPT -3 model series and you'll see this is like different, three different sizes of models over two orders of magnitude.
+And on the y -axis is how well does the model score on human preferences?
+So if we show a bunch of samples to humans, how likely are they to prefer one over the other?
+And then what we see is that even like the largest GPT -3 model is this preferred to the smaller instruct GPT variant.
+And so the 100x smaller instruct model is actually preferred over the much larger GPT, like full size GPT -3 model.
+And that's kind of wild.
+Sorry, let me just finish my talk.
+So why is it the big one?
+So basically, it's basically shown that there was like a few other lines of code that make the model so much more useful than the field that's getting at it.
+Or fine -tuning makes it a lot worse than nobody wants to use it.
+And then we make all these fancy alignment techniques that don't get adopted.
+And so what we were, like originally in like the first version, so it did solve these regressions.
+And then what here is labeled PPO, PQX is kind of like a variant where we mix in free training data into the fine -tuning.
+And that mitigated a bunch of the regressions that we saw.
+And I just had a quick follow -up to that.
+How important is like fidelity fine -tuned data that you have?
+Like you guys, you collect data from humans, right?
+What if you were to use some pre -trained model to score, you know, just data for the reports or something like that?
+Yeah, you could do that.
+And there have been like other papers on that.
+Like I thought Big wrote this paper on constitutional AI that was trying to like exactly do that.
+In terms of, well, there are certain things that the language model will be able to automatically rank and some things it won't, because it won't know your exact preferences or it won't know exactly what we wanted to do.
+And so, you know, whenever the language model does something that we just prefer, we actually, we have to give it another data point, right?
+Or in other words, you know, if you're aligning with humans, you somehow have to put humans into the loop.
+So that, you know, otherwise how does the model know what you're supposed to do?
+Okay, lots of more questions.
+I don't know if it was Tris.
+Yeah.
+How many, approximately like, what's, how many orders of that intuitive, like some good preferences do we need to achieve this?
+Yes, I'm gonna get to that in a second.
+Of course it will sort of like, it's a little bit too easy over here.
+Yeah.
+I think not as simple as you should, but it's a lot easier.
+Yeah.
+So why do you decide to do experiments here?
+We haven't, we haven't actually compared, carefully compared across RL algorithms.
+And it could very well be that a different RL algorithm would be better.
+That was kind of like, I don't know, PPO was invented over the eyes.
+So that's why we used it.
+It's not, not being good, we've done other than that.
+It works also pretty well.
+Yes.
+What are the labels of the humans that you should select?
+That's how it comes down to comparisons.
+Comparisons, this is better than this other thing.
+So usually we have people compare between like three to six different responses from usually different models.
+So is PPO and the reward model currently used in chat GPT?
+Yep.
+In production.
+And it's sort of like, do you use any of the human feedback, like, you know, regenerate responses and stuff like that to help as a reward function as well.
+How do you mean to regenerate?
+Like there's a button on chat GPT where you can say like regenerate responses or do you use any implicit feedback basically in human use?
+I don't know what the current state is for that.
+I expect people will try to use it, but you know, chat GPT hasn't been out that long.
+So I'm curious about this graph.
+Like it seems like a hundred X, as you mentioned, increasing parameter doesn't give you that much more like fidelity there.
+Qualitatively, you have been tracking this for a while.
+Can you tell right off the bat, if you're like interacting with the 1 billion, like a model or the like hundred billion model, like a Turing pseudo Turing test of parameter size, like I give you a blank box and you tell me how many parameters it has.
+Probably not very precisely, but I think the big counter question is like, do I get to write the prompt?
+So if you just draw random prompts from whatever people put in the opening of playground, which is what we use for instruct GPT, then I probably need quite a few to tell the difference.
+But if I get to write the prompt, I can probably do it in one or two, at least like if the task is like, tell the difference between this and this.
+I wanna, can I just do two more slides and maybe your questions get answered.
+And then, so this was the question about training costs.
+So this is another thing that kind of really blew my mind is like compared to pre -training, it is incredibly cheap.
+So if you look at like the amount of flops that it takes to train GPT to eat, and then you compare it with like how much does fine tuning and the RL what's pre -training makes and everything, like the most expensive instruction GPT version is like less than 2 % of the pre -training computers.
+And if you wanna train an even bigger model, it's gonna be more expensive and you could still use the same like fine tuning step to make it more aligned.
+And of course, I think the important thing to note also here is like, we haven't fixed all the problems.
+There's like important limitations.
+And so I wouldn't say that this is like, the last version and we wasn't trying to figure out how to spend more compute and more human data in the future.
+But all in all, it was surprisingly effective.
+Okay, there were no more questions.
+More questions?
+Yeah.
+I just wanted to ask what the PTFs were.
+Mixing pre -training data into the RL fine tune, just like mix the gradients.
+Quick one, what's the number of branches for this graph?
+So you're fixing number of branches for this one.
+So this is the full size GPT -3 version.
+So this is the 175 billion model.
+More questions?
+No.
+Oh, there's also some questions on Zoom.
+Okay, sure.
+So the first one is, okay, sure.
+So the first question is how would you deal with RDFH breaking in the limit?
+Example preferences are a good proxy for values, but optimizing for them is theorized to incentive device perception.
+Yes, I'll get to that.
+Okay, sure.
+Sure, next question.
+So that is like, you want to automate alignment research.
+What happens if you need conceptual big tools which are difficult for experts to write on?
+Okay, that would be a good take at the end as well.
+Sure, let's see.
+Sorry.
+Yeah, I guess like one question is like, how would fine -tuning direct you on human feedback compared to fine -tuning with iOS?
+Fine -tuning, like supervised fine -tuning?
+It's more like if you directly use the human feedback data.
+I'm also not sure what the need is.
+Okay.
+So, I mean, so one baseline I'm showing here is like, what if you just take human demonstrations in the sense that, you know, we have a bunch of tasks, we just ask humans to do them, record what they did, and then train the model to imitate that.
+And here it's like just very basic behavioral cloning, just using the same loss to use in pre -training.
+And then, you know, it's noticeably better than the Q -shirt prompted version, but it's still not as good as RL.
+And so that's why we like using RL.
+And basically, conceptually, there's two problems with the imitating humans approach.
+One is humans are better at some things than the model is, and they're worse at other things.
+And so at the things that the model is worse, you're trying to imitate something that you can't do.
+And on the things where the model is better, you're making the model worse because you're forcing it to do the thing in the way that the human would.
+And so with RL, with RLHF, you're kind of letting the model do whatever it wants to, and it can just figure out like the best way for it to do things.
+There's also another important advantage, and I'm going to get to that, but I briefly want to talk about chat -gbt.
+So one thing I kind of think of chat -gbt as like the upgrade to Instructure -gbt.
+It's kind of like the next step at making the models more aligned and more useful to humans.
+And some things that is like, you know, I think chat does better is kind of like using dialogue as the universal interface, right?
+You can talk to it directly, you can ask follow -up questions, you can ask it to refine the answer and all of these things.
+That makes it a lot easier to deal with.
+It's better at refusing harmful tasks, but it's also, there's still important limitations, right?
+Like the biggest one is like the model hallucinates a lot.
+It makes up facts when, you know, for whatever tasks you give it, and that, you know, it just makes it quite unreliable.
+It's also still sensitive to prompting, which kind of shows that, you know, it still has important misalignment that we need to fix.
+Like really, if the model was like, the model should really like do the task to the best of its ability, no matter how you prompted to do that.
+But yeah, one important principle that I think is really useful for, or that like I would have leans on a lot is that evaluation is easier than generation.
+So if you ask humans to compare and rank different responses to the model gave, it is easier to tell the difference between different variants of what the model did than it is to do the task itself.
+Or in other words, you know, you can do the comparisons on tasks.
+You can still like spot good behavior on tasks that you might not be able to do well yourself.
+And so if you're giving this kind of like feedback that lets, you know, the system do better than you actually could.
+And I think that's a very general principle that holds in lots of domains.
+So kind of like you're probably most familiar, if you studied CS, you know that P versus NP and everyone, you know, we don't actually know whether they're different, but in practice it seems like NP tasks are just much harder.
+It also applies to lots of other settings, like a lot of professional sports or esports just wouldn't be fun to watch if you couldn't tell who's winning more easily than you could actually compete on a professional level.
+It applies to a lot of consumer products.
+You can like look at two smartphones and tell which one you like more without that is like also deeper than just looking at like the specs, but it is actually very hard to build a good smartphone.
+It also applies to academic research.
+You know, it's much easier to review a paper and say all the things that are bad about it than it is to write a good paper yourself.
+It applies to, I don't know, when you, yeah, basically there's lots of domains where this applies.
+And so I think this is like a very, this principle is like very useful when we want to like align AI systems on task that we might not be able to do ourselves well.
+Okay, so having said that, our OHF has some really important limitation.
+And I think that's gonna make it really difficult to use our OHF to scale alignment.
+Let me explain this with a diagram.
+So basically on the X axis, that's plot like the AI progress and on the Y axis, how difficult different tasks are.
+And then as we have more AI progress, kind of like the task that AI, the difficulty of tasks that AI can do goes up.
+And like one of the fundamental problems is that the level of tasks that humans can reliably evaluate doesn't go up because humans don't get better with AI progress.
+And so I think we're like somewhere here, but the problem is once you cross this line, you don't really know what, like whether your model is actually doing the right thing because you can't reliably evaluate anymore.
+And so that's kind of like the point where our OHF training will start to break down.
+And what we'll probably see is kind of what the question before I lead it to is like, well, now the systems are optimized for whatever feedback we give them.
+And so they will try to tell us what we wanna hear rather all the things that they know to be true.
+And they might learn how to deceive us because that makes it easier to score higher on preferences.
+And so kind of like the basic idea that we wanna leverage is related to the principle I just mentioned, which is evaluations, easier in generation.
+So for example, if you have a large language model, writing a code base, like an entire code base, there's just no way humans would be able to find all the bugs and all the flaws in the code base, or the code base could have like a Trojan in there and you might not be able to tell because it is so hard.
+And that's why we see so much buggy code out there.
+But if you're asked your language model to find bugs and point them out to you, once you've seen the bug, it's so much easier for you to say, oh yeah, this was a bug, please fix it.
+And so now you've taken the task of a code base down to, well, I just have to evaluate whether that was a bug according to the spec that I had in mind.
+And so the general principle that we're excited about here is like you wanna leverage AI assistance for human evaluation.
+And so the hope is that we together, if you pair up humans with AI, you actually get a line that looks more like this, where humans together with AI can evaluate much more than they could by on their own.
+And so to make this concrete, there's like two different ways you could do that, or there's many different ways you could do that.
+Two I wanna highlight.
+It's like first you could ask AI to write a critique.
+This is a project we did last year.
+And in this case, it was a simple summarization task and we trained a language model to kind of like, to say things that are wrong with the summary.
+And there's other things you could do.
+For example, you can give people chat GPT and ask them, okay, use chat GPT to help you evaluate.
+And then you could ask for a critique or you could ask for a lot of other things.
+You could ask for an explanation, you can ask for a fact checking or a quote, or whatever the model like chat GPT can actually reliably help you with.
+And so the idea would be that using AI assistance, you can kind of get all the smarts that AI has and leverage that in order to figure out how you should evaluate what this system is doing and like whether it's aligned with your preferences or whether it's trying to deceive you.
+And the big problem with this is how do we know whether it's working?
+And one of the kind of like difficulties is that by assumption, we're kind of dealing with a hard task where it's difficult to evaluate.
+And we also want the task to be real because we don't want to solve the hard task that doesn't matter.
+And so it becomes different.
+So you need like a hard task that is real, but also if you have those, you usually don't have ground truth.
+So you don't know which was the right answer and how do you know whether the assistance is working or it's biasing everyone to say the same thing.
+And so there's a simple technique that we use in the critique to do this where like that we call targeted perturbations.
+And so what you do is you have a bunch of prompts.
+So this could be like whatever people type into chat GPT.
+And then you kind of like take the response that you have and say like, this is the correct response.
+It doesn't actually have to be correct, but let's just assume it is.
+And now you're asking a human to introduce some kind of subtle flaw that is easy to miss, but is an important flaw.
+And now what you have is you have this paired dataset of like a good response and a bad response and you know which one is good and bad because you made it worse.
+And so in a way that gives you ground truth.
+And so what you now can do is you can take like randomly select one, either the correct or the flawed response and then show it to either a human or a human with assistance.
+And then they have to say whether it was the correct or the flawed one or like how good the response is.
+And in this setting, we can kind of like figure, like just try a lot of different AI assistance or scalable oversight techniques and then say, you know, like is this actually helping humans find the flaws that we planted more lively than not?
+And if it is, then you know, like you're actually really helping.
+And so we did this and the critiques paper.
+So this is training the language models to write critiques and for summaries and what we can show is that when we are assisting humans with critiques at the evaluation, they actually find 50 % more flaws than it did with that.
+And so this is kind of like real signs of life that you can already use in models that we can have today to help humans evaluate and like find problems they would have missed otherwise.
+And of course, we still have to do this like on a much harder task and like with like a real task in a sense.
+And we also want to have like bigger effect size, but I think it's just like, it shows that there's promise of these techniques already working.
+And so in the long run, what I think we want to get to is be kind of want to leverage AI for all the cognitive labor that goes into evaluating whatever our AI systems are doing.
+And this could be, you know, like reading everything that's relevant or fact -checking or doing calculations or like writing code or any of these things.
+And then humans should focus on like their preference input, like the things figuring out what they actually care about and what they want the model to do.
+And this way we can kind of like leverage, you know, like the abilities that, you know, the AI players will bring to the table and the things that they will be better at than us eventually, and then kind of like use them to help communicate the thing that we actually care about and, you know, the things that we actually want them to do.
+And yeah, that's it.
+But yeah, those are like the main slides.
+I'm happy to take more questions.
+Yes.
+I was wondering about this hallucination of responses.
+Have you ever tried to consider some notion of uncertainty in the answers?
+Yes.
+For example, batch and sampling or something like this where you have the value that there is between the responses and somehow value here.
+So, and sampling is difficult because either you're like training and fine tuning ensemble from the same pre -trained model.
+And so you don't get that much variance in your ensemble or you have pre -training a bunch of different models and now you're spending a lot of money on pre -trainings.
+One thing, I mean, it seems like it should be a solvable problem to just teach the model to say it's uncertain when it's actually uncertain.
+And there's been a bunch of research in that direction, but I think right now it's still like, we're not really in a good shape.
+It's more stuff to do.
+Do you think we may run into a kind of signals and noise ratio problem when it comes to AI suggested critiques to AI answers?
+Because I'm sure like when AI is trying to point out potential problems with text, humans are more likely to report more problems, but what if it's noticing problems that humans wouldn't have necessarily had a problem to begin with?
+Yeah, so we did try to control for that a little bit by like having humans rate the severity of the flaws and whether they would have noticed them otherwise, they can still see a significant effect.
+But also like, I mean, a lot of the time, the model is nitpicking and then those are like not the interesting cases.
+Yeah, also if you like look at the example I showed, I think it's from the blog post, like a lot of the critiques are just actually quite garbage.
+And one of the things that makes it easy for critiques is it's okay if most of them are garbage because the human can just read them and discard them.
+And it kind of like more helps evaluate it and know where to focus on or like notice, like think of something they would have missed otherwise.
+So it's more like the critiques help you brainstorm how you should evaluate or something.
+But if you're kind of like using an assistant, you probably want more reliability than like filling most of the answers to why.
+Yeah, yes.
+How do we ensure that the evaluation metrics we are using in your recursive mode modeling approach, like detect deception and like left turns or something, don't have like major discontinuity?
+Yeah, I think, well, it depends a lot what kind of discontinuity you're talking about.
+Like if you get overnight, like a model that is, let's say a thousand inches larger on like number of parameters or like equivalently better, that can like create quite a step up and that makes it quite difficult to do this kind of evaluation.
+So in that sense, I think it's going to be very important to like scale up AI more continuously and like do more incremental steps.
+Having said that, I think the basic picture with request reward modeling is that you're training the systems to help you evaluate, you know, systems that are trained or fine -tuned from the same system, right?
+And so if you can figure out how to get, like fine -tune them in a way that they mention everything that is actually useful and relevant, then it would still be able to evaluate systems, even though they're much smarter than anything you've evaluated before.
+Maybe let me make that more concrete because there's, I think, a way that you could measure that or like one way we've tried it was using what we call the discriminator critique gap.
+So to measure that, you're training two different, or you're fine -tuning two different models from the same pre -trained model.
+One is the discriminator, just says like, is this the flawed response or the correct response or more correct response?
+And the other one is a critique model that tells you what the flaw was.
+And now you can measure how often did the discriminator get it correctly and the discriminator is just like pure gradient descent.
+It doesn't have to want to tell you anything.
+You're just basically hooking into the model of representations and trying to like get all the relevant latent insight it has to this prediction task.
+And then on the other side, other hand, you have this critique model or this general assistance model and you're measuring how often does the assistant actually help me find to the right flaw.
+And then if you compare these two scores, you can like look at the gap between them, hence this generator, sorry, discriminator critique gap.
+And then if the gap is large, then the model knows a lot about the task it's not telling you.
+And so that would be very worrying.
+And the gap is small, then, you know, there's much, presumably there's like fewer things that the model is like not telling you.
+But I guess there's like lots of value in ensuring this approach is robust and like contesting it on learning from what we've learned.
+That's right.
+That's why we want to test it on current models.
+Yes, I don't know who was first.
+I think someone in the back.
+So I wanted to ask about like maybe towards the end, you had a slide where like there's like human genres, like and so, you know, I couldn't help but notice like part of that also is like communicating what you want the AI to do, right?
+Not just like evaluating, but like communicating, like perhaps like I would like you to do this and maybe it can't do that.
+And so like, at least like in my personal experience using the chat GPT, like there were some things that could do that that were like surprising, but because like broke some new weight in the tunnel, for instance, then I was like, no, like how did that come up?
+Or, you know, if you can ask about like, it's like in the prompt, there's like different things, where I'm like, okay, like what can I ask for?
+And like what might it have?
+One thing that I thought was a bit concerning was just this idea that like, you know, people always communicate their preferences, like honestly, or like there could be like coordinated efforts, right, to like instill rewards for like specific capabilities, you know, like coordinated effort to do such a thing.
+But one idea like I had was like, I tried to ask if that has like some idea of like a Wikipedia for itself, I didn't know how to use it at first.
+So I just thought like maybe there didn't seem to be one, but like I was hoping there was one, there was one for like GPT three, right?
+Like I think Brockman broke like a little connoisseur.
+So I was hoping.
+And so my question is like, how do you like make that sort of like thing safe, right?
+Like, how do you like recognize coordinated efforts to like, you know, like specifically reward certain kinds of behavior, maybe like some group decides that they would like to, yeah, you know, give it some capability.
+So this is a, you know, like, yeah, this is a really good question.
+And like, in a way, I mean, the first obvious thing that you shouldn't do is like, you shouldn't just like literally turn on the data that people give who like using the interface.
+And we've kind of like seen other examples of what happens if we do that.
+If you think of like Microsoft K or something that can go pretty wrong.
+The other thing is, I mean, right now, what we're doing is like, we're hiring a bunch of people and then ask them to rate different model responses.
+But also now the question becomes like, you know, who will be hiring and like, what's their background?
+What are they trying to do?
+And so, and in particular, like the thing, I think we're doing quite poorly right now is like, actually like importing like a diverse and representative set of human preferences.
+And it's more just like, you know, whoever we end up, we can hire.
+And so I kind of wish there was also this like more targeted research on like how we should do that and how that could be done well.
+And some of it is also like, you know, better placed outside of like big tech companies.
+Because if you are like tech companies always have an incentive to like, you know, import human preferences in a way that maybe is not like the thing that we actually, humanity would do under reflection or something.
+And so I think it's a really big, important question.
+Does this light fall off like data contamination is like the dual problem for this?
+Like, do you think the internet might be contaminated?
+Probably is, yeah.
+I mean, people might can, anyone can poison free training, right?
+Just put something on the internet.
+And it's, you know, something that we have to be very mindful of.
+Yes.
+Considering that we're currently training these models, hopefully gain closer to human preferences at this point.
+As human preferences change, we've seen like, is there something like, Yeah.
+I mean, the most obvious thing is like, the model's knowledge base is kind of like the pre -training cutoff date, like somebody, you know, whatever data you went into pre -training, it doesn't know about like a lot of things that happened after that.
+In terms of updating kind of like human preferences or the, you know, like the comparisons that go into the reward model, you just collect more data and retrain.
+The fine -tuning run is like comparatively cheap, so you can do that again.
+I think what gets harder is that, you know, like as you have deployed the model and people started using it for all kinds of, you know, tasks that they want to build their company around, like they, if you update and you change the model, then they also have to do a bunch of work into like adopting their prompts to whatever they're doing.
+And so it doesn't come at a zero cost.
+Yes.
+Sorry, you.
+So on the note of exceeding human performance, but what if the advantage of GPT -3 is that it has this immense corpus of the entire internet?
+If you want to specialize in a specific domain, like chemistry or material science or something, and officially to generate new compounds or something, then do things to be adapted, like to use less data, still learn as efficiently as you can say about it.
+You mean like less data on like the chemical domain or something?
+Yeah, we just have the research papers of the last 30 years or something.
+Yeah.
+And you can throw that into pre -training, right?
+And then the model knows about it.
+Can the model really learn this effectively without so much data?
+Can it somehow adapt the abstract concepts behind GPT -3 for that sort of thing?
+Yeah, I mean, that's kind of the general idea with what you intend to do with fine -tuning.
+And to some extent, we've seen it like generalize in this way.
+For example, InstructTBT was trained almost entirely on English language feedback and demonstrations and it works in other languages.
+And so that's kind of wild.
+And so similarly, you could train the model with people who don't know anything about chemistry and then it learns to follow instructions and it will do so like on the topic of chemistry.
+And this fine -tuning can be very sample efficient, like with 100 data points, you can actually make a meaningful change in the model behavior.
+So it can be quite effective.
+I'm gonna pick someone who hasn't asked.
+Regarding response generation, do you or how much effort do you put on or do you put emphasis in training on different expression styles?
+So what I've noticed with ProtectTBT that it always gives you back very structured or scientifically structured answers.
+Do you consider any training if it returns you like a scientifically structured answer or rather an abstract answer?
+Yeah, I mean, the tricky thing is ideally the model should give you the kind of answer that you want to have, right?
+And some people prefer a more scientific or technical answer.
+Some people might prefer a more generic answer.
+And I mean, right now, like CheckTBT doesn't have like a way for you to set like your specific preferences and that's something that would be really exciting to have.
+But also I think the kind of statistic properly that you've observed is in fact, like probably a product of our labeler pool.
+And so a lot of the CheckTBT workers were like more, you know, like, I think more like computer sciencey and like more, there was like more data generated by programmers compared to InstructTBT, which was more like generalist labelers.
+And yeah, there's like different, it's like kind of, it changes also the style.
+So there is no specific distinguished effort?
+Yeah, I mean, we should make a distinguished effort.
+It should give you like the style that you want, right?
+Yes.
+So one of the things that I've been thinking about is how the CheckTBT is gonna play back in the education of younger generation or coming generation.
+And so you have to like grab the AI progress and the human level, yeah, let things get evaluated.
+What I'm sorry to think about is like over break, I have used this, I've shared with like my 10 year old cousin had her CheckTBT just to mess around with.
+And that green line is a lot lower.
+And furthermore, if say just becomes part of their educational experience, it's gonna be much, or I perceive it to be more difficult for them to discriminate even similar tasks than what we do now.
+And so I'm already thinking about like how that might disrupt or make this alignment a little bit more difficult in the long run, as you have people who are more, take for instance, what CheckTBT says as like a given truth anyway.
+Yep.
+I was just wondering what you're...
+I mean, there's a real risk of overlying on a text that is immature and that is not ready for, you know, you just believing in like, please don't believe everything the model says, right?
+But also I think one thing that I'm hopeful for is that like, you know, your cousin will end up like figuring out how to do this.
+Where like, you know, they grew up with, you know, like all of these AI tools that are getting better and learning how to actually leverage them productively.
+Right?
+And like, it's kind of like, you know, 20 years ago or something when you were like, you're like using Google search much earlier than everyone else, you're probably gonna get better at like using that as a tool for everything you wanna do.
+Any more questions?
+I think you had your hand up for a while.
+Like the slide where the tasks and the chat tasks and the body tasks and the model tasks, right?
+Oh wait, the last one?
+The last one.
+Yeah, so right now it seems like you guys are using this as biological sensors for the real world, the like physical ground truth and using language as like compressed interface to that ground truth.
+Are you guys also looking at using accessory technology directly with your models to a more truthful answer of, you know?
+Yeah, I mean, it depends on what that sense you could be.
+Right?
+Like, I guess like one of the most straightforward things is you could ask the model to browse and then it can like fact check its own answers and it can, you know, like import external knowledge that it didn't remember.
+And yeah, I think that would be quite useful.
+I think that would also be quite useful for assisting human evaluation.
+What's that open work?
+And you can look at web GPT, which, you know, is a published work on using the model for browsing.
+I think, so one thing that makes it harder when you're using this like external sensors or if you're letting the model interact more directly with the real world is that it raises more safety questions, right?
+If you let your language model make arbitrary API calls, then you have to be a lot more careful with which calls there's a lot to make and which is it not.
+And if you're, as opposed to if you just like you're reviewing everything the model says, then you can decide which ones you want to make.
+So yeah, it's an open problem.
+Okay, one more question.
+I think you didn't.
+About the reasoning abilities of these large language models.
+I've seen like different people talk about how is it gonna be like a fixed amount of compute per token while like humans, they have system one and system two where we can like just speak quickly versus actually using reasoning and think through things that takes more effort.
+And then I've seen other words to try to like kind of use the force it to a chain of prompt or a chain of reasoning or like just big step -by -step.
+Do you think that's not as sufficient to do everything that's to the level that we want or will it require real big fine tuning or architectural changes?
+I don't know.
+I'm also the wrong person to ask.
+I'm mostly not trying to get the models to have new capabilities and more like, you know, getting them to play on Team Human.
+Oh, do we want to do the online questions?
+Yeah.
+I was mixing in my questions.
+So what do you think is the, is it a world for offline adults in creating from the machine?
+Like especially if you get like human, like you don't teach at once.
+It's hard to model human infections.
+So do you think like the sort of PPA is more offline out?
+Yeah, quite possibly.
+I mean, yeah, as you pointed out, right, like there's a lot of conversational data and if you can use it, that would be, it should be useful.
+I think broadly you can categorize this kind of thing as like, let's make the RL algorithm better and like RL feedback.
+And I think that's valuable and that should help us like make the same pre -chain models like more aligned according to the human preferences that we collected.
+But also you would still run into like all the limitations that RLHF has, right?
+I think there's a fine -tuning API for GPT -3.
+I don't think it offers RL right now, but it's supervised fine -tuning.
+So you could do like, you can like distill best of N and do this kind of expert iteration RL.
+So the first question is, could you more clearly describe the full training process for GPT?
+Example, starting with the text doesn't see the 001s, then XDB or programming data of Y steps are highlighted.
+Sorry, I didn't catch that.
+Start with text of int 001.
+So how much ease of data you could use and how many steps are highlighted?
+I think the exact numbers are not public.
+It's basically similar to instruct GPT.
+And for the instruct GPT numbers, we had, I think around 50 ,000 comparisons and probably like 10 ,000 demonstrations or like maybe tens of thousands.
+I don't remember the exact numbers.
+So I had like this other slide with, yeah, it was like about 20 ,000 hours of human feedback is what I calculated.
+And you can just follow the exact numbers of human feedback because you can get like 1 million or whatever transactions you want.
+Right, I mean, the big question is like, how do you make, how do you ensure quality?
+Yeah, some sort of flip model that can create that out, lucky banking.
+But it's the whole problem, right?
+Like that assumes you already have the one model that you trust.
+Okay, sure.
+So next question I think that I recall was, you want to automate alignment research.
+What happens if you need conceptual big tools which are difficult for experts to very far?
+Yeah, so I mean, the kind of like ambition of that plan is to train a model that can do this kind of conceptual research.
+And you can picture that like a language model that like writes an alignment research paper that we read and then we're like, oh, this is a really cool idea.
+We should try this.
+And I think, going back to evaluation is easier in generation.
+I think it also applies to alignment research.
+And like, I think at the very least, like I find it much easier to evaluate, alignment research than I find it to like produce it.
+And so while there might be conceptual breakthroughs that we need that we couldn't even evaluate right now because they just like, if we saw them, we'd be like, what is this?
+And this is kind of like, this is like the reason why we want to do scalable oversight, right?
+Because if the language model produces this really brilliant insight and we can't even recognize it at the time, we should be able to have an easier time recognizing it if we use the AI assistance.
+And if we leverage like our best AI models to like figure out whether or not that was a good idea, what is the weaknesses and what are the strengths and like, what kind of experiments should we run to know whether this is a good idea?
+And so, yeah, I think basically, the story of just using RLHF to train a model to do good alignment research, you have the obvious pitfalls, which is, the model might write like an alignment proposal that kind of looks good to us, but it's actually not a good proposal and it creates AI that is misaligned with humans.
+And so in order to distinguish the two, which might be really hard, maybe it's not, but I think we should expect it to be really hard and then leveraging AI assistance to evaluate that seems like a really promising plan.
+So I think what is involved in the EGI is how the effect would be the frequency of the system.
+I mean, that was my whole point, it's not sufficient.
+But do you think like, do you need like something more or if you think what the company is trying to do, do you think like, if you can get a lot of feedback data, will that be sufficient to get it by generations or do you see more thinking in terms of?
+I mean, the generalists were like, I think basically the vast majority of the model's capabilities and like all the cool things you see it do come from pre -training and not from the fine tuning stage.
+The reason why people sometimes attribute it to the fine tuning stage is that you didn't see it in the pre -trained model.
+And the reason I think, the reason that we didn't see it in the pre -trained model is because the pre -trained model was so misaligned, it was not trying to help you and was not trying to show you all the things it can do.
+And instead it just regurgitates a bunch of random web text.
+And that's not what you're looking for.
+And so, yeah, I think that what RLHF basically has been doing is like unlocking capabilities that were already in the model and making those available for humans to use.
+And in some ways, like, you know, alignment research is very dual use in the sense that, you know, A, if you have really good alignment techniques, you can use it to align with whatever values you want, including values that, you know, we wouldn't particularly endorse.
+And B, it also, like if you're doing alignment right, it will always look a little bit like you made the AI system more capable because before it just wasn't really that hard to help you.
+And now you've made it more aligned.
+So, you know, you actually see these capabilities that you already have.
+Sure.
+Let's see.
+Yeah, I think this was also a question before.
+How do you deal with parallel fetch treatment?
+So this was like different sort of approximate values but optimizing for them to incentivize deception.
+So how do you counter that?
+Yeah, so that was what I was talking about here, right?
+Like, this is like the whole problem that we have, where what humans can evaluate is constant.
+And so we won't be able to evaluate like sophisticated attempts at deceiving us.
+And that's why we want to do scalable supervision so that we empower humans to spot these attempts at deception.
+How will your network monitoring in urban surveillance stand up to popular thinking's decision shifts in a work that you're changing because of other AI systems?
+Yeah, so I think these are real worries.
+And to some extent, we kind of like have to test empirically like how difficult and how severe they actually are.
+I think, so my personal stance right now is something like, I think trying to get the outer alignment signal really right is going to be like 90 % of the effort.
+And once we have that, then a lot of the other things might also fall into place.
+So for example, I mean, it kind of depends on which story of inner misalignment you're worried about.
+But one story is you're kind of training your system and it learns basically a bunch of inner optimizers, kind of like meta reinforcement learning.
+So for example, like GPT -3 can do like in context learning and that's like a kind of, you know, learned optimizer.
+And so now you're like doing all the Jeff training or whatever like alignment training you have.
+And you're like the optimizers learn to do the thing that you want on distribution.
+But now if you have a distributional shift and the distributional shift could be auto induced, meaning like the model is causing it itself.
+And now you're going out of the solution, all these inner optimizers, like try to optimize for something else.
+And one way you can like, and you know, like how much that would actually happen in practice kind of unclear, but one kind of like more important question is like, if you have a really reliable outer alignment signal and you have this like general training signals that you trust, you can also use that, you know, on the new distribution to train the system to be more, or like to get this inner optimizers in a row basically.
+And so then you've reduced like the inner alignment problems to like, how do you deal with the distributional shift and how do you like construct an outer alignment signal that you trust?
+And those are problems that we have to deal with anyways.
+But yeah, I don't know how it's actually going to shake out some important open questions.
+So regarding alignment, one of the kind of problems that encountering some discussions is, see there's not much interest in things like explaining why some of these other judgments are reflected.
+That's one of the things that's been much interesting about AI or decomposing these models is like explaining why just even second -straints are fairly, that's definitely a two route.
+As to why it's making these online judgments, have you all been able to interrogate the model?
+I mean, I think where we are right now is like pretty disactive despite satisfactory.
+I mean, you can ask the model why it gave a certain response, but you don't know whether it's answered truthfully.
+And you can also, I mean, another thing you can do is you can give the model its own response and ask it to find out flaws, which is what we did in the paper.
+But I think that like, I mean, there's one version where you try to make that better, but then the question is like, what is your ground to the signal?
+I think like better angle of attack is probably interpretability where, you know, like you figure out how to look inside the model and then how it actually works.
+That's what I was asking about.
+The level of research that we interpret those, it's like, it seems that that's been really difficult to do for these larger models in particular.
+It's such a high -pitched space.
+Your current thinking is moving towards like that brings like reducing the nationality of that, but the data is something that can be terribly hard to do.
+Yeah, I mean, we are working on that problem, but I don't think we have anything that is like to show right now.
+And so it seems generally not to be a very easy problem, but you know, I'm hopeful that we can do some things.
+I think in general, the problem of interpretability or like using interpretability for alignment is kind of tricky because I suspect it's going to be neither, it's going to be not sufficient and it might not be necessary.
+So any amount of interpretability you can leverage would be useful because it's another tool in your toolbox of like detecting deception or like knowing, you know, what you said, like how, why the model gave a certain answer and made a certain decision.
+But, you know, it is kind of unclear if you really get really good at interpretability, how you then leverage that for alignment.
+Like presumably you can look in the model and just like throw all the models out that you can find a misalignment in, but then aren't you just selecting for models that have misalignments that are really hard to find with the interpretability.
+True, just one follow up to that, we might ask about that as a practice of practice in capital journal, is that you have to provide explanation.
+Yeah.
+And I guess my question would be like, why would you take the interpretability if it was not necessary?
+Yes, so why would it not be necessary?
+So again, this is kind of like an open question, but basically what stance you could take is that at the end of the day, what really is gonna matter is the decisions that the model actually takes and not the reasons why it took them.
+And so if you can get to the point where you're confident that all the things the model actually does are aligned with what you want, then does it still matter what the model thinks internally?
+I don't know.
+Which you're fine with, you're fine with like evaluating the model.
+Yeah, that's what we're trying to do, right?
+Like we're trying to make like a really, really good evaluation signal.
+And then you can select for, you can train the model to do the things that you want it to do, because you can always evaluate better than the model can do stuff.
+Yeah.
+I'm probably not much of a expert at this question.
+I think you're good.
+We're good.
+Thanks so much to you all for the great lecture.
+Very interesting.
+I might actually, I should talk about the top of type GPT.
+I might just do like the live on, just like the application thing.
+Yeah, sure.
+Just to end up the class.
+So how do you think this thing?
+Just think of all you.
+All we're trying to do, should we give our speaker a round of applause?

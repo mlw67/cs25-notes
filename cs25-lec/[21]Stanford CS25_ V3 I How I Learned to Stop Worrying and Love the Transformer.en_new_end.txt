@@ -1,0 +1,747 @@
+Do folks know what this is?
+There's a Stanford, Stanford's location.
+You know which one?
+Well, first, what is this?
+What was going on?
+The first start in telecom.
+That's right.
+And then what is the association that Stanford had?
+I believe this is Maparti.
+Yeah.
+Who started SAIL, if I understand correctly.
+Is that right?
+Because he started SAIL?
+Yeah, I think he did.
+But anyways, so what's interesting is, so it's amusing to actually look at what they wrote in their, I don't know, is it brochure or what they wrote in their goals, right?
+So the font is a bit small.
+Okay, so the study is to proceed on the basis of the conjecture that every aspect of learning or any other feature of intelligence can in principle be so precisely described that a machine can be made to simulate it, right?
+Fantastic.
+So single machine, you want to simulate all of, like human intelligence.
+And a carefully selected group of scientists, and we think that we can make actually the paragraph right before the second set of red underline, is we think that a significant advance can be made in one or two of these problems if a carefully selected group of scientists work on together for a summer.
+Okay.
+I don't think they knew of AI Winters then, actually.
+They didn't know of it then.
+And the third thing is amusing is that the major obstacle is not lack of machine capacity, but our inability to write programs taking full advantage of what we have.
+So while the goals are noble, it's surprising how wrong you can be with some of the smartest people in the room, right?
+So Selfridge and Neuronal Prokopogee that were the original pandemonium, I think he got everything basically except for path problems with black box optimization.
+Then Minsky, of course Shannon, Solomonoff, I think this is Solomonoff, MDL.
+In many ways, you can argue that's the underpinning of self -supervised learning today.
+But it's really amusing to see the first, I mean, at least I don't know if we'll be able to characterize or write down all the rules for intelligence.
+So you can imagine that the approaches they were taking were all these rule -based systems, right?
+And they couldn't be more wrong on machine capacity.
+Today's transformers are data centers, right?
+And I guess they needed a really, really long summer to solve this one.
+So it's 1955, so like about 60 years.
+No, I'm getting close to 70, 70 years, right?
+And we're basically talking about the same problems again, except maybe some things work, some things don't work.
+And this talk is about one of the pieces that has made this larger enterprise work.
+And we're getting closer to the original goals of the Dartmouth conference, yeah.
+Again, okay, so this is like the big gaps.
+I mean, so what eventually happened in the field was that their goal of having a single system that explained most of, that was able to mimic our cognitive abilities, which would definitely mean like image processing or image understanding and language processing as well, right?
+I mean, the field got, I mean, a single model or a single approach to do all these things was shattered by like thousands of like different research projects.
+So I mean, there was no consolidation, but here's another, here's another, here's another, this is going to be a harder one.
+Can you tell what is, this is 2009 and this is not a single system, this is a complicated machine translation system.
+So when I started my PhD, machine translation systems used to be a bit more complicated than this actually.
+Thousands of pipeline systems, you had to first extract, you had to first do word alignments that actually looked like attention, you think about it as hard attention, then based on that we extracted like all larger phrases aligned with other phrases, then you had to figure out how they, then you had to teach, there was some machine learning there, you had to teach a model how to score them connecting with each other.
+So can you, does anybody know where a neural network is then?
+So this is the, this is a machine translation system from 2009 and CSM is a continuous state language model.
+That's the use for rescoring, right?
+So the world was so discrete then that you had to call these models like continuous state language models.
+And I mean, it was largely inspired by the neural probabilistic language model by, oh, it doesn't appear.
+Sorry, there, the neural probabilistic language model by Benju I think was in 2003.
+And so we were, even in 2013 when I published a paper on neural network language models, these models were still being put into, the feed forward neural network language models were still, you know, rescoring.
+And now it's incredible if you think about it.
+So just in terms of consolidation, how all of these complicated systems that have now been replaced by just neurons that talk to each other, and you just learn the rules from, you just learn the rules from data automatically.
+So it's fun to, it's interesting to see.
+And so since then, you know, like, so this is what the EMLP 2013 conference was like.
+You see these different, like these things, you can call it verticalized analytics, different areas like morphology, dialogue and discourse.
+I mean, I don't even know if people talk about this, talk to models now.
+I don't know if there's a research track anymore.
+Then there is like a machine translation, so like this opinion, mining, incentive and analysis.
+Now models make you angry or upset.
+So you could see that just in 2013, the field, even research was divided into these smaller tracks and everybody had their own specific, they were bringing their own specific domain information and they had to specialize in a domain in order to solve some tasks.
+And we solved tasks to some degree, machine translation, because, I mean, probably because of a lot of government funding as well, we had made a lot of progress and we were making practical translation systems that were being deployed in the wild.
+Google Translate was a great example of that.
+Right.
+And so since then, you know, like you have this, you know, we started to through first, we all agreed we need distributed word representations.
+And you saw this like, I probably remember this funky embedding algebra, aim minus man plus woman equals queen from word to vec.
+And there was a big industry of models that actually, that just that the word representations and the word representations were actually useful in downstream tasks.
+And then came like, you know, another step in this process, another step in this process where now we started saying, OK, these representations are like in there, but they're only helpful if they're learned in context.
+Right.
+So the king should change based on context.
+The king of Persia or the king of the emperor has no clothes.
+Right.
+And so we saw these approaches like sequence to sequence learning, where we started to formulate, we started creating these general formulations of how to solve any task in NLP.
+Right.
+So sequence to sequence formulation, if you can, you can you can you can you can formulate many tasks in languages, sequence to sequence, question answering, machine translation, dialogue.
+So and then and then of course, we had then we then we developed attention.
+Right.
+Which was a which was a very effective content based way to summarize information.
+If you were typically using code or decoder architectures, everybody is probably getting familiar with the code or decoder architecture.
+Right.
+So you go to decoder architecture and a position on the decoder side would summarize based on its content, all the information on the source sentence.
+Right.
+And this is really effective content based way of summarizing information.
+And what started happening was we started these these general these general paradigms started coming up.
+Sequence to sequence learning can solve if it can install most language problems, because most language problems have to deal with learning representations of variable length.
+The goal is to learn representations of variable length sequences.
+And if you do that successfully, you can then potentially solve that problem.
+And then attention with an excellent way, a content based way to actually summarize information from some neighborhood.
+And and so so so so and the major workhorse until then were these are the current models or LSTMs.
+Right.
+Where basically the method was typically the same.
+You had a you had a sentence and you crushed the sentence into into a set of into a set of vectors, set of representations, one typically, typically one for each position.
+Right.
+And the way LSTMs did it was where they walked along the sentence, they ate up a word, and then they summarize this, summarize the entire history into one fixed bottleneck.
+And that bottleneck was then transmitted, was updated based on the next word.
+So now and if you were successfully able to learn representations, then we could solve these tasks, translation summarization dialogues.
+So it's an important movement.
+And in 2020, I guess when was the sequence to sequence learning papers, 2015 NeurIPS?
+Then we saw then we saw the attention paper in 2015, 2016.
+And the machine translation community was kind of the first to respond and say, hey, you know, machine translation is a classic sequence to sequence learning problem.
+Like, why don't we now first start re -scoring and then can we still build native, really rethink machine translation with the sequence to sequence models?
+Right.
+And these are fantastic models.
+I don't know if you guys have ever done these exercises on LSTMs can can count.
+Like if you for example, if you if you train an encoder decoder on if you like it to model A to the end, B to the end.
+So you feed in NAs and you ask the decoder to predict NBs.
+And you actually just a single cell LSTM, if you know the structure of an LSTM, there's a cell that basically keeps.
+So it's a notion of state.
+And just a single cell is able to actually just do trivial counting.
+It counts how many A's you consumed and then it decrements it.
+And then when you consume all the exactly the same number of B's as the number of A's, something lights up and says, I'm done.
+I've recognized this language.
+So you can treat it like A to the end, B to the end.
+And here you have a you have a sorry, this is not clear, but you have somewhat of a you have a grammar here.
+And you can see that these are different cells.
+There's about eight cells here in each one of these cells that actually increments its counter.
+Once it reads a particular symbol and it's able to actually track how deep you are in this, how deep you are in this hierarchy, in this grammar.
+And Google and Google, of course, the crowning achievement, perhaps of sequence to sequence models, which I was actually right.
+I was fortunate to be able to see people as it would be, as work was being done.
+Was the Google neural machine translation system where they took LSCM's.
+I mean, they added many advancements.
+There was a lot of systems improvements, a lot of a lot of data that Google had and they produced what you might add at that time.
+The state of the art neural machine translation system sequence to sequence models.
+So now this big consolidated, this big complicated system, which looked much, which looked much more complicated and now become a homogenous, just as a single homogenous neural network.
+So at the time, the biggest frustration we had was this was I mean, these LSTM's were the primary workforce.
+And the biggest frustration we had was, I mean, not only were we producing, not only were we produce the output order aggressively, we were sequentially decoding the output left to right.
+But also we were reading the input sequentially.
+So you had to kind of, in order to produce that representation for the 10th word, you had to eat up the first word, the second word, the third word.
+So that was really slow and another big problem with LSTM's were that you have this bottleneck that basically that contains all the information about your past.
+So you have to now crush, you have to pack both long distance interactions that you might have and local interactions through the single fixed vector that you need to transmit.
+And sequentiality inhibits parallelism, which means that you couldn't even read, like the encoder couldn't even read the sentence in parallel.
+And of course, decoding was autoregressive, so you couldn't even write in parallel.
+And convolutions were, they were starting to emerge as a solution largely.
+I mean, they've been very successful in their vision.
+They had also figured out how to optimize them well, how to make them really fast on GPUs, because they're just basically matrix multiplications and matrix multiplication is largely, it's parallelizable.
+So the convolutions were a solution to this problem of not being able to read in parallel, right?
+Because you could, in parallel, every word basically produce its representation by looking at its neighbors, right?
+Its local neighbors.
+And there were some very, like, there were some breakthrough papers such as ByteNet for machine translation, the convolutional sequence to sequence model that was contemporaneous to the transformer, actually probably predated by a few months.
+Where they used convolutions both in the encoder and decoder to get good scores on machine translation that were better than the Google neural machine translation system.
+And of course, probably the most successful of the most successful was WaveNet, which was a text to speech system that was state of the art at the time.
+And again, so convolutions still had this problem that, one, I guess they were parallelizable, but the issue was that you still, you couldn't directly capture long distance interactions between words, right?
+So if you're basically a receptive field, if it's like a three by three, if it's a one by three, then it basically grows linearly with the factor of, it grows linearly with the number of layers each time it expands by three.
+So you still needed a linear number of layers to capture these long distance relationships.
+But attention on the other hand was this really effective mechanism that we knew that could actually get us in one, it could actually capture all the interactions between one word and every other word using content based addressing, right?
+Because convolutions basically match weights with parameters, attention was actually able to use content with content.
+So based on how similar I am to my neighborhood, based on how similar I am to my neighbors, I'm going to absorb that information.
+And this actually, this motif actually appears everywhere, even in computer vision.
+So maybe actually I can go there.
+So here's a vision.
+There's this approach.
+Do people here know non -local means?
+So in computer vision, there's an approach called non -local means.
+That's basically, it was originally developed for image denoising.
+So if you want to denoise an image patch, you basically, you look at all your neighbors and you see which patch is very similar to you.
+And based on the similarity, you actually pull in that information.
+So, and this largely works in images because images are very self -similar.
+This starts sounding like, hey, based on content, I want to pull that information.
+And again, there were similar, there were approaches like texture synthesis by Ephros, where if you wanted to do kind of painting or if you wanted to generate an image, then you would look at a patch that's similar to this rectangle in some other, in your dictionary or in like a database that you have patches.
+And then based on what's closest, you actually bring it, right?
+So you'll bring that patch and then you'll paste it there.
+So these approaches that look like attention were already prevalent.
+It's a very natural formulation.
+And the Badanau paper had shown that this actually works really well for language as well.
+So the question then was, OK, why can't we then learn representations instead of being this source target, why can't we actually learn representations by the sentence attending onto itself?
+So now you basically use, instead of attending a source sentence, attending to a target sentence, can it just attend to itself?
+And the original goal of actually when we wanted to actually do parallel decoding.
+So attention by construction is parallelizable because each token can basically construct its representations from its neighbors in parallel.
+Right.
+And it directly captures token to token interactions because of course, we'll run into complexities of length, but we can discuss and we'll discuss and solve some of these things later to overcome them.
+But you can direct instead of having this sort of linear growth and receptive field, you can directly capture these interactions because convolutions, if you have a very, very large receptive field, it gets computationally very expensive.
+And it also had these explicit gating and multiplicative interactions, which we've often seen like in gated pixel CNN or Gell -E, these explicit gated multiplicative interactions have typically helped training and have led to better, better, better accuracies.
+And as I mentioned, the original motivation of why we actually wanted to do this was we said, hey, OK, so the elastiems are, you have good translation systems, but the problem is that actually both reading and writing sequentially, can we actually do both in parallel?
+So we wanted to read, we wanted to read the German sentence in parallel and then translated and then also write in parallel by that.
+Instead of actually decoding it sort of autoregressively, can you decode it instead of decoding in time, can you decode it in height?
+So like you first spit out one word or you spit out all the words and you iteratively define them.
+Right.
+And this turned out to be very, very challenging and hasn't been solved successfully until today.
+Because the biggest challenge essentially is when you whenever you're decoding, right, essentially, as you predict a word, you kind of bend the probability distribution that then nails down, narrows down what you're going to predict later on.
+And the ordering that allows you basically, the ordering that allows you to nail these modes was very hard to learn.
+So imposing a left right ordering is much easier than actually not having one and having to learn it as you're decoding.
+So the original approaches didn't work, but then we still had our salvation in being able to read parallel.
+So we said, all right, let's take this back to the encoder decoder models.
+And unlike at that time, there were a few formulations.
+Right.
+So we had the sort of the original formulation attention from Graves, then we had the additive attention formulation.
+And we took the dot product attention formulation largely because it allowed us to do it because it allowed us to actually do attention as a matrix multiplication.
+And oftentimes, some of the biggest constraints that actually physics is such a big constraint in neural networks that if you can make your architecture amenable to modern accelerators, you have a much better chance of succeeding.
+And dot product attention could be expressed as a matrix multiplication.
+And they're already kernels for being able to do matrix multiplication very effectively on the GPU.
+So the formulation was, all right, so now we have similar to the dot product attention, we had a scaling factor simply because if the dot product actually becomes too big and you can solve it under certain assumptions of mean and variance in the representations, it hasn't updated actually.
+Yeah, so our formulation is basically you have your queries, which what you end up doing is if you have a position, you force project it into queries.
+And then the same token, the representation of the same token gets projected into also keys and values.
+And first, the query determines how much you're actually going to pull from all these keys.
+So you first do a dot product of the query with every key.
+And then based on that, you combine or you pull the content in all these positions based on what the score was after normalizing it using a softmax.
+So in some sense, you can think of self -attention also as kind of a content -based pooling mechanism.
+And the scaling factor basically avoids you, like it saved us from these logits actually blowing up and training becoming unstable.
+And on the decoder side, you can trivially implement causality by just adding an attention mask.
+And where this brings us is that, all right, so now we've solved, now there's a caveat on the flops, we'll actually cover this later.
+But now what we have is a mechanism that's parallelizable.
+It gives you direct content, it gives you direct token interactions that we believe is going to help you actually learn more and these relationships between the words better.
+And the complexity of self -attention is faster than convolutions, right?
+Because convolutions are quadratic in the number, they're quadratic in the number of channels and the number of in the hidden dimension, but a self -attention is quadratic in the length.
+So if your length is not much more than a hidden dimension, you've actually saved on flops.
+Now, this is not quite a complete picture because not all flops are equal, and we'll talk about this later on.
+And now when you put everything together, what basically we kind of took the basis, this has a very strong similarity to the ResNet architecture actually.
+So if we look at ResNets, right, so in ResNets you have contraction, you have spatial mixing with convolutions and then you have the expansion again, right?
+If you just, the transformer, if you just adjust, if you just move it one step down, it's very, it's analogous.
+You have attention, then you have expansion, contraction, but there is a difference in where the residual connections are, but it's a very similar, it's a very similar sort of basic building block with the residual connections, and you have these contractions and expansions.
+And then the transformer, those were, that was multi -head attention with expansion contraction, which was in the feed -forward layers.
+And then one challenge with attention, we loop, LSTMs can count, they can impact, they can count, they can learn interesting temporal patterns, but attention is permutation invariant.
+So we had to actually add position, we had to add position information so that we could learn ordering.
+So we add position information at the input, which gets transmitted to the other layers through the residual connections.
+And the original paper we had, we had post -layer norm, but later on we realized that as we actually make the model deeper, post -layer norm doesn't allow you to train effectively.
+So we have to, then we used a pre -layer norm formulation, which was also observed in the original ResNet papers.
+And so the model is basically, all right, you've got your input, well, you have spatial mixing, spatial mixing through attention, feed -forward layers, and this sort of repeats.
+And the difference on the decoder side is that you also now have encoder -decoder attention, and encoder -decoder attention at every layer.
+If there's any questions, yeah.
+Yes, what was your intuition behind the input and post -layer norm?
+Oh, so it ended up, so if you do post -layer norm, then, actually, Liz, do I have that slide?
+Let me check.
+Probably I didn't.
+But if you do post -layer norm, then you are basically squashing both the residual and the additive parts.
+So when you, so your activations from the lower layers keep getting, keep going through layer norms.
+But in pre -layer norm, you're only a residual path has a layer norm, which means your activations all the way from the bottom of the model are free.
+They're untouched and they can pass through.
+Yeah.
+OK, so now, I mean, so until this point, we haven't discussed why did we, you know, we haven't discussed multi -headed attention, which ended up being very important.
+So one of the problems with attention is that imagine if you wanted to, I mean, so oftentimes language is about understanding who did what to whom.
+So in this case, the Catholic, the owner's hand, so late, who licked what, like the Catholic, the owner, right?
+So now if you actually want to combine information from these two slots, these positions, these vectors, then the best you could do with attention is 0 .5, 0 .5 of the single layer, and half probability, half probability.
+Then they get mushed together, right?
+But now imagine the, imagine the strength that a convolution has.
+It can actually have, that actually should have, well, OK, well, I think the point would still come across.
+So now what a convolution can do is because it has, it basically applies essentially a convolution, in this case, it's a five by one.
+All it really does is it just applies a different linear transformation at each position, right?
+So it can take any, and because these linear transformations are different, it can, the first linear transformation can learn, I'm going to take a little bit of information from here, I'm going to take a little bit of information from here, and I'm going to put them together, right?
+And the attention, the best way that you could actually just do this is best by averaging out, we'll show all these things.
+But having different linear transformations allows you to take a part of the embedding here, a part of the embedding here, mix it up, and then sort of maybe put it together without actually then interfering with each other.
+And multi -head attention, which is a bit like basically a multi -tape, multi -head, like a multi -head Turing machine with different read -write heads, essentially allows you, starts getting you that property back.
+Where now, what you do is you essentially, you bring back the ability to select different parts of the input.
+So you chop up the hidden dimension into independent pieces, and then each one of them is now able to do attention.
+So now you can have probability one in this place and what probability one in this other subspace instead of having 0 .5, 0 .5.
+So now you don't have to like, you don't have to get these averaging effects, you can actually be selective, right?
+So, and also for computational reasons, we instead of actually having eight attention layers of like, or six attention heads of d dimensions we had, or eight attention heads of d dimensions, we had eight attention heads of d by eight dimensions, right?
+So, and because, so we wouldn't incur any more, we wouldn't incur any more flops, for the same amount of flops.
+But that's only half the story because the attention heads themselves turned out to be quite expensive, which then later on had to be, there were improvements that needed to be made, right?
+And the most important part, probably the most important results was that with the transformer, we were able to outperform previous ensemble models as well.
+And that was very, very exciting that, hey, the single model actually is able to outperform previous ensemble models.
+And not only that, and this is a machine translation WMT 2014 English, German and English -French machine translation tasks, and not only were we able to do it in less flops, but also these, like, it was very clear that this was a very general model because we immediately applied it to parsing and we were able to get with a small model excellent results.
+So, and in some sense, like, we were, this was very exciting because this meant that, all right, now this consolidation that we're trying to go for in machine learning, we probably have a model that's more general than what we had before, and we can now throw in a different, maybe we can now throw it at different problems, right?
+And ultimately, why?
+Because it would be helpful to have a single model that's able to combine representations from speech, images, and language.
+And if you had a general substrate that worked well in all tasks, then potentially we could get to the single multimodal model.
+As sometimes interpretability is like tea leaves, it's like reading tea leaves, so you want to be careful, but it was nice that the attention by itself can give you some interpretability.
+And we were able to kind of see how some of these attention heads or some of these attention mechanisms were actually able to learn long distance relationships.
+Some actually learned to be kind of early on, early on in the transformer, we saw this generally invariant pattern where some of the attention heads basically turned out to just look like convolutions, they were just, they were just pulling in local information.
+There's of course now being much more advanced work with some of the mechanistic interpretability stuff with grokking and the stuff that's happening in entropic, which is the way they're learning now that actually learning how to interpret these induction heads.
+So it's interesting, but we were able to see some anecdotal evidence of these heads actually performing very, very distinct and clear actions.
+Okay, so if there's any more questions, then I'll pause for a sec.
+Do you buy the research on like that it's the induction heads that are calling the in -context learning?
+Yeah, it's hard to tell because, so from what I haven't looked at the most recent work, but they've solved this issue of superposition, is that right?
+So now with having solved that they're able to, roughly, does that roughly mean that now they'll be able to assign distinguishing features to each one of these heads and be able to explain it?
+I, from what I understand, or the in -context learning part is, is that, is it that they have to show it or is it that they're saying that in -context learning happens because of induction heads?
+Oh, it's a letter.
+Yeah, it's not, it's not clear because, yeah, I think there's probably many, many kinds of, in -context learning is shown to work in so many different tasks that, and I actually haven't followed this quite well.
+I don't know, I don't know specifically, what are the induction heads typically?
+What kinds of, what kinds of properties do they have?
+Do you know what kinds of mechanisms they have?
+Okay, so yeah, so then, so since both of us don't know this really, really well, I won't be able to go very far here, but I'm not sure if they've gotten to the point where they're able to explain most of the in -context learning because of induction heads, from what I understand.
+They might have, yeah.
+Does anybody know about the induction heads?
+Okay, so now, over the years, so there's been a few, there've been many papers, but there've been a few changes that have been important.
+There've been a few changes that have stuck, and the new transformers typically have these improvements, right?
+And we'll go from bottom to top with some of them and see which ones have actually stuck, right?
+So we started with the first, one of the biggest problems with self -attention was that it was, that self -attention itself is permutation invariant, right?
+You need to, you need to, you need to, you need to do position information in order for it to learn some kind of temporal, temporal structure.
+And in the original transformer, we used these sinusoids and we had hoped that it would actually learn relative position encodings because you could decompose the position encoding of another, of another, you could decompose the position embedding of another position as some linear function of the previous one.
+And we had, and some, and another, and another factor, which is, which depends on the relative distance between the two, but that didn't happen.
+Learn position encodings in the original paper did as well.
+And so, so we were not quite able to get, we were not quite able to get these model relative distances using the sinusoids.
+So then a couple of, you know, a couple of important, and this is a very biased sample, but I think it generally covers a large category of these, it covers a large, large set of papers.
+There's roughly sort of three categories, right?
+So there's, and all of them are kind of now explicitly learning relative, explicitly learning relative embeddings.
+So, so there's, so, so in the, in the relative position transformer, we had an embedding for every pair of relative positions and using that, we basically then dot, we did a dot product of that embedding with the query that produced a logit that was, that modulated according to the relative distance.
+And we found this to be extremely, we found this to be extremely useful for translation, but I'll show also music.
+Another, another sort of, maybe a simplification.
+This is the Alibi paper where this is non -parametric, these are not learned, where instead of an embedding for every pair of positions, you actually have a single bias, right?
+So you, so you just add a single bias to the logit and you can either learn it, or you can, you can, or you can use a heuristic, which, which Alibi did.
+And one, one other advantage about relative position encodings is that they could potentially allow you to extrapolate to new, to longer sequence lengths, right, which you couldn't do with absolute position encodings.
+I'm curious about the room, about what the room thinks here, but I believe that the latest, the latest in partition relative position encodings, where this is, I believe it's called the row former, where they basically just, you know, rotate the embedding with every pair of dimensions a little bit.
+So, and the angle of rotation depends on, on your actual absolute distance, but what ends up happening is when you, when you do the attention operation, you end up getting relative, you end up basically getting an effect where you're modulating the logit based on relative distance.
+So now what's remarkable about this approach, what's, what's, what combines the best of both worlds, right?
+It actually, it's absolute position encodings, relative position encodings had a couple of challenges in that you have to maintain an extra logit for it, or an embedding for every pair.
+So there was a lot of memory, so it ended up increasing your memory.
+Here, these are actually absolute position encodings, but they give you, they ended up giving you the relative modulation in the, in the attention operation that you needed.
+And I believe the consensus is that this is the most successful, this is the most successful position encoding.
+Is that correct?
+Or are there, is that, are there others that are the people, is that the consensus?
+Okay.
+So, so it looks like, so I would say that the, the, the, the, these relative rotations are from, or the approach that's in the reformer is, is, is likely, is, is basically an actual new genuine improvement that is now going to stay with the transformer.
+And it has all the, it has all the great properties of what you would want.
+It, it has, it's an absolute position encoding that gives you relative effects, which is what we originally wanted.
+And, and, and one, and, and, and to emphasize, emphasize that we needed relative, like, being, emphasize two things.
+One, that modeling, like interesting temporal relationships, which is, which are really important in music, requires a good position representation.
+We actually found significant improvements in the music transformer.
+Is it, is it possible to play this?
+Okay.
+So, so, so here is a, here's a priming sequence.
+This is, this is work by, by work by Anna Huang, by the way.
+So this is in context learning in music, because you actually see this prompt and you ask the model to complete it.
+Okay.
+So now this is the vanilla transformer and you can already.
+So you can see that these, these were using, I mean, we tried both learned and sinusoids, and you can see that it starts all, all peppy and happy, but then just sort of languish into something really sad and, and, and confused.
+Right?
+So it's not able to capture these, because music has these interesting motifs where, well, there's, there's, there's motifs at different levels because, you know, there's some repetition locally, but there's a repetition across the entire piece as well.
+So now here, this is with the relative transformer.
+And this is with the first approach where we had relative embeddings, and we had to, we had to, we had to develop a, a compute efficient approach to actually with by using some matrix calisthenics to actually put the logits in the right place so you can read the papers.
+It's fun.
+So here's the same prime sequence and let's see the completion.
+Anna, who is the first author of this paper and also a musician, tells me that this actually captures a lot of structure in music.
+I, it sounds nicer than the previous one, but maybe depends on what people's tastes are, like maybe some avant garde jazz fan would like the second, would like the first piece, but, but, but, but the point here is that like the difference is pretty clear between not working and working.
+And I think people, it'd be fun to try this out with, with the new rotary position encodings.
+All right.
+Okay.
+So, so, so, so walking up, now that we have a, we have a good mechanism, a better mechanism than we originally had for modeling relative distances.
+And, and, and, and, and there's, there's, there's advancements on top of the rotary position encodings where by adjusting the base frequencies, you can, you can, when you, when you encounter longer sequences, you can just adjust the base frequencies and then the model's not going to, the model's not going to degrade.
+So that has good properties.
+Probably the, there's been, there've been several, several important contributions to, to the attention piece itself, which, which is, which is the primary workhorse here.
+It's the, it's the one that you can think of it as it's either it's, it's, it's, it's, there's induction heads that are learning how to copy orders.
+Or maybe all it's really doing is just routing information so that the giant feed forward layers can actually learn the important features.
+Right.
+But there's broadly two classes of problems.
+There are two classes of issues with the attention mechanism.
+One that was brought up today that's very evident is long context itself.
+Right.
+So, so the complexity, as we remember, was quadratic in the length of the sequence.
+And once your sequences get very, very long, once your sequences get very, very long, then it not only, I mean, there's, there's one problem is going to, it's going to become very, it's going to become computationally expensive, but it's also the logits that are going to become infeasible.
+Right.
+So there's sort of just generally like a few groups of papers.
+One is restricting attention windows.
+And we did this for images, images where we had local 1D and 2D attention for images.
+And the first one, we actually just rasterized the image and we had local 1D attention, which is very similar to the sliding window attention in the Mistral paper.
+And then in the, in the 2D case, we have a spatial 2D, spatial 2D attention.
+Right.
+Then there was these sparse versions where you actually, you had these specific patterns that over many layers, I mean, you can think about it as if you have these sparse matrices, how many of them do you have to multiply with each other until you get a really dense matrix?
+Right.
+So roughly this kind of turns out to be so here, you can get connectivity.
+Is that for me?
+No.
+Okay.
+You can get connectivity between distant pixels, distant pixels or distant notes in a musical tune or words pretty quickly.
+And then there's a second one, which is, which there hasn't been enough work and there's some challenges there, but it's these unstructured sparse attention approaches.
+And they're typically, they're essentially what they're, at a higher level, what they're really trying to do is imagine that I walked up to you and I told you that, hey, these are the bunches of tokens that just have very high interest similarity.
+Like they're likely to attend to each other.
+How quickly can I approximate it without actually having to do the whole computation?
+Right.
+So you have two approaches and in routing attention, you use vector quantization and in the LSH or the, I forget what, I think I forgot the name of the paper, but they used, in this paper, they used LSH.
+And in the routing transformer, most layers were actually local.
+The final layers, which typically are the ones that like to end up, that end up modeling these long distance relationships, were the ones that actually use this kind of content based unstructured sparse attention.
+And the results were generally better.
+And it's also interesting that maybe we can build models on very long sequences where most layers are fairly local and there are only a few layers that are actually doing these long distance attentions.
+Now, one of the bigger challenges there, actually, even though it ended up being, even though you end up nullifying a lot of the flops that you would do if you didn't pull attention, the problem always ends up being memory movement, always ends up being memory movement.
+And there's still more innovation to be done here also with like memory bandwidth improving, maybe some of these approaches become more feasible today than we wrote these papers.
+But this is an interesting approach, essentially trying to approximate the original attention matrix.
+Sorry, this is kind of a silly thing, but clarification, how is this unstructured sparse thinking going to seem very different from just convolutions that are sparse in the sense that you're losing a lot of the long distance or unrelated context from any arbitrary comparative elements?
+Right.
+So I would say that this is similar to the convolution there.
+If you did this perfectly, then what you did attend to, they had a very low attention rate.
+So you're essentially trying to guess as best as you can what would have attended to each other.
+And so you can use this as content based on structured sparsity.
+And there's probably more interesting work to be done there.
+Maybe instead of actually just doing a token at a time where you end up doing a lot of memory movement, you end up deciding which chunks want to self -attend to which chunks, so then you just move in pair of chunks at a time.
+Right.
+So I think there's some interesting directions here.
+And of course, and frankly, the ones that ended up staking are the simplest ones that are also there.
+And because structured sparsity is easy, you're able to optimize it easily on modern accelerators.
+So again, physics, you should make physics your friend.
+And so typically local attention or sliding into attention, we're still seeing it often appear and do well.
+These other sort of very, really wild, but more very expressive, unstructured sparse attention approaches typically haven't quite succeeded.
+There's of course linear attention variance that I don't think today are in any of the state of the art architectures.
+There were other approaches that, hey, instead of actually doing n squared, you do n squared d where you learn new k embeddings where you do nkd and then you do ndk.
+So you basically factor it, right?
+Just like an analog matrix factorization.
+Something that's one of the other approaches that's interesting that I would like myself to actually investigate is we are seeing in general using retrieval as a tool.
+So why don't you just pretend that your memories, your memories themselves were documents and use retrieval as a tool there.
+So the memorizing transformer basically essentially does a mix of local and it then retrieves from very, very long, very, very long memories.
+And they find that you don't need to train the model from scratch.
+All you need to do is adapt with this approach on some small amount of data and you're able to learn a good retrieval mechanism.
+I think it's quite interesting.
+It kind of, it still kind of comes in this like content based, content based decision of what I should attend to.
+But I like the fact that it just sort of makes retrieval a tool that you can use on either on your own memories or you could use it on documents.
+It's a nice general view of looking at things.
+Okay, so now the second piece, which you basically, you run into the issue that not all flops are equal.
+Right.
+So if you look at the memory hierarchy, right, a lot of your activations that are stored in the GPU HVM, which today in the H100 is about 80 gigabytes, but you know, the H100 is 80 gigabytes and the A100 is 40 gigabytes.
+Right.
+So there's a limited amount of high bandwidth memory.
+And so you have to first go from high bandwidth memory to the SRAM and then you have to go to the compute elements and then back.
+Right.
+So every single time and this is, I mean, it probably, you know, whenever, if interested, you look at roofline analysis, the roofline analysis actually gives you a gives you a nice picture to characterize for any device.
+You know what, where you would need, where your workload or operation needs to be so that you can actually effectively utilize the computer as much.
+You want to be compute bound, because ultimately, if you don't calculate representations, you don't calculate, you're not going to get any output.
+But if you spend a lot of time moving things around and spend less relative time calculating, then you're then you're then you're actually you're kind of wasting effort.
+Right.
+So one of the standard attention mechanism, right.
+One of the issues is that, okay, so imagine you have your queries, keys and values all in your memory, but then you need to then your standard approach would be you move it, you move it from HBM, you do the calculations, you compute the attention, you compute the logits, you move logits back into HBM, and then you can get softmax, right, the softmax back into HBM.
+And then you basically load the probabilities and the values then to then finally compute the outputs, right.
+So the arithmetic intensity, or the arithmetic intensity or operational intensity, which is the amount of flops that you do provide on attention, even though it's less flops than say, a one by one convolution, it has more, it is lower, because it typically has more memory movement.
+Whereas one by one convolutions have less memory movement, you just move the weights, move the activations, you do the calculations, and you bring them back, right.
+And same goes for convolutions too.
+Convolutions have a very high arithmetic intensity, it's not that you just want the highest arithmetic intensity or operational intensity operations, because you still want to have useful parameters, right.
+It's a trade off.
+So there's been a bunch of improvements that will stick, I mean, they're almost certain likely to stay, that try to combat this issue, both in training time, because your logits can get really big, but also inference time, or your KV, when you're doing inference, then you have a single query, but your KV hash, right, you have to maintain your keys and values that can grow quite a bit, so you have to move that around.
+And so the first step is, hey, let's just decrease the activation memory.
+So the multi query approach, whereas basically, in a multiple, so you reduce, you have multiple queries, but just, you reduce the number of read heads to just one, so you just one key and one value, that does reduce your expressivity.
+So grouped query, which is now a simple balance that basically says, hey, let's not take the extreme of having all this temporary activation memory, let's actually group it to a different query.
+So a bunch of queries will attend to the same keys and values.
+And then what what ends up happening is, another point to note here is that all of this is relative, because most of the work in these very, very, oh, but I've third approach, actually, that I should say, of not worrying about your attention is just to make the model really big.
+Then you just get about your three -fold computations and your attention computations, just like a small slice of that, so you don't worry about it.
+Right?
+So typically, these larger models, even though grouped query attention, it has more activation memory than multi query, when with these large models, it's still not a much larger, it's not a much larger, it's still a smaller proportion of what you're doing in the three -fold, so you're certifying, right?
+So I guess three things like ignore, make it really big.
+Second is, I guess, you believe in the prolonged context, you can do some of these approaches that we talked about, but then you also have these system optimizations, which are pretty cool.
+So the softmax has an interesting property that you can compute it in an online fashion, you can compute it incrementally.
+So if you've got a bunch of logits, you're kind of streaming them, if you've got a partial softmax, and a new logit comes in, you can update it in an online fashion.
+Right?
+So what does that mean?
+That means that now, you never needed to write logits or the keys into the HVM.
+So you save a lot, right?
+If there's an extremely long sequences, you end up writing a lot.
+So you save on that.
+And both these approaches end up in one case, the first paper was on TPUs that introduced this, this introduces property or took advantage of this property is on the property to be able to give softmax in an online fashion.
+And the second paper, which is now flash attention today, there have been many advancements, they actually had some systems level optimization where they now you can actually have very, very long sequences on GPUs, the optimizations for GPUs, by basically not moving the logits back into HVM using this online, using this property and also writing the right columns that use the S -RAM and everything, use the GPU.
+Any with any questions?
+What's the time?
+So we are basically 20 minutes, myself finishing time.
+So I just covered these two, you know, there's many, many, there's, I guess, there's, there's other important improvements.
+You know, I tend to the pre and post versus post layer norm, there's been some, there's been some changes of the feedforward layer themselves, like you can, you can, you can stare at the feedforward layers, you can stare at anything long enough, everything becomes attention.
+But it's true in the feedforward case that if you look at it, you can sort of think about them as it looks like attention.
+And there was a paper that sort of like, you turn that into a bit of like, turn that into memories.
+It was originally by Facebook, I actually forget what it was, but it didn't, it like the feedforward layers just stayed.
+I mean, we typically haven't seen a lot of improvements on them.
+There have been some, I, there have been some efforts on higher order attention right now, attention, if you think about it as a third order interaction, you have queries, keys and values, but, and right now, but you could imagine actually having four order interactions where you're actually computing logits of pairs of things against all pairs of things, right?
+So these are not higher order interactions where now you can have complicated, like this geometries that you actually include in your, include in your attention computation.
+And maybe it's important for say biology or some, biology, but it's not been explored much.
+What has actually worked and is likely to not stay is some approaches on password decoding, not quite the original, less or non autoregressive aspirations that we had, but these more speculative decoding where the heuristic there is pretty simple.
+Yeah, you score, if you want, you instead of generating from a heavy model, generate from a really light model that captures the diversity and then score with a heavy model.
+So then you, then you re -rank the list and that ends up working quite well.
+And most, most, most state of the art, most production deployments likely use speculative decoding.
+Okay.
+So now switching gears, I guess, you know, we started, we started, we started this, we started this, we started, we started by, you know, coding the Dartmouth conference where they wanted to build a single machine.
+And the question now is with large language models that are now eating up most of the internet, are we getting, are we quite getting there?
+And we are seeing some remarkable, we're finally seeing self -supervised learning work at a scale that work at an unprecedented scale.
+Where, you know, now by, by, by like digesting carefully curated and colossal amounts of texts with very, very large models, you're able to, then they're able to perform presumably are still waiting to be confirmed, like tasks that are, tasks that are, that are, or they're able to actually perform at least a large, a broad variety of tasks by just specifying them in the prompt.
+And, and, and it's now, it's almost like now you have, you know, you have a new computer and for people who are really excited about the future of agents, now they can program thousands of agents with the same computer.
+Oh, maybe you, now they have, now they have, now they have agents that they can, several agents that they can program with the same computer then, that then coordinate to solve problems.
+So we're getting there much closer to the single model, not quite being able to specify all the rules of intelligence, but at least learning all the rules from data.
+We're very close to, we're very, we're much closer than we were before.
+Now, this doesn't include all the important things, all the important specialization that has to happen after like our, the check or the alignment that you have to do to make the model more steerable.
+Right.
+But it's, and, and, and, and, and as it stands today, the scaling laws of the transformer exhibits are better than any other existing model.
+Right.
+There's an interesting question of, you know, which can we build a better model?
+And there are efforts, I guess, from the Stanford, from Chris Ray's lab, there have been a couple of efforts.
+There's been some revival of RNNs, but I think the only, the only, the only thing I'll say that is that the attention operation itself, this operation of actually moving information around or routing information based on content is, is very, very useful.
+And, and it's maybe not a surprise that this general sort of spatial mixing of sampling, down sampling architecture has kind of stayed both in provision, computer vision and language now with the transformer.
+So there are some invariants that are likely to stay, but I do think that maybe that, and there is certainly much more room there to improve.
+I mean, not just in the architecture, but on data itself, like probably 2x improvements on data.
+But I wouldn't say that there's, there aren't architecture in the future that will get better scaling laws.
+They might, but there are properties about the transformer, such as self attention and its general structuring that is likely, that likely we're going to see in future architectures to come.
+Also, it's hard to really think of a modern, like, if somebody really, really wanted to study large scale modern transformers, you'd have to study, like, you know, all reducers, InfiniBand, Rocky and what are, like, well, whether you get congestion, they have very, very large clusters.
+So it's interesting.
+So the computer is, the computer, the transformer is now, in some sense, a data center because it's not split up, these large transformers over tens of thousands of GPUs.
+So, and so if you, so now you actually have to really focus on several parts, the infrastructure and the model itself.
+But what's really interesting, I think, is, you know, I was just thinking of the smallest model that has exhibited emergent phenomena.
+Well, so we certainly know that GPT -4, which is likely, I don't know if you're allowed to say, some big, like, trillion parameters.
+Yeah, I think you're allowed to say, yeah, that's a trillion parameter size model, that's what everybody says, size model.
+And then you have Brocking, which is a two layer transformer that has this weird emergent behavior that when you just keep training it on just on some amount of data, suddenly just exhibits a spaceship, right?
+So we're lucky.
+There'd be like really, there's strength, there's weirdness everywhere.
+There's weirdness in small models and large models.
+And maybe we can learn something about large models by studying these small models, one would hope.
+But it's funny, there's still unexplained phenomena in very, very large models and very, very small models.
+But large transformers are no more just, you know, like a whole lab.
+There's just, I mean, it still could still be, but it's, you have to, there's so many, there's so much that you have to keep in your stack in order to really optimize this entire, this model.
+Of course, some of the very exciting directions are LLMs using tools.
+Yeah, that's, so now, now the benefits of, now language models or transformers are actually starting to use external entities, so they're connecting with the rest of the world.
+And I guess that's a good, that's a good pitch for, it makes a lot of sense to actually build products today, because it's through interactions with, like, if you want to get to the next tranche of capabilities, where will they come from?
+And, and likely with a lot of usage, you will learn much more about how to guide these models and how to train them without, then in vacuum.
+Now, you can definitely do very, very important work still.
+And by even with a smaller model, or even without building a product, without building a product, because there's so many important unsolved problems.
+And maybe you shouldn't even work on the transformer, because it's like Burning Man right now, everybody's going to the same party.
+But, but, but I think that you will, you will be able to build new capabilities once these, once with this human, human -machine collaboration.
+Of course, you know, teaching models, or models being able to express what they don't know.
+How do you learn new skills at inference time, important for, there's some interesting work, I think, on Minecraft that showed some evidence of this is also important for agents.
+And another great property that some of these diffusion models have is the more compute you spend, the potentially better the quality of the image gets.
+But we don't exactly quite have that for language.
+And what does that mean?
+Like, so today, the best model, the models that can reason, that are the most proficient reasoning and planning are also the largest ones.
+Can be, can be separated out.
+Can we have smaller models that do some adaptive thinking and are able to match the capabilities of potentially larger models and reasoning and planning?
+And maybe the answer is going to come by connecting to external planners and planners, or maybe with better representations of data, you can actually reason better on it.
+Also, this is again, a more systems, systems piece, but it's fascinating how low you can actually get on your, how low you can, how few bits you can actually use and still get something useful out.
+We already went from, the original transformer was trained on 32 -bit precision, then we went to B -float 16, and now there's good signs that int8 and fp8 would also work.
+And I think this is useful work to be done that again, going back to the same, you know, this argument about if you're actually, if you're vector, if you're using fewer bits to represent a number, you're actually transmitting fewer bits from HBM.
+So actually you can, you can get faster.
+You utilize the, you can utilize your, your matrix multipliers much more effectively.
+That was it.
+So it was many topics, but hopefully covered something fun.
+Thank you.
+Can you talk about what you're working on now?
+Yeah.
+Yeah.
+So I'm a co -founder and startup with my transform co -author, Niki.
+And we're working on, we're working on building, building models that will ultimately automate workflows.
+And we're starting with data.
+So it's very puzzling what happens in a company.
+Companies are just basically just masses of dark knowledge, right?
+And there's very few people that have both the technical privilege and the understanding to ask questions like typically analysts, but the less you understand them, the less effective your company can be.
+So how can you eventually help anyone become an effective analyst in some sense?
+Right.
+So help them ask the right question, help them figure out eventually the whys, which then requires some kind of counterfactual reasoning that's fairly complicated.
+Start with data since it's so important and companies are essentially drowning in it and then be spread out from there and then try to automate other workflows in the end price.
+But we believe that some of the early signs that we're seeing and what are in our position is that I believe that this is going to require a full stack approach.
+So not just building the model because you can then control what feedback you get.
+And so if you have a gap in the model, you aspire to get that feedback so that you can improve tomorrow.
+That's what we're doing.
+Please talk to us after we've done it.
+I'm surprised to hear that you're fairly bold about tools in the end, like how you're trying to support third party things.
+We talked about in the beginning that your motivation was transformers enabled us to get rid of pipelines, but I feel like the rule was to get pipelines again.
+So I'm surprised that you can talk about that and where you think that's going to go.
+Right.
+Right.
+So until we get to the point where it's like, you know, we're turtles all the way down, it's like transformers all the way down.
+No, I think that tool just allows you to...
+So it's kind of like how do you interface with a machine that can think, right?
+Yeah, you have to build some kind of interface and if you build a useful functionality, you want the machine to be able to take your functionality and do generally useful things with it.
+Right.
+And I think that using tools is just a way of leveraging things that people have built and software out there.
+Certain tools will probably get absorbed in the model.
+Right.
+Some others won't.
+And that still gives us the ability to like, yeah, it still gives us the ability to like...
+And certain things that transformers shouldn't even do.
+Sorry.
+I mean, like you don't want to spend a billion flops per position and calculate two numbers.
+You don't want to spend more flops to do an operation that requires like one billionth of the flops.
+Right.
+So there's certain things that the model should not do.
+It should use external tools.
+And there's certain things that the certain kind of thinking that the model should do.
+So even from a capability perspective, there's an important question of what all capabilities should be in this neural network.
+Right.
+And but then also being able to utilize the work that others have done, software that other people have built.
+It talks more about why the original approach of decoding parallel and integratively refining it.
+Yeah.
+Why does that then work?
+Yeah.
+So sometimes if you know exactly why things work, maybe you can make it work.
+But it ended up being so you're able to do silly things like randomly sort, which means that if somebody walks up to you with the sequence and you can, I mean, you can break two modes.
+Like you can say ascending or descending.
+So how do I say this?
+So typically when you decode, right, imagine that you when you give a prompt, you have many possible completions.
+And each time you make a choice, you narrow that space.
+And each time another choice, you narrow that space.
+So and you have a very and you've learned to narrow the set of all possible in some sense paths in a way the model doesn't have to decide what's the order in which you have to do it.
+When you're kind of doing this less or non -order aggressive generation, you have to do both.
+Right.
+And doing learning both simultaneously is hard.
+I mean, but eventually I think that if for a particular, I think this is probably true.
+If an oracle walked up to me and said, this is the order in which all these sentences should be generated.
+First you should generate these three words.
+Then you should generate the other two.
+Then the other two.
+If somebody walked up to me and gave you this oracle ordering for all of human language, I think we would have a much better chance and we could actually get this less non -order aggressive generation of fixed working.
+So one was, so one thing was basically the ordering itself.
+And I think it kind of has to do that because the ordering helps you then lock down the modes.
+It matters down what you're going to generate next.
+So ultimately, I think it does boil down to what's the right non -order aggressive ordering.
+And that could be either you're still generating one word at a time or not order aggressive or you're generating a few and then based on that you're generating the other few.
+So the words that you can generate all at once should be conditionally independent of each other.
+Right.
+Like what you generated so far should have completely explained them.
+And then what you generate after should again be conditionally independent.
+So how do you learn these conditional independence?
+Yeah.
+And if somebody walked up to me and gave them to me, I think we probably learned them.
+Yeah.
+Cristian.
+It's more and more about elements in general.
+And recently I think I watched you both talk about the language element, people were learning these things and all the critical elements.
+I think more of his thinking is that only scaling these models up doesn't help them to actually learn how the real world actually works.
+Don't we have a good idea of the truth and real world analysis?
+Yeah.
+Do you agree with someone on this?
+So, yeah, I think it's interesting.
+You can't learn a word model with just language, right?
+So, I mean, some of these models are not exactly being learned every year.
+You're doing RLHS, you're getting some feedback, which means there's some you're applying some, they are modifying themselves to some preference.
+So it's not just a pure language model, but it's interesting.
+So you've seen some of the work where robotics is now potentially starting to flourish because they're able to use these large models as planners.
+And so I think that it's surprising how much of the world, how much information about the world would they carry in this.
+If I understand, is that right, that the Seikan were basically used as a language model now as a planner?
+Yeah.
+And that's the standard perception and the classical passage of even solving the robotics.
+So that's, I mean, that's, no, Jan is probably still right, but the usefulness of it is evident in something that needs world knowledge, right?
+So I think you can do a lot with what you have.
+I mean, probably, yeah, I mean, we still haven't quite extracted all the usefulness out of these models and what I'll say.
+And it might be right, simultaneously, but there's still a lot more to be gained.
+So I'm similar to this question and you're also talking about like emerging, right?
+I'm just curious to know what your thoughts are more on generalizability and emergence.
+I know there was a paper from BeatMind about the science, yeah, I think, yeah, they can't really generalize outside of what they've been trained on.
+Especially because these large models now that they're just trained on everything, is there truly anything left that's out of distribution that you really benchmark it on?
+So I have been caught saying that if I had all my tests in my training, I'd make a billion dollars.
+Yeah, so I don't have a problem with it.
+So but I still think so.
+OK, so correct me if I'm wrong, but the general argument is that these models have learned such a vast set of distributions and phenomena that typically when you interrogate them, they're often very cleverly blending or bringing information from what they've learned, right?
+It might, yes, and then they have these algorithmic tasks where the models fail to generalize, right?
+So I'll focus on the former.
+I think that that's an incredibly useful property.
+It might be that, so I think maybe the feeling is that we actually don't quite understand how much we could, how much is even represented in text.
+And second, how far we could go if we were able to blend information from different, like, certainly being able to write about the Stanford, this lecture in the rhyme meter and words of Chaucer is not possible because nobody did it, right?
+But I think that you could do it, right?
+Now, is that blending information from what you already have?
+If so, that's that's a that means you can that's that's an incredible that's an incredible skill, right?
+Yeah, I haven't read it.
+It's very recent, but I believe the work.
+I think you can show that in these models, but I think there's a surprising amount of new, seemingly new things you could do by just blending information from what you already learned.
+And yeah, largely it has to do with there's so much of it.
+So the other question.
+I had two questions ago.
+I think I had an ordering in mind and then it came back.
+Sorry, but give me a second.
+I was wondering if you might have insights into connecting different agents, transformers or whatnot.
+Neuron is a great transformer is essentially like a great connection of neurons in a specific way.
+And it's awesome.
+So you figured out the best way to connect them.
+So it is no the neurons, all the neurons you talk about that doing some how to use in the brain.
+No, the neurons in the transformer, right?
+Like the transformer is the way you connect different pieces together.
+And then when you connect them together, it works.
+I was wondering if you have some insights in the building system that can I can perform the best together?
+Yeah.
+This is not going to like this.
+I like to make this joke, but the best agents are actually the neurons because they can communicate with each other.
+They can update themselves really, really well.
+But what the other agents are doing.
+What is the fundamental problem by making what is the fundamental issue in making a bunch of You're trying to understand what are the fundamental problems in trying to make a bunch of systems work together.
+That's what you're asking.
+What is goal decomposition?
+Right.
+And one is the second big one is coordination and third one is verification.
+Like if you solved a successful decomposition of the goals based on what your estimate of the scale of these agents are, if you were able to find what they've done and if you were able to coordinate, then I think you could make a lot of progress.
+Right.
+So I didn't answer your question.
+I don't know in general how much progress you've made in these three areas.
+But does somebody have any input here?
+It has a parallel track.
+And you have something that's not even a parallel track.
+And you want to verify that each track is actually doing the job.
+This all becomes like a processor.
+There's a lot of character info and you want to make sure you know what character you're going to use and verify everything and then make it bigger.
+You need to see how this is almost like a computer architecture.
+It's like micro -tracking everything and making the decision over time.
+And it's all kind of like, are you going to ask how you like the last of the times?
+But it's still like writing.
+No one knows how to do the task.
+Yeah, right.
+But like, it seems like the problems are probably, maybe to some degree, necessary as far.
+Look online.
+This is a very interesting question.
+So, can I ask one question?
+So, the human brain is very modular.
+So, it's modularity like an emergency phenomena.
+You need some special takes to read that out.
+Yeah, and by modularity here, you mean that, is it modularity in that they have this, this region has this responsibility?
+Or even is the composition different, the construction, the construction different?
+What do you mean by that?
+Because you could have both, you could argue that there's no, the responsibility is diffused across the model.
+When it's just an expert's cost, it tries to go in the opposite direction, which I should have probably mentioned.
+That's another really exciting direction, which certainly has happened to people and is going to stick.
+I totally missed it.
+That kind of tries to get the specialization, right?
+So, maybe that is some kind of modularity, right?
+Learn modularity.
+The rest of responsibility for performing the task is likely distributed.
+But if now you're going to these subsystems themselves with different composition, then you kind of get back to like, and I know that this was a goal with the pathways project at Google, where you wanted to have these really modular systems communicate with each other.
+And I think there's, it's just taking so long to get creative.
+In fact, sometimes I think that rigid building architectures are so great in this sense.
+And I feel like if you can learn with great descent, it's very useful.
+Maybe it's actually possible to make these modular systems work.
+We have some of it through experts, and I'd imagine some of these problems that we discussed before.
+Does that make sense?
+Sorry, circling back to now, whatever, seven questions ago, you mentioned that the problem with decoding all at once was one of the things that decoded generally has this assumption that the outputs are potentially independent, but aren't they?
+In the sense that if you have a latent space, if you're given the latent space as your prior, then your posterior outputs should be conditionally independent.
+So, great point.
+And where do you get the latent space from?
+Well, from the encoder or whatever in the beginning.
+Right, but there might be like quite a few ways to translate something, right?
+Yeah, there's a multiple.
+So if there's only one mode, then yeah, it's from you, right?
+But if there's like multiple ways of, well, actually there's two things.
+How much does the latent space actually carry by?
+That was an important thing to ask, right?
+How much does it actually carry?
+Because it's not just one latent vector and you're transmitting every, you're doing attention again and again.
+But we took this approach where we did precisely this.
+We autoregressively generated tokens in a new vocabulary using vector quantization.
+So the conditional dependence was modeled in a latent space, very discretized using vector quantization.
+And then based on that, we generated everything conditionally independent.
+And that did work.
+But again, so that did work in translation.
+The issue, there were some funky issues there where the latent, the latent sequence of latent vectors were only effective, were not effective if you could learn directly on the original data.
+You have to do something like distillation because distillation itself throws away potentially some of the modes.
+So generally the lower entropy data was, we had to train on it.
+The second piece was for practical systems, you have to make the whole thing really, really fast.
+This was a good research exercise, but ultimately it didn't have the right practical detail.
+Because practically the decoding practically with what we have right now didn't work well.
+Hands to arms, I think.
+Yeah, exactly.
+Yeah.
+But you're right.
+I think if you can generate sufficiently, if you can generate good sufficient latency, then yes, you're right.
+We can assume that that makes everything conditionally independent.
+And we managed to do that a bit, but it wasn't quite good.
+I guess this is the last question.
+Oh, wow.
+That's too personal.
+Very personal.
+And I have friends there, they're all really great.
+They're doing terrible things.
+I think that there's, we'll be surprised how much there is to do.
+And if so, first the motivation, right?
+There is an entire new, there's an entire new bucket of, or like a neutron shift capabilities that you will get with human -to -human interactions.
+You can make a product, people use it, they give you feedback, models get smarter.
+And this closed loop system can really bring, can really advance models.
+And then bring value, right?
+That's one.
+Second, I think it's helpful to have some deep learning benefit so much from a diversity of ideas and people producing, people, people pursuing important directions.
+And I would say the same about, I would say the same about building company products as well, or building, you know, building companies that are building new kinds of products with these models.
+So I would say that we have, there's so much surface area that we could do something incredible.
+So that's the second piece.
+Third, you know, yeah, or maybe that's the, that's the more personal direction I would be wrong.
+Thank you.

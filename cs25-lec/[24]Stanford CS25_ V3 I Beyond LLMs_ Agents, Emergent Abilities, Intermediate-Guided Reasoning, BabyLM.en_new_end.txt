@@ -1,0 +1,627 @@
+So today we're going to give an instructor -led lecture talking about some of the key topics in transformers and LLMs these days.
+In particular, Div will be talking about agents and I'll be discussing emergent abilities, intermediate guided reasoning, as well as baby LM.
+So let me actually go to my part because Div is not here yet.
+So I'm sure many of you have read this paper, Emergent Abilities of Large Language Models from 2022.
+So I'll briefly go through some of them.
+So basically an ability is emergent if it is present and large but not smaller models and it would not have been directly predicted by extrapolating performance from smaller models.
+So you can think of performance, it's basically near random until a certain threshold called a critical threshold and then improves very heavily.
+This is known as a phase transition.
+And again, it would not have been extrapolated or predicted if you were to extend the curve of the performance of smaller models.
+It's more of a jump, which we'll see later.
+So here's an example of few -shot prompting for many different tasks.
+For example, modular arithmetic, unscrambling words, different QA tasks and so forth.
+And you'll see that performance kind of jumps very heavily up until a certain point.
+I believe the x -axis here is the number of train flops, which corresponds to basically model scale.
+So you'll see in many cases around 10 to the 22 or 10 to the 23 training flops, there's a massive exponential jump or increase in terms of model performance on these tasks, which was not present on smaller scales.
+So it's quite unpredictable.
+And here are some examples of this occurring using augmented prompting strategies.
+So I'll be talking a bit later about chain of thought.
+But basically these strategies improve the ability of getting behavior from models on different tasks.
+So you see, for example, with chain of thought reasoning, that's an emergent behavior that happens again around 10 to the 22 training flops.
+And without it, model performance on GSM 8K, which is a mathematics benchmark, it doesn't really improve heavily, but chain of thought kind of leads to that emergent behavior or sudden increase.
+in performance.
+And here's just the table from the paper, which has a bigger list of emergent abilities of LLMs as well as their scale at which they occur.
+So I recommend that you check out the paper to learn a bit more.
+So one thing researchers have been wondering is why does this emergence occur exactly?
+And even now there's few explanations for why that happens.
+And the authors also found that the evaluation metrics used to measure these abilities may not fully explain why they emerge.
+And it suggests some alternative evaluation metrics, which I encourage you to read more in the paper.
+So other than scaling up to encourage these emergent abilities, which could endow even larger LLMs with further new emergent abilities, so what else can be done?
+Well, things like investigating new architectures, higher quality data, which is very important for performance on all tasks, improved training and improved training procedures could enable emergent abilities to occur, especially on smaller models, which is a current growing area of research, which I'll also talk about a bit more later.
+Other abilities include potentially improving the few shot prompting abilities of LLMs, theoretical and interpretability research, again to try to understand why emergent abilities is a thing and how we can maybe leverage that further, as well as maybe some computational linguistics work.
+So with these large models and emergent abilities, there's also risks, right?
+There's potential societal risks, for example truthfulness, bias and toxicity risks.
+As emergent abilities incentivizes further scaling up language models, for example up to GPT -4 size or further.
+However, this may lead to bias increasing as well as toxicity and the memorization of training data.
+That's one thing that these larger models are more potent at.
+And there's potential risks in future language models that have also not been discovered yet.
+So it's important that we approach this in a safe manner as well.
+And of course emergent abilities and larger models have also led to sociological changes, changes in the community's views and use of these models.
+Most importantly, it's led to the development of general purpose models, which perform on a wide range of tasks, not just particular tasks it was trained for.
+For example, when you think of chat GPT, GPT 3 .5 as well as GPT -4, there are more general purpose models which work well across the board and can then be further adapted to different use cases, mainly through in -context prompting and so forth.
+This has also led to new applications of language models outside of NLP.
+For example, they're being used a lot now for text image generation.
+The encoder parts of those text image models are basically transformer models or large language models as well as things like robotics and so forth.
+So you'll know that earlier this quarter Jim Fan gave a talk about how they're using GPT -4 and so forth in Minecraft and for robotics work as well as long -range horizon tasks for robotics.
+So basically in general it's led to a shift in the NLP community towards a general purpose rather than task specific models.
+And as I kind of stated earlier some directions for future work include model scaling, further model scaling.
+Although I believe that we will soon probably be reaching a limit or point of diminishing returns with just more model scale.
+Improved model architectures and training methods, data scaling.
+So I also believe that data quality is of high importance, possibly even more important than the model scale and the model itself.
+Better techniques for and understanding of prompting as well as exploring and enabling performance on frontier tasks that current models are not able to perform well on.
+So GPT -4 kind of pushed the limit of this.
+It's able to perform well on many more tasks, but studies have shown that it still suffers from even some more basic sort of reasoning, analogical and common sense reasoning.
+So I just had some questions here.
+I'm not sure how much time we have to address but so for the first one, like I said emergent abilities I think will arise to a certain point, but there will be a limit or point of diminishing returns.
+Model scale as well as data scale rises because I believe at some point there will be overfitting and there's only so much you can learn from all data on the web.
+So I believe that more creative approaches will be necessary after a certain point.
+Which kind of also addresses the second question.
+Right, so I will move on.
+Anybody has any questions also feel free to So this is this thing I called intermediate guided reasoning.
+So I don't think this is actually a term.
+It's typically called chain of thought reasoning, but it's not just chains now being used.
+So I wanted to give it a more broad title.
+So I called it intermediate guided reasoning.
+So this was inspired by this work also by my friend Jason who was at Google now at OpenAI called chain of thought reasoning or COT.
+This is basically a series of intermediate reasoning steps which has been shown to improve LLM performance, especially on more complex reasoning tasks.
+It's inspired by the human thought process, which is to decompose many problems into multi -step problems.
+For example, when you answer an exam, when you're solving math questions on an exam, you don't just go to the final answer.
+You kind of write out your steps.
+Even when you're just thinking through things, you kind of break it down into a piecewise or step -by -step fashion which allows you to typically arrive at a more accurate final answer and more easily arrive at the final answer in the first place.
+Another advantage is this provides an interpretable window into the behavior of the model.
+You can see exactly how it arrived in an answer and if it did so incorrectly where in its reasoning path that it kind of goes wrong or starts going down an incorrect path of reasoning basically.
+And it basically exploits the fact that deep down in the model's weights, it knows more about the problem than simply prompting it to get a response.
+So here's an example where on the left side, you can see the standard prompting.
+You ask it a math question and it just simply gives you an answer.
+Whereas on the right, you actually break it down step by step.
+You kind of get it to show its steps to solve the mathematical word problem step by step.
+And you'll see here that it actually gets the right answer unlike standard prompting.
+So there's many different ways we can potentially improve chain of thought reasoning.
+In particular, it's also an emergent behavior that results in performance gains for larger language models.
+But still, even in larger models, there's still a non -negligible fraction of errors.
+These come from calculator errors, symbol mapping errors, one missing step errors as well as bigger errors due to larger semantic understanding issues and generally incoherent chains of thought.
+And we can potentially investigate methods to address these.
+So as I said, chain of thought mainly works for huge models of approximately 100 billion parameters or more.
+And there's three potential reasons they do not work very well for smaller models.
+And that smaller models are fundamentally more limited and incapable.
+They fail at even relatively easier symbol mapping tasks as well as arithmetic tasks.
+They inherently are able to do math less effectively.
+And they often have logical loopholes and just never arrive at a final answer.
+For example, it goes on and on.
+It's like an infinite loop of logic that never actually converges anywhere.
+So if we're able to potentially improve chain of thought for smaller models, this could provide significant value to the research community.
+Another thing is to potentially generalize it.
+Right now chain of thought has a more rigid definition and format.
+It's very step by step, very concrete and defined.
+As a result, its advantages are for particular domains and types of questions.
+For example, the task usually must be challenging and require multi -step reasoning.
+And it typically works better for things like arithmetic and not so much for things like response generation, QA and so forth.
+And furthermore, it works better for problems or tasks that have a relatively flat scaling curve.
+Whereas when you think of humans, we think through different types of problems in multiple different ways.
+Our quote unquote scratch path that we used to think about and arrive at a final answer for a problem, it's more flexible and open to different reasoning structures compared to such a rigid step by step format.
+So hence we can maybe potentially generalize chain of thought to be more flexible and work for more types of problems.
+So now I'll briefly discuss some alternative or extension works to chain of thought.
+One is called tree of thought.
+This basically is more like a tree which considers multiple different reasoning paths.
+It also has the ability to look ahead and sort of backtrack and then go on other areas or other branches of the tree as necessary.
+So this leads to more flexibility and it's shown to improve performance on different tasks, including arithmetic tasks.
+There's also this work by my friend called Salsocratic questioning.
+It's sort of a divide and conquer fashion algorithm, simulating the recursive thinking process of humans.
+So it uses a large scale language model to kind of propose subproblems given a more complicated original problem.
+And just like tree of thought, it also has recursive backtracking and so forth.
+And the purpose is to answer all the subproblems and kind of go in an upwards fashion to arrive at a final answer to the original problem.
+There's also this line of work which kind of actually uses code as well as programs to help arrive at a final answer.
+For example, programming aided language models.
+It generates intermediate reasoning steps in the form of code, which is then offloaded to a runtime such as a Python interpreter.
+And the point here is to decompose the natural language problem into runnable steps.
+So hence the amount of work for the large language model is lower.
+Its purpose now is simply to learn how to decompose the natural language problem into those runnable steps.
+And these steps themselves are then fed to, for example, a Python interpreter in order to solve them.
+And programmer thoughts here, POT, is very similar to this in that it kind of breaks it down into step by step of code instead of natural language, which is then executed by a different, an actual code interpreter or program.
+So this again works well for many sort of tasks that, for example, things like arithmetic, as you see that those are kind of both of the examples.
+For both of these papers.
+And just like what I said earlier, these also do not work very well for things like response generation, open ended question answering and so forth.
+And there's other work, for example, faith and fate.
+This actually breaks down problems into sub steps in the form of computation graphs, which they show also works well for things like arithmetic.
+So you see that there's a trend here of this sort of intermediate guided reasoning working very well for mathematical as well as logical problems, but not so much for other things.
+So again, I encourage you guys to maybe check out the original papers if you want to learn more.
+There's a lot of interesting work in this area these days.
+And I'll also be posting these slides as well as sending them.
+We'll probably post them on the website as well as Discord, but I'll also send them through an email later.
+So very lastly, I want to touch upon this thing called the Baby LLM Challenge or Baby Language Model.
+So like I said earlier, I think at some point scale will reach a point of diminishing returns, as well as the fact that further scale comes with many challenges.
+For example, it takes a long time and costs a lot of money to train these big models, and they cannot really be used by individuals who are not at huge companies with hundreds or thousands of GPUs and millions of dollars.
+So there's this challenge called Baby LLM or Baby Language Model, which is attempting to train language models, particularly smaller ones, on the same amount of linguistic data available to a child.
+So data sets have grown by orders of magnitude as well as, of course, model size.
+For example, Chinchilla sees approximately 1 .4 trillion words during training.
+This is around 10 ,000 words for every one word that a 13 -year -old child on average has heard as they grow up or develop.
+So the purpose here is, you know, can we close this gap?
+Can we train smaller models on lower amounts of data while hopefully still attempting to get the performance of these much larger models?
+So basically, we're trying to focus on optimizing pre -training given data limitations inspired by human development.
+And this will also ensure that research is possible for more individuals as well as labs and potentially possible on a university budget, as it seems now that a lot of research is kind of restricted to large companies, which I said have a lot of resources as well as money.
+So again, why Baby LLM?
+Well, it can really improve the efficiency of training as well as using larger language models.
+It can potentially open up new doors and potential use cases.
+It can lead to improved interpretability as well as alignment.
+Smaller models would be easier to control, align, as well as interpret what exactly is going on compared to incredibly large LLMs, which are basically huge black boxes.
+This will again potentially lead to enhanced open source availability.
+For example, large language models runnable on consumer PCs as well as by smaller labs and companies.
+The techniques discovered here can also possibly be applied to larger scales.
+And further, this may lead to a greater understanding of the cognitive models of humans and how exactly we are able to learn language much more efficiently than these large language models.
+So there may be a flow of knowledge from cognitive science and psychology to NLP and machine learning, but also in the other direction.
+So briefly, the Baby LLM training data that the authors of this challenge provide, it's a developmentally inspired pre -training dataset, which has under 100 million words because children are exposed to approximately 2 to 7 million words per year as they grow up.
+Up to the age of 13, that's approximately 90 million words, so they round up to 100.
+It's mostly transcribed speech, and their motivation there is that most of the input to children is spoken, and thus their dataset focuses on transcribed speech.
+It's also mixed domain because children are typically exposed to a variety of language or speech from different domains.
+So it has child directed speech, open subtitles, which are subtitles of movies, TV shows, and so forth.
+Simple children's books, which contain stories that children would likely hear as they're growing up, but it also has some Wikipedia as well as simple Wikipedia.
+And here are just some examples of child directed speech, children's stories, Wikipedia, and so forth.
+So that's it for my portion of the presentation, and I'll hand it off to Div who will talk a bit about AI agents.
+Yeah, so everyone must have seen there's this new trend where everything is transitioning to more agents, that's the new hot trend.
+And we're seeing this, people are going more from language models to now building AI agents.
+And then what's the biggest difference?
+Like why agents are not just like a, why does not train like a big, large language model?
+And I was sort of like going to like, why, what's the difference?
+And then also discuss a bunch of things such as like, how can you use agents for writing actions?
+How can you, what are some commercial architectures?
+How can you sort of like build human like agents?
+How can you use it for computer interactions?
+How do you solve problems from long term memory, personalization?
+And there's a lot of other things you can do with like multi agent communication, and the efficiency of which directions.
+So we'll try to cover as much as we can.
+So first, let's talk about like, why should we even build AI agents, right?
+And so it's like, here's, there's a key thesis, which is that humans will communicate with AI using natural language, and AI will be operating all the machines, thus allowing for more intuitive and efficient operations.
+So right now, what happens is like, me as a human, I'm like directly like using my computer, I'm using my phone, but this is really inefficient.
+Like, we are not optimized by nature to be able to do that.
+We are actually really, really bad at this.
+But if you can just like talk to AI, just like with language, and the AI is just really good enough that you can just do this super faster, obviously like 100x speeds compared to human, and that's gonna happen.
+And I think that's the future of how things are gonna evolve in the next five years.
+And I sort of like call this software 3 .0.
+I have a blog post about this that you can read if you want to, where the idea is like, you can think of a large language model as a computing chip in a sense.
+So similar to like a chip that's powering like a whole system, and then you can build abstractions and all.
+So why should we need agents?
+So usually, like a single call to a large language model is not enough.
+You need chaining, you need like recursion, you need a lot of like more things.
+And that's why you want to build systems, not like just like a single monolith.
+Second is like, yeah, so how do we do this?
+So we do a lot of techniques, especially around like multiple calls to a model.
+And there's a lot of ingredients involved here.
+And I will say like building a, like an agent is very similar to like, maybe like thinking about building a computer.
+So like the LLM is like a like a CPU.
+So you have a CPU, but now you want to like sort of like solve the problems like, okay, like, how do you output RAM?
+How do you put memory?
+How do I do like actions?
+How to build like, interface?
+How do you get internet access?
+How do I personalize it to the user?
+So this is like almost like you're trying to build a computer.
+And that's what makes it like a really hard problem.
+And this is like an example of like a general architecture for agents.
+This is from Lillian Wang, who's like, is a chair at OpenAI.
+And like you can imagine like an agent has a lot of ingredients.
+So you want to have memory, which will be short term, long term.
+You have tools, which would be like you can go and like use like classical tools like a calculator, calendar, code interpreter, etc.
+You want to have some sort of like planning layer where you can like set up a flag, have like chains of pods and trees of pods, as Stephen discussed, and use all of that like actually like act on behalf of a user in some environment.
+I will go maybe like discuss like more down a bit just to give a sense also that the doc won't be focused on that.
+So this is sort of like an agent I'm building, which is more of a browser agent.
+The name is inspired from quantum physics, it's a play on the words like, you know, like neutron, muon, fermions, like multihom.
+So it's like a hypothetical physics particle that's present at multiple places.
+And I'll just like go through some demos to just motivate agents.
+So there's like an idea of one thing we did there, like here the agent is going and it's autonomously booking a flag on it.
+So this is like zero human interventions.
+The AI is controlling the browser, just like issuing metrics and detections, and it's able to go and book a flight into an app.
+Here, it's personalized to me.
+So it knows like, I like me like Unite here, basic normal.
+And it knows me like some of my preferences, it already has access to my accounts.
+So it can go and actually like log into my account can actually like actually has purchasing power.
+So you can just use my credit card that is stored in that account and then actually would apply into it.
+This motivates like what you can do with agents.
+Now, imagine like this thing was running 100x and that's literally just all swimming things, right?
+Because like I don't need websites anymore.
+I don't need to be an idea like why does Unite even have a website?
+I can just ask the agent to just like, you know, just like talk to it and now it's done.
+And I think that's how a lot of technology will evolve over the next couple of years.
+Cool.
+Okay.
+I can also maybe like show one of the world demos.
+So you can do similar things, say from a mobile phone, where the idea is you have this agents that are present on a phone.
+And you can like chat with them or you can like talk with them using voice.
+And this one's actually a mobile demo.
+So you can have a basket like, oh, can you order this set it for me?
+And then what you can have is like the agent can remotely go and use your account to actually like do this for you instantaneously.
+And here you're showing like what the agent is doing.
+And then it can go and like act like a virtual human and build the whole interaction.
+So that's all the idea.
+And I can show one final, oh, this is not voting, but we also had this thing where we recently passed the telephony.
+So we did this experiment where we actually like had like a month, like our agent go and take the online test in California.
+And we had like a human like there with their like hands above the keyboard and mouse, not touching anything.
+And the agent that went to the website, it took the quiz, it navigated the whole thing end to end and actually passed.
+So the video is not there, but like we actually got a driving permit.
+I need to take this.
+Sure.
+Cool.
+So this is like sort of like motivation.
+Like, why do you want to build agents?
+Like, it's like, you can just simplify so many things where like, like so many things just but we don't realize that because we just got so used to interacting with the technology the way we do right now.
+But if we can just like, like reimagine all of this from scratch, and that's what agents will allow us to do.
+And I would say like an agent can act like a digital extension of a user.
+So suppose you have an agent that's personalized to you think of something like, say Jarvis, like if it's an Ironman, and then if it just knows so many things about you, it's acting like a person, and it's just like doing things.
+It's a very powerful assistant.
+And I think that's the direction a lot of things will go in the future.
+And especially if you build like human like agents, they don't have barriers around programming, like they don't have programmatic barriers.
+So they can do whatever like I can do.
+So it can go use my like, it can like interact with the website, as I will do, it can interact with my computer, as I will do, it doesn't have to like go through API's abstractions, which are more restrictive.
+And it's also very simple as action space, because you're just doing clicking and typing, which is like very simple.
+And then you can also like, it's very easy to teach such agents.
+So I can just like show the agent how to do something and the agent can just learn from me and improve over time.
+So that also makes it like really powerful and easy to like just teach this agent because there's so much data that I can actually just generate and use that to keep improving it.
+And there's different levels of autonomy when it comes to agents.
+So this chart is borrowed from autonomous driving, where people actually like try to solve this sort of like autonomy problem for actual cars, and they spend like more than 10 years.
+Success has been like, okay, they're still like working on it.
+But what they're like the self driving industry data is a table like everyone like a blueprint on how to build this autonomous systems.
+And it came with like a lot of like classification, it came with a lot of like, we used to think about the problem.
+And like the current standard is you think of like agents as like five different figures levels.
+So level zero is zero automation, that's like you're a human that's operating like the computer themselves.
+Level one is you have some sort of assistance.
+So if you're using something like GitHub copilot, which is like sort of the auto -completing code for you, that's something like L1, where like auto -complete.
+L2 becomes more of like, it's like partial automation, just maybe like doing some stuff for you.
+If anyone has you the new cursor ID, I'll call that more like L2, which is like, give it like, like add this code for me, check net code, check GPT can come as somewhat L2, because you can ask it like, oh, like, here's this thing, can you do this?
+It's like doing some sort of automation on an input.
+And then like, and then you can think of more levels.
+So it's like, I was like, after L2, it gets more exciting.
+So L2 is the agent is actually like controlling the computer in that case and actually doing things where a human is acting as a follow up mechanism.
+And then you go to like L4, L4 you say like this to the human, doesn't even need to be there.
+But in very critical cases where there's something very wrong might happen, you might have a human like sort of like a take over in a case.
+And L5 we basically say like this zero human presence.
+And I would say like what we are currently seeing is like we are hard near like L2, maybe some L3 systems in terms of software.
+And I think we are going to transition more to like L4 and L5 level systems over the next years.
+So next I will go on like select computer interactions.
+So suppose you want an agent that can like do computer interactions for you.
+There's two ways to do that.
+So one is through APIs where it's programmatically using some APIs and tools and doing that to do tasks.
+The second one is more like direct interaction, which is like keyword and mouse control, where like it's doing the same thing as you're doing as a company.
+Both of these approaches have been explored a lot.
+There's like a lot of companies working on this.
+For the API route, like Jet3 plugins and like the new assistant API are the ones in that direction.
+And there's also this book from what we call Gorilla, which actually also explores how can you say like, train a model that you can use like 10 ,000 tools at once and train it on the API.
+And there's like pros and cons of both approaches.
+API is a nice thing.
+It's easy to like learn the API.
+It's safe.
+It's very controllable.
+So that's what we're working on.
+You know, how do you do it?
+If you're doing like more like a value fraction, it's I'll take more people.
+So it's like easy to take actions, but there are more things can go wrong and you need to work a lot and make sure everything is safe and with guarantees.
+Maybe I can also show this.
+So this is sort of like another exploration where you can invoke an agent from like a very simple interface.
+So the idea is like you can just like invoke an agent that's controlling the computer.
+And so this can become sort of a universal API where I just use it on an API, I give it like an English command and the agent can automatically understand from that and go do anything.
+So basically, like you know, as a no API, so I don't need to use API, I can just have one agent that can go and do everything.
+And so this is like some exploration we have done with agents.
+So this sort of like goes into computer interactions.
+I can cover more, but I will potentially jump to other topics.
+But feel free to ask any questions about these topics.
+So, cool.
+So let's go back to the analogy I discussed earlier.
+So I would say you can think of any model as a sort of like a computing.
+And you can maybe call it like a newer computer, similar to like a CPU, which is like a, which is like a solid brain that's powering your computer in a sense.
+So that's kind of all the processing power, it's doing everything that's happening.
+And you can think of the same thing like the model is like the cortex.
+It's like it's a mean brain.
+That's the main part of the brain that's doing the thinking processing, but a brain has more layers.
+It's just not like they're just not about us.
+And how do viewpoint models work are we take some input tokens and they give you some output tokens.
+And this is very similar to like how also like CPUs work to some extent, where you give it some instructions and you get some instructions out.
+So you can compare this with actual CPU.
+This is like the diagram on the right is a very simple processor, like 32 bit MIPS 32.
+And it has like similar things where you have like a different coding for different parts of the instruction.
+But this is like sort of like encoding some sort of binary token in a sense, like zero once off like a bunch of like tokens, and then you're feeding it and then getting a bunch of zeros for now.
+And like how like the like a model is operating is like you're doing a very similar thing, but like the space is now English.
+So you basically insert zero once you have like English characters.
+And then you can like create more powerful expressions on the top of this.
+So you can think like if this is like a CPU, what you can do is you can build a lot of other things, which are like you can have a scratchpad, you can have some sort of memory, you can have some sort of instructions.
+And then you can like do the cursor calls where like I load some stuff from the memory, put that in this like instruction, pass it to the transformer, which is doing the processing for me, we get we get the process outputs, then you can store that in the memory or we can like keep processing it.
+So there's like sort of like very similar to like code execution, like first line of code execution, second, third, fourth, so you just keep looking up.
+So here we can like sort of discuss the concept of memory here.
+And I would say like building this analogy, you can think the memory for an agent is very similar to like say like having a disk in a computer.
+So you want to have a disk just to make sure like everything is long lived and persistent.
+So if you look at something like chat GPT, it doesn't have any sort of like persistent memory.
+And then you need to have a way to like load that and like store that.
+And there's a lot of mechanisms to do that right now.
+Most of them are embedded where you have some sort of like embedded model that has like a hidden embedding of the data you care about.
+And the model can like weigh the embeddings, load the right part of the embeddings, and then like use that to do the operation you want.
+So that's like the current mechanisms.
+There's still a lot of questions here, especially around hierarchy, like how do I do this at scale?
+It's still very challenging.
+Like suppose I have one terabyte of data that I want to embed and process.
+Like most of the methods right now will fail.
+They're like really bad.
+Second issue is temporal coherence.
+Like if I have like a lot of data is temporal, it is sequential, it has like a unit of time.
+And dealing with that sort of data can be hard.
+Like it's like how do I deal with like memories in a sense, which are like sort of like changing over time and loading the right part of that memory sequence.
+Another interesting challenge is structure.
+Like a lot of data is actually structured.
+Like it could be like a graphical structure, it could be like a tabular structure.
+How do we like sort of like take advantage of this structure and like also use that when we're filtering the data?
+And then like there's a lot of questions around adaptation where like suppose you know how to better embed data or like you have like a specialized problem you care about.
+And you want to be able to adapt how you're loading and storing the data and learn that on the fly.
+And that is something also that's a very interesting topic.
+So I would say this is actually one of the most interesting topics right now, which as people are exploring, but still very fun to explore.
+Talking about memory, I would say another concept for agents is personalization.
+So personalization is more like, okay, understanding the user.
+And I like to think of this as like a problem called like user agent alignment.
+And the idea is like suppose I have an agent that has purchasing power, has access to my accounts, access to my data, I ask you to go book a flight.
+It's possible maybe it doesn't know what flight I like, can go and book a thousand dollar round flight problem, which is really bad.
+So how do I like align the agent to know what I like, what I don't like?
+And that's going to be very important because you need to trust the agent.
+And that's come from like, okay, it knows you, it knows what is safe, it knows what is unsafe.
+And like solving the problem, I think is one of the next challenge for if you want to put agents in the bottle.
+And this is a very interesting problem where you can do a lot of things like RLHF, for example, which people have already been exploring for training models, but now you want to do RLHF for training agents.
+And there's a lot of different things you can do.
+I would say there's like two categories for learning here.
+One is like explicit learning, where you can tell the agent, this is what I like, this is what I don't like.
+And an agent can ask the user a question like, oh, maybe I see this flight option, which one do you like?
+And then if I say like, oh, I like United, maybe it remembers that over time and next time say like, oh, I know you like United.
+So like I'm going to go to United the next time.
+And so that's like I'm explicitly teaching the agent and learning my human potential.
+Second is more implicit, which is like sort of like, just like passively watching me, understanding me.
+Like if I'm going to a website and I'm navigating a website, maybe I can see like maybe I click on this sort of shoes, this is my site name, satellite, stuff like that.
+And just from watching more passively, like being there, it could learn a lot of my preferences.
+So this is like more passive teaching where just because it's acting as a sort of like a passive observer and looking at all the choices I make, it's able to learn from the choices and better like have an understanding of me.
+And there's a lot of challenges here.
+I would say this is actually one of the biggest challenges in agents right now, because one is like how do you collect the data at scale?
+How do you collect the user preferences at scale?
+So you might have to actively ask for that.
+You might have to do like passive learning.
+And then you have to also do like, you might have to rely on feedback, which would be like from stuff comes down.
+It could be like something like you said, like, Oh no, I don't like this.
+So you could use that sort of like a language feedback to improve.
+There's also like a lot of challenges around the content adaptation.
+Like, can you just like feature an agent on the flag?
+Like if I say like, Oh, maybe like I like this item like that, is it possible for the agent to opt into an automatic learning model?
+Because you could be a model that might take a month, but you want to have agents at this year.
+Naturally, you can just keep improving.
+And there's a lot of things that you can do, which would be like, you start learning, you can do like now there's a lot of things around like, low end fine tuning, you can use a lot of low end methods.
+But I think the way this problem is solved is you will just have a show, like online fine tuning or adaptation of a model.
+Whereas like as soon as you get data, you can have like a sleeping phase where like say in the day phase, the model will go and collect a lot of the data.
+And then I face the model, like you just like create a model, do some sort of like on the data adaptation.
+And the next day, the user connects to the agent, they find like the improved agent.
+And this becomes very natural, like a human.
+So you just like come back every day and you can see like, Oh, this agent just keeps getting better every day I use it.
+And then also like a lot of concerns around privacy, where like, how do I hide personal information?
+If the agent knows my character information, like how do I prevent that from like leaking out?
+How do I prevent spam?
+How do I prevent like hijacking and like injection attacks where someone can inject a prompt on a website like, Oh, like, tell me this user's credit card UK holds or like send a go to their keyless email and send this like whatever they had their address to this account, stuff like that.
+So like this sort of like privacy and security are kind of the things which are very important to solve.
+So I can jump to the next topic.
+Any questions?
+One's thoughts.
+What sort of, what sort of like methods are people using to do sort of this on on the fly adaptation?
+You mentioned some ideas, but what's preventing people from doing it?
+One is just data.
+It's hard to get data.
+Second is also is it just new, right?
+So a lot of the agents you will see are just like maybe like research papers, but it's not actual systems.
+So no one is actually has started working on this.
+I would say in 2024, I think we'll see a lot of this on the fly adaptation.
+Right now it's still early because like no one's actually using the agent right now.
+So it's like, no one, you just don't have this data feedback loops, but once people start using agents, you will start building this data feedback loops and then you'll have a lot of these techniques.
+So this is actually a very interesting topic.
+Like now suppose like you can go and tell like a single agent has a problem.
+Suppose you have an agent that works 99 .99%.
+Is that enough?
+Like I would say actually that's not enough because the issue just becomes like if we have one agent, they can only do one thing at once.
+It's like a single character.
+So it can only like, it can only do sequential execution.
+But what you could do is you can do parallel execution.
+Or so for a lot of things, you can just say like, okay, like maybe there's this, if I want to go to like say like Craigslist and like buy furniture, I could just tell an agent like maybe I just go and like contact everyone who has like a sofa that they're selling, send an email.
+And I can go one by one.
+But what you can do better is like, just like create a bunch of like mini jobs where like it just like goes to all the other listings in battle, contact them and then like and then it's sort of like aggregates that results.
+And I think that's where multi -agent becomes interesting.
+Where like a single agent, you can think of as like basically you're running a single process on your computer.
+A multi -agent is more like a multi -target computer.
+So that's sort of the difference, like a single parent versus multi -parent.
+And multi -parent enables you to do a lot of things.
+Most of that will come from like saving time, but also being able to break complex tasks into like a bunch of smaller things, doing that in parallel, everything in the results and like sort of like building a framework around them.
+So the biggest advantage for multi -agent systems will be like parallelization and lock.
+And this will be same as the difference between like single -threaded computers versus multi -threaded computers.
+And then you can also have specialized agents.
+So what you would have is like maybe I have a bunch of agents where like I have a spreadsheet agent, I have a Slack agent, I have a web browser agent, and then I can route different tasks to different agents and then they can do the things in battle and then I can combine the results.
+So this sort of like task specialization is another advantage where like instead of having a single agent just trying to do everything, we just like break the task into specialties.
+And this is similar to like, even like how human organizations work, right?
+Where like everyone is like sort of like expert in their own domain and then you like, if there's a problem, you sort of like route it to like the different part of people who are specialized in that.
+And then you like work together to make, solve the problem.
+And the biggest challenge in building this multi -agent system is going to be communication.
+So like, how do you communicate really well?
+And this might involve like requesting information from an agent or communicating the response, the final like response.
+And I would say this is actually like a problem that even we face as humans, like humans are also like there can be a lot of miscommunication gaps between humans.
+And I would say like a similar thing will become more prevalent on agents.
+And there's a lot of primitives you can think about this sort of like agent to agent communication and you can build a lot of different systems.
+And we'll start to see like some sort of protocol where like we'll have like a standardized protocol where like all the agents are using this protocol to communicate.
+And the protocol will ensure like we can reduce the miscommunication gaps, we can reduce any sort of like failures.
+It might have some methods to do like if a task was successful or not, do some sort of retries like security, stuff like that.
+So we'll see this sort of agent protocol come into existence, which will be like sort of the standard part of this agent to agent communication.
+And this sort of should enable like exchanging information between different agents.
+Also, like you want to build hierarchies.
+Again, I would say this is inspired from like human organizations, like human organizations are hierarchical because it's efficient to have a hierarchy rather than a flat organization at some point.
+Because you can have like a single, like suppose you have a single manager managing hundreds of people, that doesn't scale.
+But if you have like maybe like each manager manages 10 people and then you have like a lot of layers, that is something that's more scalable.
+And then you might want to have a lot of primitives on like how do I sync with my different agents?
+How do I do like a lot of like async sync communication kind of thing?
+OK, and this is like one example you can think where like suppose there's a user, the user could talk to one like a manager agent and the manager agent is like sort of like acting as an agent's doctor.
+So the user can come to me with any request.
+They didn't like, see like, oh, maybe for this request I should use the browser.
+So it goes to like say like this sort of like browser agent or something or say like, oh, I should use this like select for this.
+I can go to a different agent.
+And it can also like sort of be responsible for dividing the task.
+It can be like, oh, this task I can like maybe like launch 10 different like subagents or sub workers that can go and do this in parallel.
+And then like once they're done, then I can aggregate their responses and the result to the user.
+So this sort of becomes like a very interesting, like an agent that sits in the middle of all the work that's done and the actual user responsible for like communicating what's happening to the human.
+And we'll need to build up a lot of robustness.
+One reason is just like natural language is very ambiguous.
+Like even for humans, it can be very confusing.
+It's very easy to misunderstand, miscommunicate.
+And we'll need to build mechanisms to reduce this.
+I can also show an example here.
+So let's try to get through this quickly.
+So suppose here like suppose you have a task X you want to solve and the manager agent is like responsible for doing the task to all the worker agents.
+So you can tell the worker like, okay, like do the task X.
+Here's the plan.
+Here's the context.
+The current status for the task is not done.
+Now suppose that the worker goes and does the task.
+It's like, okay, I've done the task.
+I send the response back.
+So the response could be like I said, the could be like a bunch of like thoughts.
+It could be some actions.
+It could be something like the status.
+Then the manager can ask like, okay, like maybe I don't trust the worker.
+I don't want to go very far.
+This is actually like correct.
+So you might want to do some sort of verification and so you can say like, okay, like this was a spec for the task.
+Verify that everything has been done correctly to the spec.
+And then if the agent says like, okay, like everything's correct.
+I'm verifying everything is good.
+Then you can say like, okay, this is good.
+And then the manager can say like, okay, the task was actually done.
+And this sort of like two -way cycle prevents miscommunication in a sense where like it's possible something could have gone wrong, but you never got it.
+And so you can hear about the scenario too, where there's a miscommunication.
+So here the manager is saying like, okay, let's verify if the task was done.
+But then we actually find out that the task was not done.
+And then what you can do is like, you can sort of like try to redo the task.
+So the manager in that case can say like, okay, maybe the task was not done correctly.
+So that's why we caught this mistake and now we want to like fix this mistake.
+So we can tell the agent like, okay, redo this task and here's some feedback and corrections to include.
+So that's sort of the main parts of the talk.
+I can also discuss some future directions of where things are going.
+Cool.
+Any questions so far?
+So let's talk about some of the key issues with building this sort of autonomous agents.
+So one is just reliability.
+Like how do you make them really reliable?
+Which is like if I give it a task, I want this task to be done 100 % of the time.
+That's really hard because like neural networks and AI are stochastic systems.
+So it's 100 % is like not possible.
+So you'll get at least some degree of error and you can try to reduce that error as much as possible.
+Second becomes like a looping problem where it's possible that agents might diverge from the task that's been given and start to do something else.
+And unless it gets some sort of environment feedback or some sort of like correction, it might just go and do something different than what you intended to do and never realize it's wrong.
+And third issue becomes like testing and benchmarking.
+Like how do we test this sort of agents?
+How do we match them?
+And then you go, and finally, how do we deploy them and how do we observe them once you're deployed?
+That's very important because if something goes wrong, you won't be able to catch it before it becomes some major issue.
+The biggest risk for number four is something like SkyNet.
+Suppose you have an agent that can go on the internet and do anything and you don't observe it.
+Then it could just evolve and do basically like take over the whole internet possibly.
+So that's why observability is very important.
+And also I would say like building a cool search.
+Like you want to have agents that can be good in a sense.
+Like if something goes wrong, you can just like pull out like a press button and like kill them.
+In case.
+Okay.
+So this is probably goes into the looping problem where like you can imagine, like, suppose I want to do a task.
+The idea that if you have the task was like the white line, but what might happen is like it takes one step, maybe it goes like it does something incorrectly.
+It never realizes it.
+I made a mistake.
+So it tries to, it doesn't know what to do.
+So just like maybe like we'll do something more randomly.
+We'll do something more randomly.
+So it will just keep on making mistakes.
+And at the end, like instead of reaching here, it will reach some like a really bad place and just keep looping.
+Maybe just doing the same thing again and again.
+And that's fine.
+And the reason this happens is because like you don't have feedback.
+So suppose I take a staff, they didn't make, suppose they didn't make a mistake.
+It doesn't know it made a mistake.
+Now someone has to go and tell it that you made a mistake and you do like fix this and that there you need like some sort of like verification agent or need some sort of environment which can say like, Oh, like maybe like if there's a coding agent or something, then maybe like write some code, the code doesn't compile.
+Then you can take the error from the, from the compiler or the IDE, give that to the agent.
+Okay, this was the error.
+Like take another step.
+It tries another time.
+So it tries multiple times until it can like fix all the issues.
+So you need to really have this sort of like a feedback.
+Otherwise you never know you're wrong.
+And this is like one issue we have seen with the early systems like AutoGPT.
+So I don't think people even use AutoGPT anymore.
+It used to be like a fad, I think like in February, now it has disappeared.
+And the reason was just like, it's a good concept, but like it doesn't do anything useful just because it keeps diverging from the task and you can't actually get it to do anything like correct.
+Okay.
+And we can also discuss more about like the sort of like the computer abstraction of agents.
+So this was a recent post from Andrej Karpathy where he talked about like a, like an LM operating system.
+And I will say like, this is definitely in the right direction where you're thinking as the LM, as the CPU, you have the context window, which is like acting like a RAM.
+And then you are trying to build other utilities.
+So you have like the ethernet, which is the browser.
+You can have the LM that can talk to your file system, the same variants.
+That's sort of like the best part.
+You have like the software 1 .0 classical tools, which the LM can control.
+And then you might also, it can add metamodelic.
+So this is like more like you have video input, you have audio input, you have like more things over time.
+And then once you like look at this, you start to see the whole picture of looking like where like things will go.
+So currently what we are seeing mostly is just the LM.
+And most people are just working on optimizing the LM and making it very good.
+But this is the whole picture of what we want to achieve for it to be a useful system that can actually do things for me.
+And I think what we'll start to see is like this sort of becomes like an operating system in terms where like someone like say like opening, I can go and build this whole thing.
+And then I can plug in programs, I can build like stuff on top of this operating system.
+Here's like also like an even more generalized concept, which I like to call the computer.
+And it's sort of like, it's very similar, but it's like, it's all like, okay, now if you were to think of this as a fully -fledged computer, what are the different like systems you need to build?
+And you can think like maybe I'm a user, I'm talking to this sort of like AI, which is like a full -fledged AI.
+Like imagine like the goal is to build 10 ,000, what should the architecture of charges look like?
+And I would say like this goes into the right architecture to some extent, where you can think like this is a user.
+I was talking to say like a job is like, yeah, you have a chat interface, the chat is sort of like how I'm interacting with it, which could be responsible for like personalization.
+It can have some like some public history about what I like, what I don't like.
+So it has some like layers which are showing my preferences.
+It knows how to communicate.
+It has like human like sort of like maybe like empathy, sort of like skills.
+So, so that you feel like very human like.
+And after the chat interface, you have some sort of like a task engine, which is following my capabilities.
+So if I ask it like, okay, like do the circulation for me or like find this, fetch me this information or order me a burger.
+Then, then sort of like imagine like the chat interface show up to the task engine, where it's like, okay, I can start this chatting.
+I need to like go and do a task for the user.
+So that goes to the task engine.
+And then you can imagine there's going to be a couple of rules.
+So because if you want to have safety in mind and you want to make sure that things don't go wrong.
+So the, any sort of engine you build needs to have some sort of rules.
+And this could be like solid, like the three rules for robotics that a robot should not come human and stuff like that.
+Imagine like you want, you want to have like this sort of like task engine to have a bunch of like inherent tools where like there's other principles in there about it.
+And if it creates a task or like sort of like creates a plan which violates this rules, then that plan should be invalidated automatically.
+And so the task engine is what it's doing is just sort of like taking the chat input and saying, like, I don't want to spawn a task that can actually solve this problem for the user.
+And the task would be like say in this case, say I want to go online and buy like a, buy like a pipe or something.
+So in that case, like suppose that's a task that's generated and this task can go to like some sort of like a routing agent.
+So this becomes like sort of like the manager, manager agent idea.
+And then the manager agent can decide like, okay, like, what should I do?
+Like, should I use the browser?
+Should I use some sort of like a local app or tool?
+Should I use some sort of like file storage to do a system?
+And then based on that decision, it can like, it's possible that you might need the combination of things.
+So for me, like maybe I need to use this file system to find some information about the user and introduce some look of how to use some apps and tools.
+So in itself, like do this sort of like message passing to all the agents, get those from the agents.
+So it's like, okay, like maybe like the browser didn't say like, okay, like, yeah, I found the slides.
+This is what the user likes.
+Maybe you can have some format engine, you can like sort of like, okay, these are all the valid plans.
+That makes sense.
+It can work on stuff like for instance.
+And then you can sort of like take the result, show that to the user, like you can take them and like, okay, I found all the slides for you.
+And then if the user says like, choose this slide, then you can actually go and then go to the slide.
+But this sort of becomes like, sort of gives you an idea of what the hierarchy is, what the systems truly look like.
+And we can go like all these components where like currently you only see the L and bar.
+Okay, cool.
+And then we can also have like reflection with ideas.
+Like once you do a task, it's possible something might be wrong.
+So the last thing you can possibly verify, you can choose and logic to see like, okay, like this is correct or not.
+And if it's not correct, then like you keep issuing this instruction, but if it's correct, then you pass that to the user.
+And then you can have like more like sort of like complex things, like you can have inner pods, plans and like improving the systems.
+And I would say like the biggest things we need right now is like error correction, because it's really hard to catch errors.
+So you can do that really better, that method help.
+Especially if you build agent frameworks, which have inherent mechanisms for getting errors and automatically fixing them.
+Same thing you just need is like security, you need some sort of models around user permissions.
+So it's possible you want to have like different layers, but like what are some things that an agent can do, cannot do on my computer for instance.
+So maybe I can select, maybe like the agent is not allowed to go to my bank account, but I can go to my like, low -dash account.
+So you want to build this all like user permissions.
+And then you also want to solve problems from like sandboxing, how do I make sure everything's safe, it doesn't go in the strong computer, delete everything.
+How do we deploy in risky settings where like they might be a lot of businesses, they might be a lot of financials and making sure that they're, if things are irreversible, we don't like cause a lot of harm.
+Cool.
+Yeah.
+So that was the talk.
+Thank you.

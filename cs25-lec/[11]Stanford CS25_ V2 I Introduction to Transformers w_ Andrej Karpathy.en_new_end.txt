@@ -1,0 +1,771 @@
+Hi, everyone.
+Welcome to CS25 Transformers United V2.
+This was a course that was held at Stanford in the winter of 2023.
+This course is not about robots that can transform into cars, as this picture might suggest.
+Rather, it's about deep learning models that have taken the world by the storm and have revolutionized the field of AI and others.
+Starting from natural language processing, transformers have been applied all over, from computer vision, reinforcement learning, biology, robotics, et cetera.
+We have an exciting set of videos lined up for you with some truly fascinating speakers, skip talks, presenting how they're applying transformers to the research in different fields and areas.
+We hope you'll enjoy and learn from these videos.
+So without any further ado, let's get started.
+This is a purely introductory lecture and we'll go into the building blocks of transformers.
+So first, let's start with introducing the instructors.
+So for me, I'm currently on a temporary differ from the PhD program.
+I'm leading AI at a robotic startup, and I work at a robot tech, so we're working on some general purpose robots, somewhat like a robot.
+And yeah, I'm very passionate about robotics and building efficient learning algorithms.
+My research interests are in the personal learning from provisions and remodeling, and I have a bunch of publications in robotics on the driving of the areas.
+I'm an undergraduate at Cornell, it's a wonderful corner, so nice to meet Paul.
+So I'm Steven, I'm currently a first year CSB speaker.
+Chris did my master's at CMU, and undergrad at Waterloo.
+Mainly into NLP research, anything involving language and tech.
+But more recently, I've been getting more into computer vision as well as quantum algebra, and just some stuff I do for fun.
+A lot of music stuff, mainly piano.
+Some self promo, but I post a lot on my Insta, YouTube and TikTok, so if you guys wanna check it out.
+My friends and I are also starting a Stanford piano club, so if anybody's interested, feel free to email the DM for details.
+Other than that, martial arts, bodybuilding, and future drama, anime, occasional gamer.
+Okay, cool, yeah.
+So my name's Ryland, instead of talking about myself, I just want to very briefly say that I'm super excited to take this class.
+I could have the last time it was offered, sorry to teach this class, excuse me, I could have the last time it was offered.
+I had a bunch of fun.
+I thought we brought in a really great group of speakers last time, I'm super excited for this offering.
+And yeah, I'm thankful that you're all here, and I'm looking forward to a really fun quarter together.
+Thank you.
+Yeah, so fun fact, Brandon was the most outspoken student last year, and so if someone wants to become an instructor next year, you know what I mean.
+Yeah, yeah, yeah.
+Okay, let's see, okay.
+So what we hope you will learn in this class is first of all, how do tasks so much work?
+How they're being applied, just not gonna be.
+And nowadays, like, we are pretty much in everywhere in AI machine learning.
+And what are some new interactions or research in this topics?
+Cool, so this class is just an introductory, so we'll be just talking about the basics of transformers, introducing them, talking about the self -attention mechanism on which they're founded, and we'll do a deep dive more on like models like BERT, GPT, stuff like that.
+So great, happy to get started.
+Okay, so let me start with presenting the attention timeline.
+Attention all started with this one paper, Attention is All You Need by Vaswani et al in 2017.
+That was the beginning of transformers.
+Before that, we had the prehistoric era where we had models like RNNs, LSTMs, and there's simple attention mechanisms that didn't work or scale that up.
+Starting in 2017, we saw this explosion of transformers into NLP, where people started using it for everything.
+I even heard this quote from Google, our performance increased every time we fired our linguist.
+For the past 2018, after 2018 to 2020, we saw this explosion of transformers into other fields like vision, bunch of other stuff, and like biology, alcohol, and in last year, 2021 was the start of the generative era where we got like a lot of generative modeling.
+Started models like Codex, GPT, DALI, table diffusion, so a lot of like things happening in generative modeling and we started scaling up in AI.
+And now the present, so this is 2022, like the start of 2022, and now we have models like the Chai GPT, Whisper, a bunch of other, and we are like scaling onwards without splitting up.
+So that's great.
+So that's the future.
+So going more into this, so once there were RNNs, so we had sequence to sequence models, LSTM, GLU.
+What worked here was that they were good at encoding history but what did not work was they didn't encode long sequences and they were very bad at encoding context.
+So consider this example, consider trying to predict the last word in the text, I grew up in France, dot dot dot, I speak fluent dash.
+Here, you need to understand the context for it to predict French and like attention mechanism is very good at that, but as you can just using LSTMs, it doesn't work at all.
+Another thing transformers are good at is more based on content is like, also context prediction is like finding attention maps.
+If I have something like a word like it, what noun does it correlate to?
+And we can give like a probability attention on what are the possible activations and this works better than existing mechanisms.
+Okay, so where we were in 2021, we were on the verge of takeoff.
+We were starting to realize the potential of transformers in different fields.
+We solved a lot of long sequence problems like protein folding, alpha fold, offline RL.
+We started to see few shots, zero shot generalization, we saw multimodal tasks and applications like generating images from language.
+So that was Dali.
+Yeah, and it feels like Asian, but it was only like two years ago.
+And this is also a talk on transformers that you can watch on YouTube.
+And this is where we were going from 2021 to 2022, which is we have gone from the verge of taking off to actually taking off and now we are seeing unique applications in audio generation, art, music, storytelling.
+We are starting to see reasoning capabilities like common sense, logical reasoning, mathematical reasoning and we are also able to now get human enlightenment and interaction.
+They're able to use reinforcement learning and human feedback.
+That's how Chai GPT is trained to perform really good.
+We have a lot of mechanisms for controlling toxicity, bias and ethics now.
+And there are a lot of also a lot of developments in other areas like different models.
+So the future is a spaceship and we are all excited about it.
+And there's a lot more applications that we can enable.
+And it'd be great if you can see transformers also work there.
+One big example is video understanding and donation.
+That is something that everyone is interested in.
+And I'm hoping we'll see a lot of models in this area this year.
+Also finance, business.
+I'll be very excited to see GPT author novel but we need to solve very long sequence modeling and most transformer models are still limited to like 4 ,000 tokens or something like that.
+So we need to do make them generalize much more better on long sequences.
+We also want to have generalized agents that can do a lot of multitask, a multi input predictions like Gato.
+And so I think we will see more of that too.
+And finally, we also want domain specific models.
+So you might want like a GPT model that's good at like maybe like your help.
+So that could be like a doctor GPT model.
+You might have like a large GPT model that's like only on a lot of data.
+So currently we have like GPT models that have came on everything but we might start to see more niche models that are like good at one task.
+And we could have like a mixture of experts.
+So it's like you can think like, this is a like how you normally consult an expert.
+We'll have like expert AI models and you can go to a different AI model for your different needs.
+There are still a lot of missing ingredients to make this all successful.
+The first of all is external memory.
+We are already starting to see this but models like GPT where the infections are short lived, there's no long term memory and they don't have ability to remember but store conversations for long term.
+And this is something we want to fix.
+Second is reducing the computation complexity.
+So attention mechanism is quadratic over the sequence length of a just learn.
+And we want to reduce it on the get faster.
+Another thing we want to do is we want to enhance the controllability of these models.
+Like a lot of these models can be stochastic and we want to be able to control what sort of output we get from them.
+And you might have experienced the GPT if you just refresh, you get like different output each time but you might want to have mechanisms that controls what sort of things you get.
+And finally, we want to align our state of art language models with how the human brain works.
+And we are seeing the search but we still need more research on seeing how they can be made more important.
+Good, thank you.
+Hi, yes, I'm excited to be here.
+I live very nearby.
+So I got the invites to come to class and I was like, okay, I'll just walk over.
+But then I spent like 10 hours in those slides.
+So it wasn't as simple.
+So yeah, I want to talk about transformers.
+I'm going to skip the first two over there.
+We're not going to talk about those.
+We'll talk about that one.
+Just to simplify the lecture since we don't have time.
+Okay, so I wanted to provide a little bit of context of why does this transformers cost even exist?
+So a little bit of historical context.
+I feel like Bilbo over there, I joined like telling you guys about this.
+I don't know if you guys saw the drinks and basically I joined AI in roughly 2012 in full force.
+So maybe a decade ago.
+And back then you wouldn't even say that you joined AI by the way, that was like a dirty word.
+Now it's okay to talk about, but back then it was not even deep learning.
+It was machine learning.
+That was a term you'd use if you were serious.
+But now AI is okay to use, I think.
+So basically do you even realize how lucky you are potentially entering this area and roughly going to.
+So back then in 2011 or so, when I was working specifically on computer vision, your pipelines looked like this.
+So you wanted to classify some images.
+You would go to a paper and I think this is representative.
+You would have three pages in the paper describing all kinds of zoo of kitchen sink of different kinds of features descriptors.
+And you would go to a poster session and in computer vision conference and everyone would have their favorite feature descriptors that they're proposing and it was totally ridiculous.
+And you would take notes on like which one you should incorporate into your pipeline because you would extract all of them and then you would put an SVM on top.
+So that's what you would do.
+So there's two pages.
+Make sure you get your sparse SIP histograms, your SSIMs, your color histograms, textiles, tiny images, and don't forget the geometry specific histograms.
+All of them had basically complicated code by themselves.
+So you're collecting code from everywhere and running it and it was a total nightmare.
+So on top of that, it also didn't work.
+So this would be, I think, represents the prediction from that time.
+You would just get predictions like this once in a while and you'd be like, you just shrug your shoulders like that just happens once in a while.
+Today, you would be looking for a bug.
+And worse than that, every single sort of feel, every single chunk of AI had their own completely separate vocabulary that they work with.
+So if you go to NLP papers, those papers would be completely different.
+So you're reading the NLP paper and you're like, what is this part of speech tagging, morphological analysis, syntactic parsing, co -reference resolution, what is NP, BT, JJA, and your compute?
+So the vocabulary and everything was completely different and you couldn't read papers, I would say, across different areas.
+So now that changed a little bit starting 2012 when Alex Kuchevsky and the colleagues basically demonstrated that if you scale a large neural network on large dataset, you can get very strong performance.
+And so up till then, there was a lot of focus on algorithms, but this showed that actually neural nets scale very well.
+So you need to now worry about compute and data and if you scale it up, it works pretty well.
+And then that recipe actually did copy paste across many areas of AI.
+So we started to see neural networks pop up everywhere since 2012.
+So we saw them in computer vision and NLP and speech and translation in RL and so on.
+So everyone started to use the same kind of modeling tool, modeling framework.
+And now when you go to NLP and you start reading papers there in machine translation, for example, this is a sequence to sequence paper, which we'll come back to in a bit.
+You start to read those papers and you're like, okay, I can recognize these words.
+Like there's a neural network, there's a parameter, there's an optimizer, and it starts to read like things that you know of.
+So that decreased tremendously the barrier to entry across the different areas.
+And then I think the big deal is that when the transformer came out in 2017, it's not even that just the toolkits and the neural networks were similar, is that literally the architectures converge to like one architecture that you copy paste across everything seemingly.
+So this was kind of an unassuming machine translation paper at the time proposing the transformer architecture.
+But what we found since then is that you can just basically copy paste this architecture and use it everywhere.
+And what's changing is the details of the data and the chunking of the data and how you feed them.
+And that's a caricature, but it's kind of like a correct first order statement.
+And so now papers are even more similar looking because everyone's just using transformer.
+And so this convergence was remarkable to watch and unfolded over the last decade.
+And it's pretty crazy to me.
+What I find kind of interesting is I think this is some kind of a hint that we're maybe converging to something that maybe the brain is doing because the brain is very homogeneous and uniform across the entire sheet of your cortex.
+And okay, maybe some of the details are changing, but those feel like hyper parameters, like a transformer, but your auditory cortex and your visual cortex and everything else looks very similar.
+And so maybe we're converging to some kind of a uniform, powerful learning algorithm here, something like that.
+I think it's kind of interesting.
+Okay, so I want to talk about where the transformer came from briefly historically.
+So I want to start in 2003.
+I liked this paper quite a bit.
+It was the first sort of popular application of neural networks to the problem of language modeling.
+So predicting in this case, the next word in a sequence, which allows you to build generative models over text.
+And in this case, they were using multilayer perceptron.
+So very simple neural net.
+The neural nets took three words and predicted the probability distribution for the fourth word in a sequence.
+So this was well and good at this point.
+Now, over time, people started to apply this to a machine translation.
+So that brings us to sequence to sequence paper from 2014.
+That was pretty influential.
+And the big problem here was, okay, we don't just want to take three words and predict the fourth.
+We want to predict how to go from an English sentence to a French sentence.
+And the key problem was, okay, you can have arbitrary number of words in English and arbitrary number of words in French.
+So how do you get an architecture that can process this variable sized input?
+And so here they use a LSTM, and there's basically two chunks of this, which are covered by the slap, by this, but basically have an encoder LSTM on the left.
+And it just consumes the word one word at a time and builds up a context of what it has read.
+And then that acts as conditioning vector to the decoder RNN or LSTM that basically goes chunk, chunk, chunk for the next word in the sequence, translating the English to French or something like that.
+Now, the big problem with this, that people identified, I think very quickly and tried to resolve is that there's, what's called this encoder bottleneck.
+So this entire English sentence that we are trying to condition on is packed into a single vector that goes from the encoder to the decoder.
+And so this is just too much information to potentially maintain a single vector.
+And that didn't seem correct.
+And so people who are looking around for ways to alleviate the attention sorry, the encoder bottleneck, as it was called at the time.
+And so that brings us to this paper, neural machine translation by jointly learning to align and translate.
+And here, just quoting from the abstract, in this paper, we conjecture that use of a fixed length vector is a bottleneck in improving the performance of the basic encoder decoder architecture and propose to extend this by allowing the model to automatically soft search for parts of the source sentence that are relevant to predicting a target word without having to form these parts or hard segments explicitly.
+So this was a way to look back to the words that are coming from the encoder.
+And it was achieved using this soft search.
+So as you are decoding in the words here, while you are decoding them, you are allowed to look back at the words at the encoder via the soft attention mechanism proposed in this paper.
+And so this paper, I think is the first time that I saw basically attention.
+So your context vector that comes from the encoder is a weighted sum of the hidden states of the words in the encoding.
+And then the weights of this sum come from a softmax that is based on these compatibilities between the current state as you're decoding and the hidden states generated by the encoder.
+And so this is the first time that really you start to like look at it and this is the current modern equations of the attention.
+And I think this was the first paper that I saw it in.
+It's the first time that there's word attention used as far as I know to call this mechanism.
+So I actually tried to dig into the details of the history of the attention.
+So the first author here, Dimitri, I had an email correspondence with him and I basically sent him an email.
+I'm like, Dimitri, this is really interesting.
+Transformers have taken over.
+Where did you come up with the soft attention mechanism that ends up being the heart of the transformer?
+And to my surprise, he wrote me back this like massive email which was really fascinating.
+So this is an excerpt from that email.
+So basically he talks about how he was looking for a way to avoid this bottleneck between the encoder and decoder.
+He had some ideas about cursors that traverse the sequences that didn't quite work out.
+And then here, so one day I had this thought that it would be nice to enable the decoder RNN to learn who to search, where to put the cursor in the sourced sequence.
+This was sort of inspired by translation exercises that learning English in my middle school involved.
+You gaze shifts back and forth between source and target sequence as you translate.
+So literally I thought this was kind of interesting that he's not a native English speaker and here that gave him an edge in this machine translation that led to attention and then led to transformer.
+So that's really fascinating.
+I expressed a soft search as softmax and that weighted averaging of the binary states.
+And basically to my great excitement, this worked from the very first try.
+So really I think interesting piece of history.
+And as it later turned out that the name of RNN search was kind of lame.
+So the better name attention came from Yoshua on one of the final passes as they went over the paper.
+So maybe attention is all you need would have been called like RNN searches, but we have Yoshua Bengio to thank for a little bit of better name I would say.
+So apparently that's the history of this.
+Okay, so that brings us to 2017, which is attention is all you need.
+So this attention component, which in Dimitri's paper was just like one small segment and there's all this bidirectional RNN and decoder and this attention only paper is saying, okay, you can actually delete everything.
+Like what's making this work very well is just the attention by itself.
+And so delete everything, keep attention.
+And then what's remarkable about this paper actually is usually you see papers that are very incremental.
+They add like one thing and they show that it's better, but I feel like attention is all you need was like a mix of multiple things at the same time.
+They were combined in a very unique way and then also achieved a very good local minimum in the architecture space.
+And so to me, this is a really a landmark paper that is quite remarkable.
+And I think had quite a lot of work behind the scenes.
+So delete all the RNN, just keep attention because attention operates over sets.
+And I'm going to go into this in a second.
+You now need to positionally encode your inputs because attention doesn't have the notion of space.
+So they should be very careful.
+They adopted this residual network structure from ResNets.
+They intersperse attention with multi -layer perceptrons.
+They used layer norms, which came from a different paper.
+They introduced the concept of multiple heads of attention that were applied in parallel.
+And they gave us, I think like a fairly good set of hyperparameters that to this day are used.
+So the expansion factor in the multi -layer perceptron goes up by 4x, and we'll go into like a bit more detail.
+And this 4x has stuck around.
+And I believe like there's a number of papers that tried to play with all kinds of little details of the transformer and nothing like sticks because this is actually quite good.
+The only thing to my knowledge that stuck, that didn't stick was this reshuffling of the layer norms to go into the pre -norm version, where here you see the layer norms are after the multi -headed attention repeat forward, but they just put them before instead.
+So just reshuffling of layer norms, but otherwise the GPTs and everything else that you're seeing today is basically the 2017 architecture from five years ago.
+And even though everyone is working on it, it's proven remarkably resilient, which I think is interesting.
+There are innovations that I think have been adopted also in positional encodings.
+It's more common to use different rotary and relative positional encodings and so on.
+So I think there have been changes, but for the most part it's proven very resilient.
+So really quite an interesting paper.
+Now I wanted to go into the attention mechanism.
+And I think I sort of like the way I interpreted is not similar to the ways that I've seen it presented before.
+So let me try a different way of like how I see it.
+Basically to me, attention is kind of like the communication phase of the transformer and the transformer interleaves two phases, the communication phase, which is the multi -headed attention and the computation stage, which is this multilayer perceptron or P -twim.
+So in the communication phase, it's really just a data dependent message passing on directed graphs.
+And you can think of it as, okay, forget everything with a machine translation and everything.
+Let's just, we have directed graphs at each node, you are storing a vector.
+And then let me talk now about the communication phase of how these vectors talk to each other in the directed graph.
+And then the compute phase later is just the multilayer perceptron, which now, which then basically acts on every node individually.
+But how do these nodes talk to each other in this directed graph?
+So I wrote like some simple Python, like I wrote this in Python basically to create one round of communication of using attention as the direct, as the message passing scheme.
+So here, a node has this private data vector, as you can think of it as private information to this node.
+And then it can also emit a key, a query and a value.
+And simply that's done by a linear transformation from this node.
+So the key is, what are the things that I am, sorry, the query is one of the things that I'm looking for.
+The key is one of the things that I have and the value is one of the things that I will communicate.
+And so then when you have your graph that's made up of nodes with some random edges, when you actually have these nodes communicating, what's happening is you loop over all the nodes individually in some random order, and you're at some node and you get the query vector Q, which is I'm a node in some graph and this is what I'm looking for.
+And so that's just achieved via this linear transformation here.
+And then we look at all the inputs that point to this node and then they broadcast, what are the things that I have, which is their keys.
+So they broadcast the keys, I have the query, then those interact by dot product to get scopes.
+So basically simply by doing dot product, you get some kind of a unnormalized weight of the interestingness of all of the information in the nodes that point to me and to the things I'm looking for.
+And then when you normalize that with softmax, so it just sums to one, you basically just end up using those scores, which now sum to one in our probability distribution, and you do a weighted sum of the values to get your update.
+So I have a query, they have keys, dot product to get interestingness or like affinity, softmax to normalize it, and then weighted sum of those values, flow to me and update me.
+And this is happening for each node individually, and then we update at the end.
+And so this kind of a message passing scheme is kind of like at the heart of the transformer and happens in a more vectorized, batched way that is more confusing and is also interspersed with layer norms and things like that to make the training behave better.
+But that's roughly what's happening in the attention mechanism, I think on a high level.
+So yeah, so in the communication phase of the transformer, then this message passing scheme happens in every head in parallel and then in every layer in series and with different weights each time.
+And that's it as far as the multi -headed attention goes.
+And so if you look at these encoder decoder models, you can sort of think of it then in terms of the connectivity of these nodes in the graph, you can kind of think of it as like, okay, all these tokens that are in the encoder that we want to condition on, they are fully connected to each other.
+So when they communicate, they communicate fully when you calculate their features.
+But in the decoder, because we are trying to have a language model, we don't want to have communication from future tokens because they give away the answer at this step.
+So the tokens in the decoder are fully connected from all the encoder states, and then they are also fully connected from everything that is before them.
+And so you end up with this like triangulate structure in the directed graph.
+But that's the message passing scheme that this basically implements.
+And then you have to be also a little bit careful because in the cross attention here with the decoder, you consume the features from the top of the encoder.
+So think of it as in the encoder, all the nodes are looking at each other, all the tokens are looking at each other many, many times, and they really figure out what's in there.
+And then the decoder, when it's looking only at the top nodes.
+So that's roughly the message passing scheme.
+I was going to go into more of an implementation of the transformer.
+I don't know if there's any questions about this.
+It's been a little bit of self attention and multi -headed attention, but what is the advantage of that?
+Yeah, so self attention and multi -headed attention.
+So the multi -headed attention is just this attention scheme, but it's just applied multiple times in parallel.
+Multiple heads just means independent applications of the same attention.
+So this message passing scheme basically just happens in parallel multiple times with different weights for the query key and value.
+So you can almost look at it like in parallel, I'm looking for, I'm seeking different kinds of information from different nodes and I'm collecting it all in the same node.
+It's all done in parallel.
+So heads is really just like a copy paste in parallel and layers are copy paste, but in series.
+Maybe that makes sense.
+And self attention, when it's self attention, what it's referring to is that the node here produces each node here.
+So as I described it here, this is really self attention because every one of these nodes produces a key query and a value from this individual node.
+When you have cross attention, you have one cross attention here coming from the encoder.
+That just means that the queries are still produced from this node, but the keys and the values are produced as a function of nodes that are coming from the encoder.
+So I have my queries because I'm trying to decode some, the fifth word in the sequence.
+And I'm looking for certain things because I'm the fifth word.
+And then the keys and the values in terms of the source of information that could answer my queries can come from the previous nodes in the current decoding sequence or from the top of the encoder.
+So all the nodes that have already seen all of the encoding tokens many, many times can now broadcast what they contain in terms of information.
+So I guess to summarize the self attention is kind of like, sorry, cross attention and self attention only differ in where the keys and the values come from.
+Either the keys and values are produced from this node or they are produced from some external source like an encoder and the nodes over there.
+But algorithmically is the same, Michael.
+So the two questions on the first question is, in the nested capacity graph paradigm, what would the layers of the - So yeah, so - What kind of points?
+So think of, so each one of these nodes is a token.
+I guess like they don't have a very good picture of it in the transformer, but like this node here could represent the third word in the output in the decoder.
+And in the beginning, it is just the embedding of the word.
+And then, okay, I have to think through this knowledge a little bit more.
+I came up with it this morning.
+Actually, I came up with it yesterday.
+We have another question on this.
+One example of a graph instantiation would give a good intuition because nodes have been lost in the word embedding?
+These nodes are basically the vectors.
+I'll go to an implementation.
+I'll go to the implementation and then maybe I'll make the connections to the graph.
+So let me try to first go to, let me now go to, with this intuition in mind at least, to nano GPT, which is a graph -based graph.
+It's a complete implementation of a transformer that is very minimal.
+So I worked on this over the last few days and here it is reproducing GPT -2 on open web text.
+So it's a pretty serious implementation that reproduces GPT -2, I would say, and provided enough compute.
+This was one node of eight GPUs for 38 hours or something like that, if I remember correctly.
+And it's very readable, it's 300 lines.
+So everyone can take a look at it.
+And yeah, let me basically briefly step through it.
+So let's try to have a decoder -only transformer.
+So what that means is that it's a language model.
+It tries to model the next word in the sequence or the next character in the sequence.
+So the data that we train on, it's always some kind of text.
+So here's some fake Shakespeare.
+Sorry, this is real Shakespeare.
+We're gonna produce a fake Shakespeare.
+So this is called the tiny Shakespeare dataset, which is one of my favorite toy datasets.
+You take all of Shakespeare, concatenate it, and it's one megabyte file, and then you can train language models on it and get infinite Shakespeare, if you like, which I think is kind of cool.
+So we have a text.
+The first thing we need to do is we need to convert it to a sequence of integers because transformers natively process, you can't plug text into transformer.
+You need to somehow encode it.
+So the way that encoding is done is we convert, for example, in the simplest case, every character gets an integer.
+And then instead of hi there, we would have this sequence of integers.
+So then you can encode every single character as an integer and get like a massive sequence of integers.
+You just concatenate it all into one large, long, one -dimensional sequence, and then you can train on it.
+Now, here, we only have a single document.
+In some cases, if you have multiple independent documents, what people like to do is create special tokens and they intersperse those documents with those special end of text tokens that they splice in between to create boundaries.
+But those boundaries actually don't have any modeling impact.
+It's just that the transformer is supposed to learn via back propagation that the end of document sequence means that you should wipe the memory.
+Okay, so then we produce batches.
+So these batches of data just mean that we go back to the one -dimensional sequence and we take out chunks of this sequence.
+So say if the block size is eight, then block size indicates the maximum length of context that your transformer will process.
+So if our block size is eight, that means that we are going to have up to eight characters of context to predict the ninth character in the sequence.
+And the batch size indicates how many sequences in parallel we're going to process.
+And we want this to be as large as possible, so we're fully taking advantage of the GPU and the parallels on the boards.
+So in this example, we're doing a four by eight batches.
+So every row here is independent example sort of, and then every row here is a small chunk of the sequence that we're going to train on.
+And then we have both the inputs and the targets at every single point here.
+So to fully spell out what's contained in a single four by eight batch to the transformer, I sort of compacted here.
+So when the input is 47 by itself, the target is 58.
+And when the input is the sequence 47, 58, the target is one.
+And when it's 47, 58, one, the target is 51 and so on.
+So actually the single batch of examples that's four by eight actually has a ton of individual examples that we are expecting the transformer to learn on in parallel.
+And so you'll see that the batches are learned on completely independently, but the time dimension sort of here along horizontally is also trained on in parallel.
+So sort of your real batch size is more like B times T.
+It's just that the context grows linearly for the predictions that you make along the T direction in the model.
+So this is all the examples that the model will learn from, this single batch.
+So now this is the GPT class.
+And because this is a decoder only model, so we're not going to have an encoder because there's no like English we're translating from, we're not trying to conditional some other external information.
+We're just trying to produce a sequence of words that follow each other or likely to.
+So this is all PyTorch and I'm going slightly faster because I'm assuming people have taken 231M or something along those lines.
+But here in the forward pass, we take these indices and then we both encode the identity of the indices just via an embedding lookup table.
+So every single integer has a, we index into a lookup table of vectors in this nn .embedding and pull out the word vector for that token.
+And then because the message, because transformed by itself doesn't actually, it processes sets natively.
+So we need to also positionally encode these vectors so that we basically have both the information about the token identity and its place in the sequence from one to block size.
+Now those, the information about what and where is combined additively.
+So the token embeddings and the positional embeddings are just added exactly as here.
+So this X here, then there's optional dropout.
+This X here basically just contains the set of words and their positions.
+And that feeds into the blocks of transformer.
+And we're gonna look into what's blocked here.
+But for here, for now, this is just a series of blocks in the transformer.
+And then in the end, there's a layer norm and then you're decoding the logits for the next word or next integer in a sequence using a linear projection of the object of this transformer.
+So LM head here, a short for a language model head, is just a linear function.
+So basically positionally encode all the words, feed them into a sequence of blocks and then apply a linear layer to get the probability distribution for the next character.
+And then if we have the targets, which we produced in the data loader, and you'll notice that the targets are just the inputs offset by one in time, then those targets feed into a cross entropy loss.
+So this is just a negative one likelihood, typical classification loss.
+So now let's drill into what's here in the blocks.
+So these blocks that are applied sequentially, there's again, as I mentioned, communicate phase and the compute phase.
+So in the communicate phase, all the nodes get to talk to each other.
+And so these nodes are basically, if our block size is eight, then we are going to have eight nodes in this graph.
+There's eight nodes in this graph.
+The first node is pointed to only by itself.
+The second node is pointed to by the first node and itself.
+The third node is pointed to by the first two nodes and itself, et cetera.
+So there's eight nodes here.
+So you apply, there's a residual pathway in X.
+You take it out, you apply a layer norm and then the self attention so that these communicate, these eight nodes communicate, but you have to keep in mind that the batch is four.
+So because batch is four, this is also applied.
+So we have eight nodes communicating, but there's a batch of four of them, all individually communicating among those eight nodes.
+There's no crisscross across the batch dimension of course.
+There's no batch norm on each other, luckily.
+And then once they've changed information, they are processed using the multilayer perceptron and that's the compute phase.
+So, and then also here, we are missing, we are missing the cross attention and because this is a decoder only model.
+So all we have is this step here, the multi -headed retention, and that's this line, the communicate phase.
+And then we have the feed forward, which is the MLP and that's the compute phase.
+I'll take questions a bit later.
+Then the MLP here is fairly straightforward.
+The MLP is just individual processing on each node, just transforming the feature representation sort of at that node.
+So applying a two layer neural net with a Gelu nonlinearity, which is just think of it as a ReLU or something like that.
+It's just a nonlinearity.
+And then MLP is straightforward.
+I don't think there's anything too crazy there.
+And then this is the causal self -attention part, the communication phase.
+So this is kind of like the meat of things and the most complicated part.
+It's only complicated because of the batching and the implementation detail of how you mask the connectivity in the graph so that you don't, you can't obtain any information from the future when you're predicting your token.
+Otherwise it gives away the information.
+So if I'm the fifth token and if I'm the fifth position, then I'm getting the fourth token coming into the input and I'm attending to the third, second and first.
+And I'm trying to figure out what is the next token.
+Well, then in this batch, in the next element over in the time dimension, the answer is at the input.
+So I can't get any information from there.
+So that's why this is all tricky, but basically in the forward pass, we are calculating the queries, keys and values based on X.
+So these are the keys, queries and values.
+Here, when I'm computing the attention, I have the queries matrix multiplying the keys.
+So this is the dot product in parallel for all the queries and all the keys in all the heads.
+So that I felt to mention that there's also the aspect of the heads, which is also done all in parallel here.
+So we have the batch dimension, the time dimension and the head dimension and you end up with five dimensional tensors and it's all really confusing.
+So I invite you to step through it later and convince yourself that this is actually doing the right thing.
+But basically you have the batch dimension, the head dimension and the time dimension and then you have features at them.
+And so this is evaluating for all the batch elements, for all the head elements and all the time elements, the simple Python that I gave you earlier, which is query dot product P.
+Then here we do a mask to fill.
+And what this is doing is it's basically clamping the attention between the nodes that are not supposed to communicate to be negative infinity.
+And we're doing negative infinity because we're about to softmax.
+And so negative infinity will make basically the attention of those elements be zero.
+And so here we are going to basically end up with the weights, the sort of affinities between these nodes, optional dropout.
+And then here attention matrix multiply V is basically the gathering of the information according to the affinities we've calculated.
+And this is just a weighted sum of the values at all those nodes.
+So this matrix multipliers is doing that weighted sum.
+And then transpose contiguous view because it's all complicated and bashed in five dimensional tensors, but it's really not doing anything.
+Optional dropout and then a linear projection back to the residual pathway.
+So this is implementing the communication case here.
+Then you can train this transformer and then you can generate infinite Shakespeare.
+And we will simply do this by, because our block size is eight, we start with some token, say like I used in this case, you can use something like a new line as the start token.
+And then you communicate only to yourself because there's a single node and you get the probability distribution for the first word in the sequence.
+And then you decode it or the first character in the sequence, you decode the character and then you bring back the character and you re -encode it as an integer.
+And now you have the second thing.
+And so you get, okay, we're at the first position and this is whatever integer it is, add the positional encodings, goes into the sequence, goes into the transformer.
+And again, this token now communicates with the first token and its identity.
+And so you just keep plugging it back.
+And once you run out of the block size, which is eight, you start to crop because you can never have block size more than eight in the way you've trained this transformer.
+So we have more and more context until eight.
+And then if you want to generate beyond eight, you have to start cropping because the transformer only works for eight elements in time dimension.
+And so all of these transformers in the main setting have a finite block size or context length.
+And in typical models, this will be 1 ,024 tokens or 2 ,048 tokens, something like that.
+But these tokens are usually like VPE tokens or sentence piece tokens or work piece tokens.
+There's many different encodings.
+So it's not like that long.
+And so that's why I think they've mentioned, we really want to expand the context size and it gets gnarly because the attention is quadratic in the main case.
+Now, if you want to implement an encoder instead of a decoder attention, then all you have to do is this mask node and you just delete that line.
+So if you don't mask the attention, then all the nodes communicate to each other and everything is allowed and information flows between all the nodes.
+So if you want to have the encoder here, just delete all the encoder blocks, we'll use attention where this line is deleted.
+So you're allowing whatever this encoder might store, say 10 tokens or 10 nodes, and they are all allowed to communicate to each other going up the transformer.
+And then if you want to implement cross -attention, so you have a full encoder decoder transformer, not just a decoder only transformer or GPT, then we need to also add cross -attention in the middle.
+So here there's a self -attention piece where all the, there's a self -attention piece, a cross -attention piece and this MLP.
+And in the cross -attention, we need to take the features from the top of the encoder.
+We need to add one more line here and this would be the cross -attention instead of, I should have implemented it instead of just pointing, I think, but there'll be a cross -attention line here.
+So we'll have three lines because we need to add another block and the queries will come from X, but the keys and the values will come from the top of the encoder.
+And there will be basically information flowing from the encoder strictly to all the nodes inside X and then that's it.
+So it's very simple sort of modifications on the decoder attention.
+So you'll hear people talk that you kind of have a decoder only model like GPT.
+You can have an encoder only model like BERT or you can have an encoder decoder model like say T5 doing things like machine translation.
+So, and in BERT, you can't train it using sort of this language modeling setup that's autoregressive and you're just trying to predict the next element sequence.
+You're training it with slightly different objectives.
+You're putting in like the full sentence and the full sentence is allowed to communicate fully and then you're trying to classify sentiment or something like that.
+So you're not trying to model like the next token in the sequence.
+So these are translated different with mask, with using masking and other denoising techniques.
+So that's kind of like the transformer.
+I'm going to continue.
+So yeah, maybe more questions.
+So what we're doing is we're connecting graph to the model and we're doing something that's a tag.
+We're just trying to still perform like it's a dynamic graph that we can actually change in every instance and we also have a feature for it.
+We are enforcing these constraints on it by just masking, but even though we're working with the same kind of thing.
+So I'm not sure if I fully follow.
+So there's different ways to look at this analogy, but one analogy is you can interpret this graph as really fixed.
+It's just that every time we do the communicate, we are using different weights.
+You can look at it down.
+So if we have block size of eight, in my example, we would have eight nodes.
+Here we have two, four, six, okay.
+So we'd have eight nodes.
+They would be connected in, you lay them out and only connect from left to right.
+I mean, but for different problem that might not be, you'll have a graph for the connection function.
+Why would the connect?
+Usually the connections don't change as a function of the data or something like that.
+I think the model would be good like an actual graph like the function that is, like a little bit not, but I'm wondering if I need.
+I don't think I've seen a single example where the connectivity changes dynamically in function data.
+Usually the connectivity is fixed.
+If you have an encoder and you're training a BERT, you have how many tokens you want and they are fully connected.
+And if you have a decoder on one, you have this triangular thing.
+And if you have encoder decoder, then you have awkwardly sort of like two pools of nodes.
+Yeah, all right.
+I guess I think if there's like a different method for that, you have like a negative.
+My question is, I wonder if you know much more about this.
+I know, like, you know, like in my head, Yeah, it's really hard to say.
+So that's why I think this paper is so interesting is like, yeah, usually you'd see like a path and maybe they had path internally, but I think they just didn't publish it.
+All you can see is sort of things that didn't look like the transformer.
+I mean, you have ResNets, which have lots of this, but a ResNet would be kind of like this, but there's no self -attention component, but the MLP is there kind of in a ResNet.
+So a ResNet looks very much like this, except there's no, you can use layer norms in ResNets, I believe as well.
+Typically sometimes they can be batch norms.
+So it is kind of like a ResNet.
+It is kind of like they took a ResNet and they put in a self -attention, in addition to the preexistent MLP block, which is kind of like convolutions.
+And MLP was strictly speaking, the convolution one by one convolution, but I think the idea is similar in that MLP is just kind of like, you know, typical weights, nonlinearity weights or operation.
+But I will say like, yeah, it's kind of interesting because a lot of work is not there.
+And then they give you this transformer and then it turns out five years later, it's not changed even though everyone's trying to change it.
+So it's kind of interesting to me that it's kind of like a package, in like a package, which I think is really interesting historically.
+And I also talked to paper authors and they were unaware of the impact that the transformer would have at the time.
+So when you read this paper, actually, it's kind of unfortunate because this is like the paper that changed everything.
+But when people read it, it's like question marks, because it reads like a pretty random machine translation paper.
+Like, oh, we're doing machine translation.
+Oh, here's a cool architecture.
+Okay, great, good results.
+Like it doesn't sort of know what's going to happen.
+And so when people read it today, I think they're kind of confused potentially.
+Having, like having, I will have some tweets at the end, but I think I would have renamed it with the benefit of hindsight of like, well, I'll get to it.
+Yeah, I think that's a good question as well.
+Currently, I mean, I certainly don't love the autoregressive modeling approach.
+I think it's kind of weird to like sample a token and then commit to it.
+So, you know, maybe there's some ways to, maybe there's some ways, some hybrids with diffusion as an example, which I think would be really cool.
+Or we'll find some other ways to like edit the sequences later, but still in the autoregressive framework.
+But I think diffusion is kind of like an up and coming modeling approach that I personally find much more appealing.
+When I sample text, I don't go chunk, chunk, chunk and commit.
+I do a draft one and then I do a better draft two.
+And that feels like a diffusion process.
+So that would be my hope.
+Okay, also a question.
+So yeah, you think the garden logic, that it takes a way to visualize a graphic.
+But you say like the self attention is sort of like completing like an edge paper, using the dot product on the notes in that idea.
+And then once we have the edge paper, we just like multiply it by the values and then we just appropriate it.
+Yes.
+Yes, right.
+And you think there's like a, like analogy with like a coffee with networks and they're differentiating.
+I find the graph neural networks kind of like a confusing term because I mean, yeah, previously there was this notion of, I kind of thought maybe today, everything is a graph network because the transformer is a graph neural network processor.
+The native representation that the transformer operates over is sets that are connected by edges in a direct way.
+And so that's the native representation.
+And then, okay, I should go on because I still have like 30 slides.
+Sorry, sorry, sorry.
+This question was divided, is that softmax?
+Why don't you want your one divide by two?
+Oh yeah.
+Yeah, the root DE, I think basically like as your, if you're initializing with random weights separate from a Gaussian, as your dimension size grows, so does your values, the variance grows, and then your softmax will just become the one half vector.
+So it's just a way to control the variance and bring it to always being in a good range for softmax and nice distribution.
+Okay, so it's almost like an initialization thing.
+Okay, so transformers have been applied to all the other, all the other fields.
+And the way this was done is in my opinion, kind of ridiculous ways, honestly, because I was a computer vision person and you have comnets and they kind of make sense.
+So what we're doing now with bits as an example, is you take an image and you chop it up into little squares.
+And then those squares literally feed into a transformer and that's it, which is kind of ridiculous.
+And so, I mean, yeah.
+And so the transformer doesn't even in the simplest case, like really know where these patches might come from.
+They are usually positional encoded, but it has to sort of like rediscover a lot of the structure I think of them in some ways.
+And it's kind of weird to approach it that way.
+But it's just like the simplest baseline of the chomping up big images into small squares and feeding them in as like the individual nodes actually works fairly well.
+And then this is in a transformer encoder.
+So all the patches are talking to each other throughout the entire transformer.
+And the number of nodes here would be sort of like nine.
+Also in speech recognition, you just take your MEL spectrogram and you chop it up into slices and feed them into a transformer.
+So there was paper like this, but also whisper.
+Whisper is a copy -paste transformer.
+If you saw whisper from OpenAI, you just chop up MEL spectrogram and feed it into a transformer and then pretend you're dealing with text and it works very well.
+Decision transformer in RL, you take your states, actions and reward that you experience in environment and you just pretend it's a language and you start to model the sequences of that.
+And then you can use that for planning later.
+That works pretty well.
+Even things like alpha -fold.
+So we were frequently talking about molecules and how you can plug them in.
+So at the heart of alpha -fold computationally is also a transformer.
+One thing I wanted to also say about transformers is I find that they're super flexible and I really enjoy that.
+I'll give you an example from Tesla.
+You have a comnet that takes an image and makes predictions about the image.
+And then the big question is, how do you feed in extra information?
+And it's not always trivial.
+Say I have additional information that I want to inform, that I want the outputs to be informed by.
+Maybe I have other sensors like radar.
+Maybe I have some map information or a vehicle type or some audio.
+And the question is, how do you feed information into a comnet?
+Where do you feed it in?
+Do you concatenate it?
+How do you add it?
+At what stage?
+And so with the transformer, it's much easier because you just take whatever you want, you chop it up into pieces and you feed it in with the set of what you had before.
+And you let the self -attention figure out how everything should communicate.
+And that actually currently works.
+So just chop up everything and throw it into the mix is kind of like the way.
+And it frees neural nets from this burden of Euclidean space, where previously you had to arrange your computation to conform to the Euclidean space of three dimensions of how you're laying out the compute.
+Like the compute actually kind of happens in almost like 3D space.
+If you think about it, but in attention, everything is just sets.
+So it's a very flexible framework and you can just like throw in stuff into your conditioning set and everything just self -attended over.
+So it's quite beautiful from that perspective.
+Okay.
+So now what exactly makes transformers so effective?
+I think a good example of this comes from the GPT -3 paper, which I encourage people to read.
+Language models are two shot learners.
+I would have probably renamed this a little bit.
+I would have said something like transformers are capable of in -context learning or like meta learning.
+That's kind of like what makes them really special.
+So basically the second that they're working with is, okay, I have some context and I'm trying to like say passage.
+This is just one example of many.
+I have a passage and I'm asking questions about it.
+And then I'm giving a span of the context in the prompt, I'm giving the questions and the answers.
+So I'm giving one example of question answer, another example of question answer, another example of question answer and so on.
+And this becomes, oh yeah, people are gonna have to leave soon.
+Okay, this is really important, let me think.
+Okay, so what's really interesting is basically like with more examples given in the context, the accuracy improves.
+And so what that hints at is that the transformer is able to somehow learn in the activations without doing any gradient descent in a typical fine tuning fashion.
+So if you fine tune, you have to give an example and the answer and you fine tune it using gradient descent.
+But it looks like the transformer internally in its weights is doing something that looks like potentially gradient descent, some kind of a meta learning in the weights of the transformer as it is reading the prompt.
+And so in this paper, they go into, okay, distinguishing this outer loop with stochastic gradient descent and this inner loop of the end context learning.
+So the inner loop is as the transformer is sort of like reading the sequence almost and the outer loop is the, is the training by gradient descent.
+So basically there's some training happening in the activations of the transformer as it is consuming a sequence that maybe very much looks like gradient descent.
+And so there's some recent papers that kind of hint at this and study it.
+And so as an example, in this paper here, they propose something called this raw operator.
+And they argue that the raw operator is implemented by transformer.
+And then they show that you can implement things like ridge regression on top of the raw operator.
+And so this is kind of giving, there are papers hinting that maybe there is some thing that looks like gradient based learning inside the activations of the transformer.
+And I think this is not impossible to think through because what is, what is gradient based learning?
+Forward pass, backward pass and then update.
+Well, that looks like a resonant, right?
+Because you're just changing, you're adding to the weights.
+So you start initial random set of weights, forward pass, backward pass and update your weights.
+And then forward pass, backward pass, update weights.
+Looks like a resonant, transformer's a resonant.
+So much more hand wavy, but basically some papers trying to hint at why that could be potentially possible.
+And then I have a bunch of tweets.
+I just got them pasted here in the end.
+I was, this was kind of like meant for general consumption.
+So there are a bit more high level and high P a little bit, but I'm talking about why this architecture is so interesting and why, why potentially became so popular.
+And I think it's simultaneously optimizes three properties that I think are very desirable.
+Number one, the transformer is very expressive in the forward pass.
+It's, it's sort of like it's able to implement very interesting functions, potentially functions that can even like do metal learning.
+Number two, it is very optimizable thanks to things like residual connections, layer norms and so on.
+And number three, it's extremely efficient.
+This is not always appreciated, but the transformer, if you look at the computational graph is a shallow, wide network, which is perfect to take advantage of the parallelism of GPUs.
+So I think the transformer was designed very deliberately to run efficiently on GPUs.
+There's previous work like neural GPU that I really enjoy as well, which is really just like, how do we, how do we design neural nets that are efficient on GPUs and thinking backwards from the constraints of the hardware, which I think is a very interesting way to think about it.
+Oh yeah.
+So here I'm saying I probably would have called, I probably would have called the transformer a general purpose efficient, optimizable computer instead of attention is all you need.
+Like that's what I would have maybe in hindsight called that paper is proposing it as a model that is very general purpose.
+So forward passes express it.
+It's very efficient in terms of GPU usage is easily optimizable by gradient descent and trains very nicely.
+Then I have some other hype tweets here anyway.
+So I, you know, you can read them later, but I think this one's maybe interesting.
+So it previous neural nets are special purpose computers designed for specific tasks.
+GPT is a general purpose computer reconfigurable at runtime to run natural language programs.
+So the program, the programs are given as prompts, and then GPT runs the program by completing the document.
+So I really, I really liked these analogies personally, to computer it's just like powerful computer and it's optimizable by gradient descent.
+And I don't know.
+Okay.
+Yeah, that's it.
+You can read the things later, but that's what I'll just, thank you.
+I'll just leave this up.
+So, sorry, I just found this lead.
+So it turns out that if you scale up the training set and use a powerful neural net, like a transformer, the network becomes a kind of general purpose computer over text.
+So I think that's kind of like nice way to look at it.
+And instead of performing a single text sequence, you can design the sequence in the prompt.
+And because the transformer is both powerful, but also was trained on large enough, very hard data set, it kind of becomes this general purpose text computer.
+And so I think that's kind of interesting.
+We have three points.
+I guess, like for me, I learned about phone numbers.
+And then you get all the different things.
+We have an RNA.
+And then I heard about the transformer.
+And I'm looking for a how much do you think it's like, is pretty really like most of it, you know, I think it really, because it's mostly more efficient.
+Or do you think security sort of like something you can have that specific that provides for you?
+So I think there's a bit of that.
+Yeah.
+So I would say RNNs like in principle, yes, they can implement arbitrary programs.
+I think it's kind of like a useless statement to some extent, because they are not, they're probably, I'm not sure that they're, they're probably expressive because in a sense of like power and that they can implement these arbitrary functions, but they're not optimizable.
+And they're certainly not efficient because they are serial computing devices.
+So I think, so if you look at it as a compute graph, RNNs are very long thin compute graph.
+Like if you stretched out the neurons and you look like, take all the individual neurons and our connectivity and stretched them out and try to visualize them.
+RNNs would be like a very long graph and a bad, and it's bad also for optimizability, because I don't exactly know why, but just the rough intuition is when you're back propagating, you don't want to make too many steps.
+And so transformers are shallow white graph.
+And so from, from supervision to inputs is a very small number of hops.
+And it's along residual pathways, which may gradients flow very easily.
+And there's all these layer norms to control the, a grainy, the, the, the scales of all, all of those activations.
+And so there's not too many hops and you're going from supervision to input very quickly and just flows through the graph.
+So, and it's, it can all be done in parallel.
+So you don't need to do this in current decoder RNNs.
+You have to go from first word, then second word, then third word, but here in transformer, every single word was processed completely in parallel, which is kind of a, so I think all of these are really important because all of these are really important.
+And I think number three is less talked about, but extremely important because in deep learning scale matters.
+And so the size of the network that you can train, it gives you is extremely important.
+And so if it's efficient on the current hardware, then we can make it bigger.
+When you mentioned that you're dealing with multiple modalities of data, how does it work?
+Do you like the different data, different tokens?
+Or is it, No.
+So yeah, so you take your images and you apparently chop them up into patches.
+So there's the first thousand tokens or whatever.
+And now I have a special, so radar could be also, but I don't actually know the native representation of radar.
+So, but you could, you just need to chop it up and enter it.
+And then you have to encode it somehow like the transformer needs to know that they're coming from radar.
+So you create a special, you have some kind of a special token that you, these radar tokens are slightly different in the representation and it's learnable by grading the center.
+And like vehicle information would also come in with a special embedding token that can be learned.
+you don't, it's all just a set.
+But yeah, it's all just a set, but you can't positional encode these sets if you want.
+So, but positional encoding means you can hard wire, for example, the coordinates, like using sinus nodes and cosines, you can wire that, but it's better if you don't wire the position, you just, it's just a vector that is always hanging out at this location, whatever content is there, just adds on it and this vector is trainable by background.
+That's how you do it.
+I don't really like this.
+I think they're kind of delicate, like they seem to work, but it sounds like there's sometimes some structure out of the, or they change to whatever else.
+I have an idea, but I like it better.
+Um, I'm not sure if I understand the question.
+So I mean, the positional encoder is like, they're actually like not, they have, okay.
+So they have very little inductive bias or something like that.
+They're just vectors hanging out in location always.
+And you're trying to, you're trying to help them in some way.
+Um, and I think the intuition is, is good, but um, like if you have enough data, usually trying to mess with it is like a bad thing.
+Like trying to, like trying to enter knowledge when you have enough knowledge in the dataset itself is not usually productive.
+So it really depends on what scale you are.
+If you have infinity data, then you actually want to encode less and less.
+That turns out to work better.
+And if you have very little data, then actually you do want to encode some biases.
+And maybe if you have a much smaller dataset, then maybe convolutions are a good idea because you actually have this bias coming from more filters.
+And so, but I think, um, so the transformer is extremely general, but there are ways to mess with the encodings to put in more structure.
+Like you could, for example, encode sinuses and cosines and exit, or you could actually go to the attention mechanism and say, okay, if my, if my image is chopped up into patches, this patch can only communicate to this neighborhood.
+And you can, you just do that in the attention matrix, just mask out whatever you don't want to communicate.
+And so people really play with this because the, the full attention is inefficient.
+So they will intersperse, for example, layers that only communicate in all patches and then layers that communicate globally.
+And they will sort of do all kinds of tricks like that.
+So you can slowly bring in more inductive bias.
+You would do it, but the inductive biases are sort of like, they're factored out from the core transformer and they are factored out in the, in the connectivity of the notes.
+And they are factored out in the positional encodings and can mess with this for competition.
+So there's probably about 200 papers on this now, if not more, they're kind of hard to track up, honestly, like my Safari browser, which is on my computer, like 200 open tabs, but yes, I'm not even sure if I want to pick my favorite, honestly.
+Yeah, I think it was very interesting stuff from you.
+And you can think of a transformer as like a CP, I think it was instructions that could like 4 ,000 and make now the CP body has like the stored variables, you have memory, just like doing a program with CP, I just like do it multiple times.
+So maybe I can use a transformer like that.
+The other one that I actually like even more is potentially keep the context length fixed, but allow the network to somehow use a scratch pad.
+And so the way this works is you will teach the transformer somehow via examples in the prompt that, hey, you actually have a scratch pad.
+Hey, basically, you can't remember too much, your context line is finite, but you can use a scratch pad and you do that by emitting a start scratch pad and then writing whatever you want to remember and then end scratch pad.
+And then you continue with whatever you want.
+And then later when it's decoding, you actually like have special logic that when you detect start scratch pad, you will sort of like save, whatever it puts in there in like external thing and allow it to attend over it.
+So basically you can teach the transformer just dynamically because it's so meta learned.
+You can teach it dynamically to use other gizmos and gadgets and allow it to expand its memory that way.
+If that makes sense.
+It's just like human learning to use a notepad, right?
+You don't have to keep it in your brain.
+So keeping things in your brain is kind of like the context length of the transformer, but maybe we can just give it a notebook and then it can query the notebook and read from it and write to it.
+Maybe you can use a transformer to play another transformer.
+I'm using the way they're going to see this.
+I don't know if I detected that.
+I kind of feel like, did you feel like it was more than just a long prompt that's unfolding?
+I didn't try extensively, but I did see a forgetting event.
+And I kind of felt like the block size was just moved.
+Maybe I'm wrong.
+I don't actually know about the internals of Chai GPT.
+Yeah.
+Two online questions.
+So one question is, what do you think about architecture?
+S4?
+S4.
+I swear I don't have a S4.
+Which one is S4?
+Ah, the second question, this one's a personal question.
+What are you going to work on next?
+You don't have a second question.
+I mean, so right now I'm working on things like nano GPT, where's nano GPT?
+I mean, I'm going basically slightly from computer vision and like kind of like the vision based products do a little bit in the language domain.
+Where's Chai GPT?
+Okay, nano GPT.
+So originally I had min GPT, which I rewrote to nano GPT and I'm working on this.
+I'm trying to reproduce GPTs.
+And I mean, I think something like Chai GPT, I think incrementally improved in a product fashion would be extremely interesting.
+And I think a lot of people feel it and that's why it went so wide.
+So I think there's something like a Google plus plus plus to build that I think is really interesting.
+Can we give her a speed around the pod?

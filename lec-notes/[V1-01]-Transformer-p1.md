@@ -1,9 +1,10 @@
 ## CS 25 - Notes - V1
 
-CS25: Transformers United
+CS25: Transformers United (Transformers 合集)
 Stanford - Fall 2021
 
-主题：
+**主题：**
+
 Since their introduction in 2017, transformers have revolutionized Natural Language Processing (NLP). Now, transformers are finding applications all over Deep Learning, be it computer vision (CV), reinforcement learning (RL), Generative Adversarial Networks (GANs), Speech or even Biology. Among other things, transformers have enabled the creation of powerful language models like GPT-3 and were instrumental in DeepMind's recent AlphaFold2, that tackles protein folding.
 
 In this seminar, we examine the details of how transformers work, and dive deep into the different kinds of transformers and how they're applied in different fields. We do this through a combination of instructor lectures, guest lectures, and classroom discussions. We will invite people at the forefront of transformers research across different domains for guest lectures.
@@ -20,6 +21,10 @@ In this seminar, we examine the details of how transformers work, and dive deep 
 
 
 ### 一、本节内容整体介绍
+
+#### 1.0 本节思维导图
+
+![](./img/cs25-V1-p1.png)
 
 #### 1.1. 课程介绍
 - 课程由Advay、Chetanya和Div三位讲师共同教授。
@@ -374,7 +379,9 @@ OpenAI有最新的模型，OpenAI的GPT系列是GPT-3。
 *「注释：ELECTRA 和DeBERTa是BERT之后的新型预训练模型，它们采用了不同的技术来提高模型的性能。模态指的是信息的表现形式，如文本、图像或声音。」*
 
 这就是本讲的全部内容，感谢您的收听，
-谢谢。
+
+谢谢，
+
 谢谢大家。
 
 ### 三、课程内容扩展
@@ -382,24 +389,38 @@ OpenAI有最新的模型，OpenAI的GPT系列是GPT-3。
 #### 3.1 Attention机制想法的由来
 最初，它们是非常简单的机制。注意力受到重要性加权过程的启发，像人类一样将注意力放在图像的不同部分，如果你有一张狗的图像，你可能会更多地关注前景而不是背景。所以在软注意力的情况下，你所做的是学习每个像素的简单软注意力加权，这可以是0到1之间的权重。但这里的问题是这是一项非常昂贵的计算。
 正如下边的图中所示，你可以看到我们正在为整个图像计算这个注意力图。
+
 [图片]
+
 你可以做的是，你可以直接得到一个0到1的注意力图，我们在狗所在的地方直接放一个1，在背景所在的地方放0。这就像计算成本较低，但问题是它是不可微分的，使得训练更加困难。接下来，我们还有在自注意力之前提出的不同种类的基本注意力机制。
 
 Soft Attention 模型的不断进化
+
 [图片]
+
 RNN 模型
 传统的循环神经网络中，y1、y2 和 y3 的计算都是基于同一个C. 深入思考一下，发现这可能并不是最好的方案，因为 Source 中不同单词对 y1、y2 和 y3 的影响是不同的，所以，很自然地就有了如下思路：
+
 [图片]
+
 引入注意力机制的 Encoder-Decoder 框架
 上述改良模型中的 C1、C2、C3 是怎么计算的呢？其实也非常简单，就是在计算 C1、C2 和 C3时，分别使用不同的权重向量：
+
 [图片]
+
 上述公式中的权重向量 (a11, a12, a13)、(a21, a22, a23)、(a31, a32, a33) 又是如何计算的呢？请看下图。
+
 [图片]
+
 注意力分配的概率计算
 上述模型中： h1 = f(Tom)、h2 = f(h1, Chase)、h3 = f(h2, Jerry).
 当计算出 Hi-1 之后，通过函数 F(hj,Hi-1) 获得输入语句中不同单词（Tom、Chase、Jerry）对目标单词 yi 的影响力，F 的输出再经过 Softmax 进行归一化就得到了符合概率分布取值区间的注意力分配概率。其中，F 函数的实现方法有多种，比如余弦相似度、MLP 等。
+
 [图片]
+
 Google 神经网络机器翻译系统结构图
 
-【未完待续，后续将补充在21年后，Transformer相关的进展】
-Update 2024/04/25
+
+【未完待续，后续将补充在21年后，Transformer相关的进展。Update 2024/04/25】
+
+
