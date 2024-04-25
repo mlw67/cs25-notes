@@ -76,13 +76,20 @@ In this seminar, we examine the details of how transformers work, and dive deep 
 *「注释：这段概述了课程的三个学习目标，旨在不仅让学生理解transformer的工作原理，还要能够将其应用于不同领域，并激发创新思维。」*
 
 #### 2.2 transformer的历史
+
+[PPT图片]
+
 欢迎来到我们的transformer研讨会，我将首先概述注意力时间线以及其形成的过程。transformer的关键思想是2017年开发的自注意力机制。这一切都始于一篇名为《Attention is All You Need》的论文，作者是Vohaswani等人。
 
 *「注释：注意力时间线指的是自注意力机制及其相关概念的发展历史。《Attention is All You Need》是一篇开创性的论文，它首次提出了transformer模型。」*
 
+[PPT图片]
+
 在2017年之前，我们处于一个前史时期，那时我们有更旧的模型，如RNNs、LSTMs和更简单的注意力机制。最终，transformer在其他领域的增长已经爆炸性增长，并在机器学习的所有领域中变得突出。我将去看并展示这是如何被使用的。所以在前史时期，曾经有RNNs。有不同的模型，如序列到序列、LSTMs、GRUs。它们擅长编码某种记忆，但在编码长序列方面效果不佳，并且在编码上下文方面表现非常糟糕。
 
 *「注释：前史时期指的是在transformer模型出现之前的时间，RNNs、LSTMs和GRUs是那时常用的循环神经网络模型，它们在处理序列数据时有一定的局限性。」*
+
+[PPT图片]
 
 因此，这里举个例子，如果你有一个句子，比如说：“我在法国长大....，所以我会说流利的法语”这样的句子。
 
